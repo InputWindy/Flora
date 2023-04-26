@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="源文件\Core">
+      <UniqueIdentifier>{6633e676-c24b-4ea5-9275-019f63e20a42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ThirdParty">
+      <UniqueIdentifier>{a5df142a-8a2b-4685-a553-76cd6e5cd902}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ThirdParty\OpenGL">
+      <UniqueIdentifier>{40f58662-e187-4c1f-b058-a39a7bea0c03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Core\Application">
+      <UniqueIdentifier>{17f7dd46-c7f6-4359-beab-b649f987079b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Core\Resource">
+      <UniqueIdentifier>{6b095773-4be0-47b4-87ea-2904c3ffba6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Core\Resource\Texture">
+      <UniqueIdentifier>{4e676397-4420-4d2d-90fe-675fe34e3c7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Core\Serialization">
+      <UniqueIdentifier>{f8efdbb1-ad7b-44ee-bb69-3f561f067d03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Core\Viewport">
+      <UniqueIdentifier>{8705d12c-a3a6-4df6-a639-a2179aefcfd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Core\UI">
+      <UniqueIdentifier>{f5bc9afb-32df-4f63-bad1-daf6985d4f2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Core\Render">
+      <UniqueIdentifier>{50ff5497-071d-4be0-938f-a842ee4f8ca1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Core\Resource\Material">
+      <UniqueIdentifier>{52080787-0262-4d11-9afd-5eeaaefb1b91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Core\Resource\Material\Uniform">
+      <UniqueIdentifier>{161b7396-6c08-462e-92e6-52a0ee51b0dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Core\Resource\Material\RenderState">
+      <UniqueIdentifier>{490cb92d-55a2-4e33-87ac-980c8cd60a4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Core\Misc">
+      <UniqueIdentifier>{2146e513-f8cf-4ac0-a59c-de430e8b392d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Core.cpp">
+      <Filter>源文件\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>源文件\Core\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>源文件\Core\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Viewport.cpp">
+      <Filter>源文件\Core\Viewport</Filter>
+    </ClCompile>
+    <ClCompile Include="glad.c">
+      <Filter>源文件\ThirdParty</Filter>
+    </ClCompile>
+    <ClCompile Include="jsoncpp.cpp">
+      <Filter>源文件\ThirdParty</Filter>
+    </ClCompile>
+    <ClCompile Include="Serialization.cpp">
+      <Filter>源文件\Core\Serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>源文件\Core\Resource\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>源文件\Core\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGLTexture.cpp">
+      <Filter>源文件\ThirdParty\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGLInterface.cpp">
+      <Filter>源文件\ThirdParty\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderCommand.cpp">
+      <Filter>源文件\Core\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>源文件\Core\Resource\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderState.cpp">
+      <Filter>源文件\Core\Resource\Material\RenderState</Filter>
+    </ClCompile>
+    <ClCompile Include="Uniform.cpp">
+      <Filter>源文件\Core\Resource\Material\Uniform</Filter>
+    </ClCompile>
+    <ClCompile Include="Console.cpp">
+      <Filter>源文件\Core\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentBrowser.cpp">
+      <Filter>源文件\Core\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGLMaterial.cpp">
+      <Filter>源文件\ThirdParty\OpenGL</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Flora.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Core.h">
+      <Filter>源文件\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="EntryPoint.h">
+      <Filter>源文件\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>源文件\Core\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>源文件\Core\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewport.h">
+      <Filter>源文件\Core\Viewport</Filter>
+    </ClInclude>
+    <ClInclude Include="Type.h">
+      <Filter>源文件\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialization.h">
+      <Filter>源文件\Core\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>源文件\Core\Resource\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>源文件\Core\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>源文件\Core\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGLTexture.h">
+      <Filter>源文件\ThirdParty\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGLInterface.h">
+      <Filter>源文件\ThirdParty\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderCommand.h">
+      <Filter>源文件\Core\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>源文件\Core\Resource\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderState.h">
+      <Filter>源文件\Core\Resource\Material\RenderState</Filter>
+    </ClInclude>
+    <ClInclude Include="Uniform.h">
+      <Filter>源文件\Core\Resource\Material\Uniform</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
+      <Filter>源文件\Core\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentBrowser.h">
+      <Filter>源文件\Core\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGLMaterial.h">
+      <Filter>源文件\ThirdParty\OpenGL</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

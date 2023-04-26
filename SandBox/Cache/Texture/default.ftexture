@@ -1,0 +1,21 @@
+{
+	"Depth" : 0,
+	"Directory" : "/Image",
+	"Extension" : ".jpg",
+	"Height" : 128,
+	"InternalFormat" : "CUBE_MAP",
+	"MagFilterMode" : "LINEAR",
+	"MaxMipLevel" : 0,
+	"MinFilterMode" : "LINEAR",
+	"MinMipLevel" : 0,
+	"Name" : "default",
+	"RelativePath" : "/Image/default.jpg",
+	"RootPath" : "C:/Users/InputWindy/Desktop/SandBox/SandBox",
+	"TextureTarget" : "2D",
+	"Width" : 128,
+	"WrapModeR" : "REPEAT",
+	"WrapModeS" : "REPEAT",
+	"WrapModeT" : "REPEAT",
+	"bFlip" : false,
+	"bHdr" : false
+}
