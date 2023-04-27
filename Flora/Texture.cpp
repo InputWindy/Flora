@@ -60,6 +60,8 @@ bool FTexture::Parse(IN FJson& in)
 	RelativePath = in["RelativePath"].asString();
 	Extension = in["Extension"].asString();
 
+	CachePath = "/Cache/Texture/" + Name + ".ftexture";
+
 	bHdr = in["bHdr"].asBool();
 	bFlip = in["bFlip"].asBool();
 	
@@ -98,7 +100,7 @@ bool FTexture::Serialize(OUT FJson& out)
 	out["bFlip"] = bFlip;
 
 	out["TextureTarget"] = Rhi->TextureTargetToString(TextureTarget);
-	out["InternalFormat"] = Rhi->TextureTargetToString(InternalFormat);
+	out["InternalFormat"] = Rhi->InternalFormatToString(InternalFormat);
 
 
 	out["MaxMipLevel"] = Info.MaxMipLevel;

@@ -3,7 +3,7 @@
 	"Directory" : "/Image",
 	"Extension" : ".jpg",
 	"Height" : 128,
-	"InternalFormat" : "CUBE_MAP",
+	"InternalFormat" : "RGBA",
 	"MagFilterMode" : "LINEAR",
 	"MaxMipLevel" : 0,
 	"MinFilterMode" : "LINEAR",

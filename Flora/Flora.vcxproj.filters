@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="头文件">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="资源文件">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -55,6 +51,21 @@
     <Filter Include="源文件\Core\Misc">
       <UniqueIdentifier>{2146e513-f8cf-4ac0-a59c-de430e8b392d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Core\Resource\Material\Parser">
+      <UniqueIdentifier>{30291c6d-2d1c-4c80-b6c9-1e4cf99a3177}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ThirdParty\Json">
+      <UniqueIdentifier>{b5d0242b-dbdc-4e4b-a124-3359961f1d59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Core\Resource\Animation">
+      <UniqueIdentifier>{62eaf853-72f6-4da3-b5aa-586dbd0f6b82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Core\Resource\Skeleton">
+      <UniqueIdentifier>{bbf6c7a4-ed0d-4a09-aff9-3079fff9b197}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Core\Resource\Mesh">
+      <UniqueIdentifier>{147ec802-d639-4172-badc-264a7301bbcf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -68,12 +79,6 @@
     </ClCompile>
     <ClCompile Include="Viewport.cpp">
       <Filter>源文件\Core\Viewport</Filter>
-    </ClCompile>
-    <ClCompile Include="glad.c">
-      <Filter>源文件\ThirdParty</Filter>
-    </ClCompile>
-    <ClCompile Include="jsoncpp.cpp">
-      <Filter>源文件\ThirdParty</Filter>
     </ClCompile>
     <ClCompile Include="Serialization.cpp">
       <Filter>源文件\Core\Serialization</Filter>
@@ -110,6 +115,18 @@
     </ClCompile>
     <ClCompile Include="OpenGLMaterial.cpp">
       <Filter>源文件\ThirdParty\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Parser.cpp">
+      <Filter>源文件\Core\Resource\Material\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="glad.c">
+      <Filter>源文件\ThirdParty\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="jsoncpp.cpp">
+      <Filter>源文件\ThirdParty\Json</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>源文件\Core\Resource\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +189,12 @@
     </ClInclude>
     <ClInclude Include="OpenGLMaterial.h">
       <Filter>源文件\ThirdParty\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Parser.h">
+      <Filter>源文件\Core\Resource\Material\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>源文件\Core\Resource\Animation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -11,12 +11,16 @@
 #include <glm/gtc/type_ptr.hpp>
 class FLORA_API FRenderCommand
 {
+	friend class FTexture;
+	friend class FMaterial;
 protected:
 	FRenderCommand() = default;
 public:
 	virtual ~FRenderCommand() = default;
 
 	static FRenderCommand* Create(ERenderCommandType Type = E_RHI_OpenGL);
+public:
+	virtual bool InitResources() = 0;
 public:
 	/// <summary>
 	/// apply for an empty texture
@@ -54,10 +58,15 @@ public:
 	/// apply for a new material
 	/// </summary>
 	virtual Ref<FMaterial> GenerateMaterial(
-		IN const char* Name = "",/*material name*/
+		IN const char* Name,/*material name*/
 		IN const char* VertexShader = "",/*vshader(default empty)*/
 		IN const char* FragmentShader = ""/*fshader(default empty)*/
 	) = 0;
+
+	/// <summary>
+	/// apply for a new material(empty)
+	/// </summary>
+	virtual Ref<FMaterial> GenerateMaterial() = 0;
 public:
 	virtual void SetBool(const char*, uint32_t, const bool&) = 0;
 	virtual void SetInt(const char*, uint32_t, const int&) = 0;

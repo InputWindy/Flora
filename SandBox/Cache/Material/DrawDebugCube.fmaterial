@@ -1,0 +1,40 @@
+{
+	"Directory" : "",
+	"Extension" : "",
+	"FragShader" : "#version 430 core\n\nvoid main()\n{\n\tgl_FragColor = vec4(1.0f,0.0,0.0,1.0f);\n}",
+	"MaterialName" : "DrawDebugCube",
+	"RelativePath" : "",
+	"RenderState" : 
+	{
+		"BlendTest" : 
+		{
+			"BlendDest" : "DST_ALPHA",
+			"BlendFuncMode" : "ADD",
+			"BlendSrc" : "SRC_ALPHA",
+			"EnableBlend" : false
+		},
+		"Culling" : 
+		{
+			"CullMode" : "CW",
+			"EnableCull" : false,
+			"FrontDefinition" : "CCW"
+		},
+		"DepthTest" : 
+		{
+			"CompareMethod" : "LESS",
+			"DepthReadOnly" : false,
+			"EnableDepth" : true
+		},
+		"StencilTest" : 
+		{
+			"EnableStencil" : false,
+			"PassOp" : "KEEP",
+			"SFailOp" : "KEEP",
+			"SPassZFailOp" : "KEEP",
+			"StencilReadOnly" : true,
+			"StencilRef" : 1
+		}
+	},
+	"RootPath" : "",
+	"VertShader" : "#version 430 core\nlayout (location = 0) in vec3 aPosition;\n\nuniform mat4 Model[50];\nuniform mat4 Projection;\nuniform mat4 View;\n\nvoid main()\n{\n\tgl_Position = Projection * View * Model[gl_InstanceID] * vec4(aPosition, 1.0);\n} "
+}

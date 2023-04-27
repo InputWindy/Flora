@@ -1,0 +1,781 @@
+﻿  Animation.cpp
+C:\Users\InputWindy\Desktop\SandBox\Flora\Resource.h(29,14): warning C4251: “IResource::RootPath”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“IResource”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Resource.h(30,14): warning C4251: “IResource::Directory”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“IResource”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Resource.h(31,14): warning C4251: “IResource::RelativePath”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“IResource”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Resource.h(32,14): warning C4251: “IResource::Extension”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“IResource”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Resource.h(33,14): warning C4251: “IResource::CachePath”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“IResource”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(16,21): warning C4251: “FBoneTransformTrack::positionTimestamps”: class“std::vector<float,std::allocator<float>>”需要有 dll 接口由 struct“FBoneTransformTrack”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(16,7): message : 参见“std::vector<float,std::allocator<float>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(17,21): warning C4251: “FBoneTransformTrack::rotationTimestamps”: class“std::vector<float,std::allocator<float>>”需要有 dll 接口由 struct“FBoneTransformTrack”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(16,7): message : 参见“std::vector<float,std::allocator<float>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(18,21): warning C4251: “FBoneTransformTrack::scaleTimestamps”: class“std::vector<float,std::allocator<float>>”需要有 dll 接口由 struct“FBoneTransformTrack”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(16,7): message : 参见“std::vector<float,std::allocator<float>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(20,25): warning C4251: “FBoneTransformTrack::positions”: class“std::vector<glm::vec3,std::allocator<glm::vec3>>”需要有 dll 接口由 struct“FBoneTransformTrack”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(20,7): message : 参见“std::vector<glm::vec3,std::allocator<glm::vec3>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(21,25): warning C4251: “FBoneTransformTrack::rotations”: class“std::vector<glm::quat,std::allocator<glm::quat>>”需要有 dll 接口由 struct“FBoneTransformTrack”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(21,7): message : 参见“std::vector<glm::quat,std::allocator<glm::quat>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(22,25): warning C4251: “FBoneTransformTrack::scales”: class“std::vector<glm::vec3,std::allocator<glm::vec3>>”需要有 dll 接口由 struct“FBoneTransformTrack”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(20,7): message : 参见“std::vector<glm::vec3,std::allocator<glm::vec3>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(25,76): warning C4251: “std::enable_shared_from_this<FAnimation>::_Wptr”: class“std::weak_ptr<_Ty>”需要有 dll 接口由 class“std::enable_shared_from_this<FAnimation>”的客户端使用
+          with
+          [
+              _Ty=FAnimation
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3068,16): message : 参见“std::weak_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FAnimation
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(44,14): warning C4251: “FAnimation::AnimationName”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FAnimation”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(47,55): warning C4251: “FAnimation::BoneTransforms”: class“std::unordered_map<std::string,FBoneTransformTrack,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,FBoneTransformTrack>>>”需要有 dll 接口由 class“FAnimation”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(47,7): message : 参见“std::unordered_map<std::string,FBoneTransformTrack,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,FBoneTransformTrack>>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(30,14): warning C4251: “FImage::root_path”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 struct“FImage”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(31,14): warning C4251: “FImage::directory”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 struct“FImage”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(32,14): warning C4251: “FImage::relative_path”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 struct“FImage”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(33,14): warning C4251: “FImage::name”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 struct“FImage”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(34,14): warning C4251: “FImage::extension”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 struct“FImage”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(58,72): warning C4251: “std::enable_shared_from_this<FTexture>::_Wptr”: class“std::weak_ptr<_Ty>”需要有 dll 接口由 class“std::enable_shared_from_this<FTexture>”的客户端使用
+          with
+          [
+              _Ty=FTexture
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3068,16): message : 参见“std::weak_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FTexture
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(110,15): warning C4251: “FTexture::Name”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FTexture”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(130,30): warning C4251: “FTexture::White”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“FTexture”的客户端使用
+          with
+          [
+              _Ty=FTexture
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3060,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FTexture
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(131,30): warning C4251: “FTexture::Black”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“FTexture”的客户端使用
+          with
+          [
+              _Ty=FTexture
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3060,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FTexture
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(132,30): warning C4251: “FTexture::Default”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“FTexture”的客户端使用
+          with
+          [
+              _Ty=FTexture
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3060,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FTexture
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(45,18): warning C4251: “FSamplerInfo::Texture”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“FSamplerInfo”的客户端使用
+          with
+          [
+              _Ty=FTexture
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3060,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FTexture
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(66,17): warning C4251: “FMatArray<TMat>::Data”: class“std::array<TMat,50>”需要有 dll 接口由 class“FMatArray<TMat>”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(66,2): message : 参见“std::array<TMat,50>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(67,2): message : 查看对正在编译的 类 模板 实例化“FMatArray<TMat>”的引用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(69,72): warning C4251: “std::enable_shared_from_this<FUniform>::_Wptr”: class“std::weak_ptr<_Ty>”需要有 dll 接口由 class“std::enable_shared_from_this<FUniform>”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3068,16): message : 参见“std::weak_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(142,26): warning C4002: 类函数宏的调用“assert”参数过多
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(163,11): warning C4251: “FUniform::UniformName”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FUniform”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(7,89): warning C4251: “std::enable_shared_from_this<FMaterialInstance>::_Wptr”: class“std::weak_ptr<_Ty>”需要有 dll 接口由 class“std::enable_shared_from_this<FMaterialInstance>”的客户端使用
+          with
+          [
+              _Ty=FMaterialInstance
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3068,16): message : 参见“std::weak_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FMaterialInstance
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(23,17): warning C4251: “FMaterialInstance::Material”: class“std::shared_ptr<FMaterial>”需要有 dll 接口由 class“FMaterialInstance”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Core.h(18,18): message : 参见“std::shared_ptr<FMaterial>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(24,29): warning C4251: “FMaterialInstance::Bools”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterialInstance”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(25,29): warning C4251: “FMaterialInstance::Vectors”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterialInstance”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(26,29): warning C4251: “FMaterialInstance::Matrices”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterialInstance”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(27,29): warning C4251: “FMaterialInstance::Samplers”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterialInstance”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(30,74): warning C4251: “std::enable_shared_from_this<FMaterial>::_Wptr”: class“std::weak_ptr<_Ty>”需要有 dll 接口由 class“std::enable_shared_from_this<FMaterial>”的客户端使用
+          with
+          [
+              _Ty=FMaterial
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(1502,23): message : 参见“std::weak_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FMaterial
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(62,14): warning C4251: “FMaterial::MaterialName”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(64,14): warning C4251: “FMaterial::CachePath”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(66,15): warning C4251: “FMaterial::RenderState”: struct“FRenderState”需要有 dll 接口由 class“FMaterial”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\RenderState.h(4,8): message : 参见“FRenderState”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(68,14): warning C4251: “FMaterial::VertShader”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(69,14): warning C4251: “FMaterial::FragShader”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(71,41): warning C4251: “FMaterial::Bools”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(72,41): warning C4251: “FMaterial::Vectors”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(73,41): warning C4251: “FMaterial::Matrices”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(74,41): warning C4251: “FMaterial::Samplers”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(76,31): warning C4251: “FMaterial::EquirectangularMapToCubemapShader”: class“std::shared_ptr<FMaterial>”需要有 dll 接口由 class“FMaterial”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Core.h(18,18): message : 参见“std::shared_ptr<FMaterial>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(77,31): warning C4251: “FMaterial::SkyBoxShader”: class“std::shared_ptr<FMaterial>”需要有 dll 接口由 class“FMaterial”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Core.h(18,18): message : 参见“std::shared_ptr<FMaterial>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(78,31): warning C4251: “FMaterial::StandardOpacityShader”: class“std::shared_ptr<FMaterial>”需要有 dll 接口由 class“FMaterial”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Core.h(18,18): message : 参见“std::shared_ptr<FMaterial>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(79,31): warning C4251: “FMaterial::StandardPostprocessShader”: class“std::shared_ptr<FMaterial>”需要有 dll 接口由 class“FMaterial”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Core.h(18,18): message : 参见“std::shared_ptr<FMaterial>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(80,31): warning C4251: “FMaterial::DrawDebugCubeShader”: class“std::shared_ptr<FMaterial>”需要有 dll 接口由 class“FMaterial”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Core.h(18,18): message : 参见“std::shared_ptr<FMaterial>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\ResourceManager.h(27,51): warning C4251: “FResourceManager::Textures”: class“std::unordered_map<std::string,std::shared_ptr<_Ty>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<_Ty>>>>”需要有 dll 接口由 class“FResourceManager”的客户端使用
+          with
+          [
+              _Ty=FTexture
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\ResourceManager.h(27,7): message : 参见“std::unordered_map<std::string,std::shared_ptr<_Ty>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<_Ty>>>>”的声明
+          with
+          [
+              _Ty=FTexture
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\ResourceManager.h(28,51): warning C4251: “FResourceManager::Materials”: class“std::unordered_map<std::string,std::shared_ptr<FMaterial>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<FMaterial>>>>”需要有 dll 接口由 class“FResourceManager”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\ResourceManager.h(28,7): message : 参见“std::unordered_map<std::string,std::shared_ptr<FMaterial>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<FMaterial>>>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\ResourceManager.h(29,51): warning C4251: “FResourceManager::Animations”: class“std::unordered_map<std::string,std::shared_ptr<_Ty>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<_Ty>>>>”需要有 dll 接口由 class“FResourceManager”的客户端使用
+          with
+          [
+              _Ty=FAnimation
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\ResourceManager.h(29,7): message : 参见“std::unordered_map<std::string,std::shared_ptr<_Ty>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<_Ty>>>>”的声明
+          with
+          [
+              _Ty=FAnimation
+          ]
+C:\Users\InputWindy\Desktop\SandBox\vendor\include\assimp\anim.h(401,20): warning C4099: “aiAnimation”: 类型名称以前使用“class”现在使用的是“struct”
+C:\Users\InputWindy\Desktop\SandBox\vendor\include\assimp\anim.h(401,8): message : 参见“aiAnimation”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.cpp(48,22): warning C4244: “=”: 从“const double”转换到“float”，可能丢失数据
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.cpp(49,28): warning C4244: “=”: 从“const double”转换到“float”，可能丢失数据
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.cpp(54,24): warning C4018: “<”: 有符号/无符号不匹配
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.cpp(58,35): warning C4018: “<”: 有符号/无符号不匹配
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.cpp(60,71): warning C4244: “参数”: 从“double”转换到“_Ty”，可能丢失数据
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.cpp(63,35): warning C4018: “<”: 有符号/无符号不匹配
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.cpp(65,71): warning C4244: “参数”: 从“double”转换到“_Ty”，可能丢失数据
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.cpp(68,35): warning C4018: “<”: 有符号/无符号不匹配
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.cpp(70,67): warning C4244: “参数”: 从“double”转换到“_Ty”，可能丢失数据
+          with
+          [
+              _Ty=float
+          ]
+  Material.cpp
+C:\Users\InputWindy\Desktop\SandBox\Flora\Resource.h(29,14): warning C4251: “IResource::RootPath”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“IResource”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Resource.h(30,14): warning C4251: “IResource::Directory”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“IResource”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Resource.h(31,14): warning C4251: “IResource::RelativePath”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“IResource”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Resource.h(32,14): warning C4251: “IResource::Extension”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“IResource”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Resource.h(33,14): warning C4251: “IResource::CachePath”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“IResource”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(30,14): warning C4251: “FImage::root_path”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 struct“FImage”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(31,14): warning C4251: “FImage::directory”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 struct“FImage”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(32,14): warning C4251: “FImage::relative_path”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 struct“FImage”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(33,14): warning C4251: “FImage::name”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 struct“FImage”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(34,14): warning C4251: “FImage::extension”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 struct“FImage”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(58,72): warning C4251: “std::enable_shared_from_this<FTexture>::_Wptr”: class“std::weak_ptr<_Ty>”需要有 dll 接口由 class“std::enable_shared_from_this<FTexture>”的客户端使用
+          with
+          [
+              _Ty=FTexture
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3068,16): message : 参见“std::weak_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FTexture
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(110,15): warning C4251: “FTexture::Name”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FTexture”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(130,30): warning C4251: “FTexture::White”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“FTexture”的客户端使用
+          with
+          [
+              _Ty=FTexture
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3060,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FTexture
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(131,30): warning C4251: “FTexture::Black”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“FTexture”的客户端使用
+          with
+          [
+              _Ty=FTexture
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3060,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FTexture
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(132,30): warning C4251: “FTexture::Default”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“FTexture”的客户端使用
+          with
+          [
+              _Ty=FTexture
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3060,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FTexture
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(45,18): warning C4251: “FSamplerInfo::Texture”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“FSamplerInfo”的客户端使用
+          with
+          [
+              _Ty=FTexture
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3060,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FTexture
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(66,17): warning C4251: “FMatArray<TMat>::Data”: class“std::array<TMat,50>”需要有 dll 接口由 class“FMatArray<TMat>”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(66,2): message : 参见“std::array<TMat,50>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(67,2): message : 查看对正在编译的 类 模板 实例化“FMatArray<TMat>”的引用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(69,72): warning C4251: “std::enable_shared_from_this<FUniform>::_Wptr”: class“std::weak_ptr<_Ty>”需要有 dll 接口由 class“std::enable_shared_from_this<FUniform>”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3068,16): message : 参见“std::weak_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(142,26): warning C4002: 类函数宏的调用“assert”参数过多
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(163,11): warning C4251: “FUniform::UniformName”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FUniform”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(7,89): warning C4251: “std::enable_shared_from_this<FMaterialInstance>::_Wptr”: class“std::weak_ptr<_Ty>”需要有 dll 接口由 class“std::enable_shared_from_this<FMaterialInstance>”的客户端使用
+          with
+          [
+              _Ty=FMaterialInstance
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3068,16): message : 参见“std::weak_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FMaterialInstance
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(23,17): warning C4251: “FMaterialInstance::Material”: class“std::shared_ptr<FMaterial>”需要有 dll 接口由 class“FMaterialInstance”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Core.h(18,18): message : 参见“std::shared_ptr<FMaterial>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(24,29): warning C4251: “FMaterialInstance::Bools”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterialInstance”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(25,29): warning C4251: “FMaterialInstance::Vectors”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterialInstance”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(26,29): warning C4251: “FMaterialInstance::Matrices”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterialInstance”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(27,29): warning C4251: “FMaterialInstance::Samplers”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterialInstance”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(30,74): warning C4251: “std::enable_shared_from_this<FMaterial>::_Wptr”: class“std::weak_ptr<_Ty>”需要有 dll 接口由 class“std::enable_shared_from_this<FMaterial>”的客户端使用
+          with
+          [
+              _Ty=FMaterial
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(1502,23): message : 参见“std::weak_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FMaterial
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(62,14): warning C4251: “FMaterial::MaterialName”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(64,14): warning C4251: “FMaterial::CachePath”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(66,15): warning C4251: “FMaterial::RenderState”: struct“FRenderState”需要有 dll 接口由 class“FMaterial”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\RenderState.h(4,8): message : 参见“FRenderState”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(68,14): warning C4251: “FMaterial::VertShader”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(69,14): warning C4251: “FMaterial::FragShader”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(71,41): warning C4251: “FMaterial::Bools”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(72,41): warning C4251: “FMaterial::Vectors”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(73,41): warning C4251: “FMaterial::Matrices”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(74,41): warning C4251: “FMaterial::Samplers”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(76,31): warning C4251: “FMaterial::EquirectangularMapToCubemapShader”: class“std::shared_ptr<FMaterial>”需要有 dll 接口由 class“FMaterial”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Core.h(18,18): message : 参见“std::shared_ptr<FMaterial>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(77,31): warning C4251: “FMaterial::SkyBoxShader”: class“std::shared_ptr<FMaterial>”需要有 dll 接口由 class“FMaterial”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Core.h(18,18): message : 参见“std::shared_ptr<FMaterial>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(78,31): warning C4251: “FMaterial::StandardOpacityShader”: class“std::shared_ptr<FMaterial>”需要有 dll 接口由 class“FMaterial”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Core.h(18,18): message : 参见“std::shared_ptr<FMaterial>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(79,31): warning C4251: “FMaterial::StandardPostprocessShader”: class“std::shared_ptr<FMaterial>”需要有 dll 接口由 class“FMaterial”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Core.h(18,18): message : 参见“std::shared_ptr<FMaterial>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(80,31): warning C4251: “FMaterial::DrawDebugCubeShader”: class“std::shared_ptr<FMaterial>”需要有 dll 接口由 class“FMaterial”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Core.h(18,18): message : 参见“std::shared_ptr<FMaterial>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(16,21): warning C4251: “FBoneTransformTrack::positionTimestamps”: class“std::vector<float,std::allocator<float>>”需要有 dll 接口由 struct“FBoneTransformTrack”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(16,7): message : 参见“std::vector<float,std::allocator<float>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(17,21): warning C4251: “FBoneTransformTrack::rotationTimestamps”: class“std::vector<float,std::allocator<float>>”需要有 dll 接口由 struct“FBoneTransformTrack”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(16,7): message : 参见“std::vector<float,std::allocator<float>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(18,21): warning C4251: “FBoneTransformTrack::scaleTimestamps”: class“std::vector<float,std::allocator<float>>”需要有 dll 接口由 struct“FBoneTransformTrack”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(16,7): message : 参见“std::vector<float,std::allocator<float>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(20,25): warning C4251: “FBoneTransformTrack::positions”: class“std::vector<glm::vec3,std::allocator<glm::vec3>>”需要有 dll 接口由 struct“FBoneTransformTrack”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(20,7): message : 参见“std::vector<glm::vec3,std::allocator<glm::vec3>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(21,25): warning C4251: “FBoneTransformTrack::rotations”: class“std::vector<glm::quat,std::allocator<glm::quat>>”需要有 dll 接口由 struct“FBoneTransformTrack”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(21,7): message : 参见“std::vector<glm::quat,std::allocator<glm::quat>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(22,25): warning C4251: “FBoneTransformTrack::scales”: class“std::vector<glm::vec3,std::allocator<glm::vec3>>”需要有 dll 接口由 struct“FBoneTransformTrack”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(20,7): message : 参见“std::vector<glm::vec3,std::allocator<glm::vec3>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(25,76): warning C4251: “std::enable_shared_from_this<FAnimation>::_Wptr”: class“std::weak_ptr<_Ty>”需要有 dll 接口由 class“std::enable_shared_from_this<FAnimation>”的客户端使用
+          with
+          [
+              _Ty=FAnimation
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3068,16): message : 参见“std::weak_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FAnimation
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(44,14): warning C4251: “FAnimation::AnimationName”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FAnimation”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(47,55): warning C4251: “FAnimation::BoneTransforms”: class“std::unordered_map<std::string,FBoneTransformTrack,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,FBoneTransformTrack>>>”需要有 dll 接口由 class“FAnimation”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Animation.h(47,7): message : 参见“std::unordered_map<std::string,FBoneTransformTrack,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,FBoneTransformTrack>>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\ResourceManager.h(27,51): warning C4251: “FResourceManager::Textures”: class“std::unordered_map<std::string,std::shared_ptr<_Ty>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<_Ty>>>>”需要有 dll 接口由 class“FResourceManager”的客户端使用
+          with
+          [
+              _Ty=FTexture
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\ResourceManager.h(27,7): message : 参见“std::unordered_map<std::string,std::shared_ptr<_Ty>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<_Ty>>>>”的声明
+          with
+          [
+              _Ty=FTexture
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\ResourceManager.h(28,51): warning C4251: “FResourceManager::Materials”: class“std::unordered_map<std::string,std::shared_ptr<FMaterial>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<FMaterial>>>>”需要有 dll 接口由 class“FResourceManager”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\ResourceManager.h(28,7): message : 参见“std::unordered_map<std::string,std::shared_ptr<FMaterial>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<FMaterial>>>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\ResourceManager.h(29,51): warning C4251: “FResourceManager::Animations”: class“std::unordered_map<std::string,std::shared_ptr<_Ty>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<_Ty>>>>”需要有 dll 接口由 class“FResourceManager”的客户端使用
+          with
+          [
+              _Ty=FAnimation
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\ResourceManager.h(29,7): message : 参见“std::unordered_map<std::string,std::shared_ptr<_Ty>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<_Ty>>>>”的声明
+          with
+          [
+              _Ty=FAnimation
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Parser.h(14,29): warning C4251: “FShaderParser::Uniforms”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FShaderParser”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Parser.h(19,63): warning C4251: “FShaderParser::HeaderFiles”: class“std::unordered_map<std::string,FShaderParser,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,FShaderParser>>>”需要有 dll 接口由 class“FShaderParser”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Parser.h(19,21): message : 参见“std::unordered_map<std::string,FShaderParser,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,FShaderParser>>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.cpp(67,2): warning C4267: “=”: 从“size_t”转换到“uint8_t”，可能丢失数据
+  OpenGLInterface.cpp
+C:\Users\InputWindy\Desktop\SandBox\Flora\Resource.h(29,14): warning C4251: “IResource::RootPath”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“IResource”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Resource.h(30,14): warning C4251: “IResource::Directory”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“IResource”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Resource.h(31,14): warning C4251: “IResource::RelativePath”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“IResource”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Resource.h(32,14): warning C4251: “IResource::Extension”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“IResource”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Resource.h(33,14): warning C4251: “IResource::CachePath”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“IResource”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(30,14): warning C4251: “FImage::root_path”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 struct“FImage”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(31,14): warning C4251: “FImage::directory”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 struct“FImage”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(32,14): warning C4251: “FImage::relative_path”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 struct“FImage”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(33,14): warning C4251: “FImage::name”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 struct“FImage”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(34,14): warning C4251: “FImage::extension”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 struct“FImage”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(58,72): warning C4251: “std::enable_shared_from_this<FTexture>::_Wptr”: class“std::weak_ptr<_Ty>”需要有 dll 接口由 class“std::enable_shared_from_this<FTexture>”的客户端使用
+          with
+          [
+              _Ty=FTexture
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3068,16): message : 参见“std::weak_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FTexture
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(110,15): warning C4251: “FTexture::Name”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FTexture”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(130,30): warning C4251: “FTexture::White”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“FTexture”的客户端使用
+          with
+          [
+              _Ty=FTexture
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3060,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FTexture
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(131,30): warning C4251: “FTexture::Black”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“FTexture”的客户端使用
+          with
+          [
+              _Ty=FTexture
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3060,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FTexture
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Texture.h(132,30): warning C4251: “FTexture::Default”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“FTexture”的客户端使用
+          with
+          [
+              _Ty=FTexture
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3060,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FTexture
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(45,18): warning C4251: “FSamplerInfo::Texture”: class“std::shared_ptr<_Ty>”需要有 dll 接口由 class“FSamplerInfo”的客户端使用
+          with
+          [
+              _Ty=FTexture
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3060,16): message : 参见“std::shared_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FTexture
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(66,17): warning C4251: “FMatArray<TMat>::Data”: class“std::array<TMat,50>”需要有 dll 接口由 class“FMatArray<TMat>”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(66,2): message : 参见“std::array<TMat,50>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(67,2): message : 查看对正在编译的 类 模板 实例化“FMatArray<TMat>”的引用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(69,72): warning C4251: “std::enable_shared_from_this<FUniform>::_Wptr”: class“std::weak_ptr<_Ty>”需要有 dll 接口由 class“std::enable_shared_from_this<FUniform>”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3068,16): message : 参见“std::weak_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(142,26): warning C4002: 类函数宏的调用“assert”参数过多
+C:\Users\InputWindy\Desktop\SandBox\Flora\Uniform.h(163,11): warning C4251: “FUniform::UniformName”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FUniform”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(7,89): warning C4251: “std::enable_shared_from_this<FMaterialInstance>::_Wptr”: class“std::weak_ptr<_Ty>”需要有 dll 接口由 class“std::enable_shared_from_this<FMaterialInstance>”的客户端使用
+          with
+          [
+              _Ty=FMaterialInstance
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(3068,16): message : 参见“std::weak_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FMaterialInstance
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(23,17): warning C4251: “FMaterialInstance::Material”: class“std::shared_ptr<FMaterial>”需要有 dll 接口由 class“FMaterialInstance”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Core.h(18,18): message : 参见“std::shared_ptr<FMaterial>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(24,29): warning C4251: “FMaterialInstance::Bools”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterialInstance”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(25,29): warning C4251: “FMaterialInstance::Vectors”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterialInstance”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(26,29): warning C4251: “FMaterialInstance::Matrices”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterialInstance”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(27,29): warning C4251: “FMaterialInstance::Samplers”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterialInstance”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(30,74): warning C4251: “std::enable_shared_from_this<FMaterial>::_Wptr”: class“std::weak_ptr<_Ty>”需要有 dll 接口由 class“std::enable_shared_from_this<FMaterial>”的客户端使用
+          with
+          [
+              _Ty=FMaterial
+          ]
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\memory(1502,23): message : 参见“std::weak_ptr<_Ty>”的声明
+          with
+          [
+              _Ty=FMaterial
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(62,14): warning C4251: “FMaterial::MaterialName”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(64,14): warning C4251: “FMaterial::CachePath”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(66,15): warning C4251: “FMaterial::RenderState”: struct“FRenderState”需要有 dll 接口由 class“FMaterial”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\RenderState.h(4,8): message : 参见“FRenderState”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(68,14): warning C4251: “FMaterial::VertShader”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(69,14): warning C4251: “FMaterial::FragShader”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(71,41): warning C4251: “FMaterial::Bools”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(72,41): warning C4251: “FMaterial::Vectors”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(73,41): warning C4251: “FMaterial::Matrices”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(74,41): warning C4251: “FMaterial::Samplers”: class“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”需要有 dll 接口由 class“FMaterial”的客户端使用
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(14,14): message : 参见“std::vector<std::shared_ptr<_Ty>,std::allocator<std::shared_ptr<_Ty>>>”的声明
+          with
+          [
+              _Ty=FUniform
+          ]
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(76,31): warning C4251: “FMaterial::EquirectangularMapToCubemapShader”: class“std::shared_ptr<FMaterial>”需要有 dll 接口由 class“FMaterial”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Core.h(18,18): message : 参见“std::shared_ptr<FMaterial>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(77,31): warning C4251: “FMaterial::SkyBoxShader”: class“std::shared_ptr<FMaterial>”需要有 dll 接口由 class“FMaterial”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Core.h(18,18): message : 参见“std::shared_ptr<FMaterial>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(78,31): warning C4251: “FMaterial::StandardOpacityShader”: class“std::shared_ptr<FMaterial>”需要有 dll 接口由 class“FMaterial”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Core.h(18,18): message : 参见“std::shared_ptr<FMaterial>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(79,31): warning C4251: “FMaterial::StandardPostprocessShader”: class“std::shared_ptr<FMaterial>”需要有 dll 接口由 class“FMaterial”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Core.h(18,18): message : 参见“std::shared_ptr<FMaterial>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Material.h(80,31): warning C4251: “FMaterial::DrawDebugCubeShader”: class“std::shared_ptr<FMaterial>”需要有 dll 接口由 class“FMaterial”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Core.h(18,18): message : 参见“std::shared_ptr<FMaterial>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\Console.h(61,25): warning C4251: “FConsoleContext::MsgBuffer”: class“std::vector<FConsoleContext::FDebugMsg,std::allocator<FConsoleContext::FDebugMsg>>”需要有 dll 接口由 struct“FConsoleContext”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\Console.h(61,7): message : 参见“std::vector<FConsoleContext::FDebugMsg,std::allocator<FConsoleContext::FDebugMsg>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\ContentBrowser.h(15,25): warning C4251: “FContentBrowserContext::FTreeNode::Obj”: class“std::filesystem::path”需要有 dll 接口由 struct“FContentBrowserContext::FTreeNode”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\filesystem(616,11): message : 参见“std::filesystem::path”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\ContentBrowser.h(17,15): warning C4251: “FContentBrowserContext::FTreeNode::NodeName”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 struct“FContentBrowserContext::FTreeNode”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\ContentBrowser.h(23,40): warning C4251: “FContentBrowserContext::FTreeNode::Nodes”: class“std::vector<FContentBrowserContext::FTreeNode,std::allocator<FContentBrowserContext::FTreeNode>>”需要有 dll 接口由 struct“FContentBrowserContext::FTreeNode”的客户端使用
+C:\Users\InputWindy\Desktop\SandBox\Flora\ContentBrowser.h(23,22): message : 参见“std::vector<FContentBrowserContext::FTreeNode,std::allocator<FContentBrowserContext::FTreeNode>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\ContentBrowser.h(30,28): warning C4251: “FContentBrowserContext::RootPath”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 struct“FContentBrowserContext”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\ContentBrowser.h(31,28): warning C4251: “FContentBrowserContext::CurrentPath”: class“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”需要有 dll 接口由 struct“FContentBrowserContext”的客户端使用
+D:\VisualStudio\VC\Tools\MSVC\14.34.31933\include\xstring(5294,17): message : 参见“std::basic_string<char,std::char_traits<char>,std::allocator<char>>”的声明
+C:\Users\InputWindy\Desktop\SandBox\Flora\OpenGLInterface.cpp(425,58): warning C4267: “参数”: 从“size_t”转换到“GLsizei”，可能丢失数据
+C:\Users\InputWindy\Desktop\SandBox\Flora\OpenGLInterface.cpp(430,72): warning C4267: “参数”: 从“size_t”转换到“GLsizei”，可能丢失数据
+  正在生成代码...
+  Flora.vcxproj -> C:\Users\InputWindy\Desktop\SandBox\x64\Debug\Flora.dll

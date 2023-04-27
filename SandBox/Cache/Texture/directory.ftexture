@@ -1,0 +1,21 @@
+{
+	"Depth" : 0,
+	"Directory" : "/Icon",
+	"Extension" : ".png",
+	"Height" : 512,
+	"InternalFormat" : "RGBA",
+	"MagFilterMode" : "LINEAR",
+	"MaxMipLevel" : 0,
+	"MinFilterMode" : "LINEAR",
+	"MinMipLevel" : 0,
+	"Name" : "directory",
+	"RelativePath" : "/Icon/directory.png",
+	"RootPath" : "C:\\Users\\InputWindy\\Desktop\\SandBox\\SandBox",
+	"TextureTarget" : "2D",
+	"Width" : 512,
+	"WrapModeR" : "REPEAT",
+	"WrapModeS" : "REPEAT",
+	"WrapModeT" : "REPEAT",
+	"bFlip" : true,
+	"bHdr" : false
+}

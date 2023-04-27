@@ -9,6 +9,8 @@ public:
 	FOpenGLInterface();
 	virtual ~FOpenGLInterface() = default;
 public:
+	virtual bool InitResources() final;
+public:
 	/// <summary>
 	/// apply for an empty texture
 	/// </summary>
@@ -20,7 +22,7 @@ public:
 		IN ETextureTarget,	/*texture type*/								
 		IN EInternalFormat,	/*texture internal format(default rgba32f)*/	 
 		IN FTextureInfo		/*texture infos*/								
-	)override;
+	)final;
 	/// <summary>
 	/// apply for a texture with raw data from disk
 	/// </summary>
@@ -28,7 +30,7 @@ public:
 		IN FImage,							 /*img data loaded from disk*/
 		IN bool mutisample = false,			 /*enable msaa*/
 		IN FTextureInfo info = FTextureInfo()/*texture infos*/
-	)override;
+	)final;
 	/// <summary>
 	/// apply for a texture with img path
 	/// </summary>
@@ -39,15 +41,20 @@ public:
 		IN bool b_flip = false,				 /*flip up and down*/
 		IN bool mutisample = false,			 /*enable msaa*/
 		IN FTextureInfo info = FTextureInfo()/*texture infos*/
-	)override;
+	)final;
 	/// <summary>
 	/// apply for a new material
 	/// </summary>
 	virtual Ref<FMaterial> GenerateMaterial(
-		IN const char* Name = "",/*material name*/
+		IN const char* Name,/*material name*/
 		IN const char* VertexShader = "",/*vshader(default empty)*/
 		IN const char* FragmentShader = ""/*fshader(default empty)*/
-	)override;
+	)final;
+
+	/// <summary>
+	/// apply for a new material(empty)
+	/// </summary>
+	virtual Ref<FMaterial> GenerateMaterial()final;
 public:
 	virtual void SetBool(const char*, uint32_t, const bool&)override;
 	virtual void SetInt(const char*, uint32_t, const int&)override;

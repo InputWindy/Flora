@@ -14,6 +14,8 @@ Ref<FOpenGLTexture> FOpenGLTexture::Generate(const char* Name, uint16_t W, uint1
 	Res->InternalFormat = InForm;
 	Res->ShortCut = 0;
 
+	Res->CachePath = "/Cache/Texture/" + Res->Name + ".ftexture";
+
 	GLenum texture_type = FOpenGLInterface::TextureTarget[Type];
 
 	glCreateTextures(texture_type, 1, &Res->Texture);
@@ -195,7 +197,6 @@ void FOpenGLTexture::Reload()
 	Texture = Tmp->Texture;
 	ShortCut = Tmp->ShortCut;
 
-	CachePath	 = "/Cache/Texture/" + img.name + ".ftexture";
 
 	Tmp->Texture = 0;
 	Tmp->ShortCut = 0;

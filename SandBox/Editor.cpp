@@ -1,4 +1,5 @@
 #include "Editor.h"
+#include "Flora.h"
 #include "OpenGLInterface.h"
 #include <filesystem>
 #include <direct.h>
@@ -11,10 +12,10 @@
 
 void EditorLayer::OnAwake()
 {
-	PUSH_ERROR_MSG("Temp", "Test num :%d %d %f",-200,-100,33.8f);
+	/*PUSH_ERROR_MSG("Temp", "Test num :%d %d %f",-200,-100,33.8f);
 	PUSH_TRACE_MSG("Temp", "d");
 	PUSH_INFO_MSG("Temp", "d");
-	PUSH_WARN_MSG("Temp", "d");
+	PUSH_WARN_MSG("Temp", "d");*/
 }
 
 void EditorLayer::OnUpdate()
@@ -288,32 +289,42 @@ void EditorLayer::EditorSettings()
 void PayloadFromContentBrowser(const ImGuiPayload* payload, void* userdata)
 {
 	FContentBrowserContext& Content = FContentBrowserContext::Get();
+	FResourceManager& ResourceManager = FResourceManager::Get();
+
+	std::filesystem::path& path = *((std::filesystem::path*)payload->Data);
 
 	//load map
 
 	//load model & skeleton & animation
 
+
 	//load audio
 
 	//load material
-
-	//load test texture
-	FResourceManager& ResourceManager = FResourceManager::Get();
-
-	std::filesystem::path& path = *((std::filesystem::path*)payload->Data);
-
-	Ref<FTexture> Tex = ResourceManager.FindObject<FTexture>(path.stem().generic_string());
-	if (!Tex)
+	Ref<FMaterial> Mat = ResourceManager.FindObject<FMaterial>(path.stem().generic_string());
+	if (!Mat)
 	{
 		string filepath = path.generic_string().c_str();
 		//filepath = filepath.substr(Content.RootPath.size(), filepath.size() - 1);
-		Tex = FApplication::GetRHI()->GenerateTexture();
-		Tex->LoadFromFile(filepath);
+		Mat = FApplication::GetRHI()->GenerateMaterial();
+		Mat->LoadFromFile(filepath);
 		//Tex->SaveToFile(Content.RootPath + "/Cache/Texture/" + Tex->GetName() + ".ftexture");
-		Tex->Register();
+		Mat->Register();
 	}
 
-	if (Tex)	*(uint32_t*)userdata = Tex->GetHandle();
+	////load test texture
+	//Ref<FTexture> Tex = ResourceManager.FindObject<FTexture>(path.stem().generic_string());
+	//if (!Tex)
+	//{
+	//	string filepath = path.generic_string().c_str();
+	//	//filepath = filepath.substr(Content.RootPath.size(), filepath.size() - 1);
+	//	Tex = FApplication::GetRHI()->GenerateTexture();
+	//	Tex->LoadFromFile(filepath);
+	//	//Tex->SaveToFile(Content.RootPath + "/Cache/Texture/" + Tex->GetName() + ".ftexture");
+	//	Tex->Register();
+	//}
+
+	//if (Tex)	*(uint32_t*)userdata = Tex->GetHandle();
 	
 }
 
@@ -376,7 +387,9 @@ void EditorLayer::ResourceViewer()
 		{
 			FResourceManager& Manager = FResourceManager::Get();
 			const auto& Textures = Manager.GetTextures();
-			if (FUI::CollapsingHeader("Textures"))
+			const auto& Materials = Manager.GetMaterials();
+			const auto& Animations = Manager.GetAnimations();
+			if (FUI::CollapsingHeader("Texture"))
 			{
 				FUI::BeginGroup();
 				for (auto& Texture : Textures)
@@ -417,6 +430,41 @@ void EditorLayer::ResourceViewer()
 							FUI::LabelText("Cache Path", Texture.second->GetCachePath().c_str());
 						}
 
+						FUI::TreePop();
+					}
+				}
+				FUI::EndGroup();
+			}
+		
+			if (FUI::CollapsingHeader("Material"))
+			{
+				FUI::BeginGroup();
+				for (auto& Material : Materials)
+				{
+					if (FUI::TreeNode(Material.second->GetName().c_str()))
+					{
+						FUI::TreePop();
+					}
+				}
+				FUI::EndGroup();
+			}
+
+			if (FUI::CollapsingHeader("Animation"))
+			{
+				FUI::BeginGroup();
+				for (auto& Animation : Animations)
+				{
+					if (FUI::TreeNode(Animation.second->GetName().c_str()))
+					{
+						FUI::LabelText("Duration", "%f", Animation.second->GetDuration());
+						FUI::LabelText("Ticks Per Second", "%f", Animation.second->GetTicksPerSecond());
+						auto& Bones = Animation.second->GetBoneTransforms();
+						FUI::Separator();
+						for (auto& Bone : Bones)
+						{
+							FUI::LabelText("Bone", Bone.first.c_str());
+						}
+						FUI::Separator();
 						FUI::TreePop();
 					}
 				}

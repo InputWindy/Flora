@@ -2,13 +2,14 @@
 #include "Core.h"
 #include "Texture.h"
 #include "Material.h"
+#include "Animation.h"
 #include <unordered_map>
 class FLORA_API FResourceManager
 {
 protected:
 	FResourceManager() = default;
 public:
-	virtual ~FResourceManager() = default;
+	virtual ~FResourceManager();
 	static inline FResourceManager& Get() { static FResourceManager msManager; return msManager; };
 
 	template<typename T>
@@ -17,11 +18,15 @@ public:
 	template<typename T>
 	Ref<T> FindObject(const string& Hash);
 
+	void Save();
+public:
 	inline const auto& GetTextures()	const { return Textures; };
 	inline const auto& GetMaterials()	const { return Materials; };
+	inline const auto& GetAnimations()	const { return Animations; };
 private:
 	std::unordered_map<std::string, Ref<FTexture>>   Textures;
 	std::unordered_map<std::string, Ref<FMaterial>>  Materials;
+	std::unordered_map<std::string, Ref<FAnimation>> Animations;
 };
 
 //template<>

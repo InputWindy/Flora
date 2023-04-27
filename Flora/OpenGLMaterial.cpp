@@ -5,6 +5,10 @@ FOpenGLMaterial::~FOpenGLMaterial()
 {
 	glDeleteProgram(Handle);
 }
+Ref<FOpenGLMaterial> FOpenGLMaterial::Generate()
+{
+	return make_shared<FOpenGLMaterial>();
+}
 Ref<FOpenGLMaterial> FOpenGLMaterial::Generate(const char* Name, const char* VShader, const char* FShader)
 {
     if (!Name)return nullptr;
@@ -16,12 +20,13 @@ Ref<FOpenGLMaterial> FOpenGLMaterial::Generate(const char* Name, const char* VSh
 	Res->VertShader = VShader;
 	Res->FragShader = FShader;
 
+	Res->CachePath = "/Cache/Material/" + Res->MaterialName + ".fmaterial";
+
 	std::vector<uint32_t> ShaderHandles;
 	{
 		uint32_t ShaderHandle = glCreateShader(GL_VERTEX_SHADER);
 		const char* code = Res->VertShader.c_str();
 		glShaderSource(ShaderHandle, 1, &code, NULL);
-		glCompileShader(ShaderHandle);
 
 		if (!Rhi->CompileShader(ShaderHandle))
 		{
@@ -36,7 +41,6 @@ Ref<FOpenGLMaterial> FOpenGLMaterial::Generate(const char* Name, const char* VSh
 		uint32_t ShaderHandle = glCreateShader(GL_FRAGMENT_SHADER);
 		const char* code = Res->FragShader.c_str();
 		glShaderSource(ShaderHandle, 1, &code, NULL);
-		glCompileShader(ShaderHandle);
 
 		if (!Rhi->CompileShader(ShaderHandle))
 		{
@@ -48,18 +52,15 @@ Ref<FOpenGLMaterial> FOpenGLMaterial::Generate(const char* Name, const char* VSh
 		}
 	};
 
-	glDeleteProgram(Res->Handle);
 	Res->Handle = glCreateProgram();
 	
 	for (auto id : ShaderHandles)glAttachShader(Res->Handle, id);
 	
-	bool bFlag = Rhi->LinkShader(Res->Handle);
-
+	if (Rhi->LinkShader(Res->Handle))Res->GenerateUniforms(); 
+	else Res = nullptr;
+	
 	for (auto id : ShaderHandles)glDeleteShader(id);
-
-	Res->GenerateUniforms();
-
-	return bFlag ? Res : nullptr;
+	return Res;
 }
 
 uint32_t FOpenGLMaterial::GetHandle()const
@@ -113,6 +114,4 @@ void FOpenGLMaterial::Reload()
 	for (auto id : ShaderHandles)glDeleteShader(id);
 
 	GenerateUniforms();
-
-	CachePath = "/Cache/Material/" + MaterialName + ".fmaterial";
 }

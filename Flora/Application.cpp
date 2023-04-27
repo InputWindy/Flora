@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "ResourceManager.h"
 #include <glad.h>
 #include <glfw3.h>
 #include <imgui.h>
@@ -49,6 +50,8 @@ FApplication::~FApplication()
 		delete Layer;
 	}
 
+	FResourceManager::Get().Save();
+
 	delete GRhi;
 	GRhi = nullptr;
 
@@ -65,6 +68,7 @@ void FApplication::CreateContext(FApplication* app)
 {
 	GEngine = app;
 	GEngine->LoadProjectSettings();
+	GEngine->LoadEngineResources();
 }
 
 inline FApplication* FApplication::GetApp()
@@ -151,7 +155,12 @@ void FApplication::LoadProjectSettings()
 	glfwSetWindowTitle((GLFWwindow*)WindowHandle, AppName.c_str());
 	glfwSetWindowSize((GLFWwindow*)WindowHandle,Width,Height);
 	GRhi = FRenderCommand::Create(GEngine->RHIType);
-};
+}
+void FApplication::LoadEngineResources()
+{
+	GRhi->InitResources();
+}
+;
 
 #include <windows.h>
 BOOL APIENTRY DllMain(HMODULE hModule,

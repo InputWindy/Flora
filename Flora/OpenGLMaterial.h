@@ -6,7 +6,7 @@ public:
 	FOpenGLMaterial()= default;
 public:
 	virtual ~FOpenGLMaterial();
-
+	static Ref<FOpenGLMaterial> Generate();
 	static Ref<FOpenGLMaterial> Generate(const char*, const char* = "", const char* = "");
 public:
 	virtual uint32_t GetHandle()const final;

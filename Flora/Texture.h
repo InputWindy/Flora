@@ -57,10 +57,16 @@ struct FLORA_API FTextureInfo
 //.ftexture
 class FLORA_API FTexture :public std::enable_shared_from_this<FTexture>,public ISerialization,public IResource
 {
+	friend class FOpenGLInterface;
 public:
 	static Ref<FTexture> Generate(const char*, uint16_t, uint16_t, uint16_t, ETextureTarget, EInternalFormat, FTextureInfo);
 	static Ref<FTexture> Generate(FImage, bool bMultisample = false, FTextureInfo TexInfo = FTextureInfo());
 	static Ref<FTexture> Generate(uint32_t, uint32_t);
+
+	static inline Ref<FTexture> GetWhite()   { return White; };
+	static inline Ref<FTexture> GetBlack()   { return Black; };
+	static inline Ref<FTexture> GetDefault() { return Default; };
+
 protected:
 	FTexture();
 	FTexture(const FTexture&) = default;
@@ -110,26 +116,18 @@ protected:
 
 	ETextureTarget     TextureTarget = ETextureTarget_2D;
 protected:
-	std::string RootPath;
-	std::string Directory;
-	std::string RelativePath;
-	std::string Extension;
-	std::string CachePath;
-
 	bool bHdr  = false;
 	bool bFlip = false;
 	bool bMutisample = false;
 public:
-	inline std::string GetRootPath()	const { return RootPath; };
-	inline std::string GetDirectory()	const { return Directory; };
-	inline std::string GetRelativePath()const { return RelativePath; };
-	inline std::string GetExtension()	const { return Extension; };
-	inline std::string GetCachePath()	const { return CachePath; };
-
 	inline bool IsHdr()					const { return bHdr; };
 	inline bool IsFlip()				const { return bFlip; };
 	inline bool IsLoadedFromFile()		const { return RelativePath != ""; };
 protected:
 	FTextureInfo Info;
 	EInternalFormat InternalFormat = EInternalFormat_RGBA32F;
+protected:
+	static inline Ref<FTexture> White   = nullptr;
+	static inline Ref<FTexture> Black   = nullptr;
+	static inline Ref<FTexture> Default = nullptr;
 };

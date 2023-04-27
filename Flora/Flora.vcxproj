@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="ContentBrowser.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="OpenGLInterface.cpp" />
     <ClCompile Include="OpenGLMaterial.cpp" />
     <ClCompile Include="OpenGLTexture.cpp" />
+    <ClCompile Include="Parser.cpp" />
     <ClCompile Include="RenderCommand.cpp" />
     <ClCompile Include="RenderState.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -171,6 +173,7 @@
     <ClCompile Include="Viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="ContentBrowser.h" />
@@ -181,6 +184,7 @@
     <ClInclude Include="OpenGLInterface.h" />
     <ClInclude Include="OpenGLMaterial.h" />
     <ClInclude Include="OpenGLTexture.h" />
+    <ClInclude Include="Parser.h" />
     <ClInclude Include="RenderCommand.h" />
     <ClInclude Include="RenderState.h" />
     <ClInclude Include="Resource.h" />

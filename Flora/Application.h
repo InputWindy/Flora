@@ -25,7 +25,7 @@ public:
 	virtual ~FApplication();
 
 	static inline void CreateContext(FApplication* app);
-	static inline FApplication* GetApp();
+	static inline FApplication*   GetApp();
 	static inline FRenderCommand* GetRHI();
 public:
 	//unvirtual
@@ -56,5 +56,6 @@ protected:
 	virtual void InitProjectSettings() = 0;
 private:
 	void LoadProjectSettings();
+	void LoadEngineResources();
 };
 

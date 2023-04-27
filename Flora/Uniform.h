@@ -24,7 +24,11 @@ enum class EUniformType :unsigned int
 //constructed by tiny parser
 class FLORA_API FSamplerInfo
 {
+	friend class FMaterial;
+	friend class FUniform;
+	friend class FShaderParser;
 public:
+	FSamplerInfo() = default;
 	FSamplerInfo(uint8_t slot, ETextureTarget target, Ref<FTexture> texture = nullptr):
 		Slot(slot),Target(target),Texture(texture){};
 	~FSamplerInfo() = default;
@@ -62,7 +66,7 @@ private:
 	array<TMat,50> Data;
 };
 
-class FLORA_API FUniform :public std::enable_shared_from_this<FUniform>
+class FLORA_API FUniform :public std::enable_shared_from_this<FUniform>,public ISerialization
 {
 protected:
 	FUniform() = default;
@@ -133,7 +137,8 @@ public:
 		case EUniformType::MAT2_ARRAY:if (std::is_same_v<FMatArray<mat2>, T>)Res = (T*)Buf; break;
 		case EUniformType::MAT3_ARRAY:if (std::is_same_v<FMatArray<mat3>, T>)Res = (T*)Buf; break;
 		case EUniformType::MAT4_ARRAY:if (std::is_same_v<FMatArray<mat4>, T>)Res = (T*)Buf; break;
-		case EUniformType::SAMPLER:   if (std::is_same_v<FSamplerInfo, T>)Res = (T*)Buf; break;
+		case EUniformType::SAMPLER:   
+			if (std::is_same_v<FSamplerInfo, T>)Res = (T*)Buf; break;
 		case EUniformType::MAX:assert(0, "EUniformType::MAX");
 			break;
 		default:
@@ -148,8 +153,12 @@ public:
 	//move copy
 	void MoveTemp(Ref<FUniform>& InOut);
 public:
-	inline string		GetName()const { return UniformName; };
-	inline EUniformType GetType()const { return Type; };
+	virtual bool Parse(IN FJson&)final;
+	virtual bool Serialize(OUT FJson&)final;
+public:
+	inline string		GetName()const   { return UniformName; };
+	inline EUniformType GetType()const   { return Type; };
+	inline bool			IsDisplay()const { return bDisplay; };
 protected:
 	string   UniformName;
 	EUniformType Type = EUniformType::MAX;
