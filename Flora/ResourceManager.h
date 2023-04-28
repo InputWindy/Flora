@@ -3,6 +3,7 @@
 #include "Texture.h"
 #include "Material.h"
 #include "Animation.h"
+#include "Skeleton.h"
 #include <unordered_map>
 class FLORA_API FResourceManager
 {
@@ -18,15 +19,20 @@ public:
 	template<typename T>
 	Ref<T> FindObject(const string& Hash);
 
+	template<typename T>
+	Ref<T> RemoveObject(const string& Hash);
+
 	void Save();
 public:
 	inline const auto& GetTextures()	const { return Textures; };
 	inline const auto& GetMaterials()	const { return Materials; };
 	inline const auto& GetAnimations()	const { return Animations; };
+	inline const auto& GetSkeletons()	const { return Skeletons; };
 private:
 	std::unordered_map<std::string, Ref<FTexture>>   Textures;
 	std::unordered_map<std::string, Ref<FMaterial>>  Materials;
 	std::unordered_map<std::string, Ref<FAnimation>> Animations;
+	std::unordered_map<std::string, Ref<FSkeleton>>  Skeletons;
 };
 
 //template<>

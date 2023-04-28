@@ -1,9 +1,6 @@
 {
-	"Directory" : "",
-	"Extension" : "",
 	"FragShader" : "#version 430 core\nin vec3 TexCoords;\n\nuniform samplerCube Skybox;\n\nvoid main()\n{\n\tgl_FragColor = texture(Skybox, TexCoords);\n}",
 	"MaterialName" : "SkyBox",
-	"RelativePath" : "",
 	"RenderState" : 
 	{
 		"BlendTest" : 
@@ -35,6 +32,5 @@
 			"StencilRef" : 1
 		}
 	},
-	"RootPath" : "",
 	"VertShader" : "#version 430 core\nlayout (location = 0) in vec3 aPosition;\n\nout vec3 TexCoords;\n\nuniform mat4 Projection;\nuniform mat4 View;\n\nvoid main()\n{\n\tTexCoords = aPosition;\n\tvec4 pos = Projection * mat4(mat3(View)) * vec4(aPosition, 1.0);\n\tgl_Position = pos.xyww;\n}"
 }

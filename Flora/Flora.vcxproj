@@ -167,6 +167,7 @@
     <ClCompile Include="RenderState.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Serialization.cpp" />
+    <ClCompile Include="Skeleton.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Uniform.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Serialization.h" />
+    <ClInclude Include="Skeleton.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Type.h" />
     <ClInclude Include="UI.h" />

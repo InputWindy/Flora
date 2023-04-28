@@ -4,14 +4,18 @@
 #include "Type.h"
 #include "Serialization.h"
 #include "Resource.h"
+#include <glm/glm.hpp>
 
 using namespace std;
+using namespace glm;
 
-struct FLORA_API FImage
+struct FLORA_API FImage:public std::enable_shared_from_this<FImage>,public ISerialization
 {
+	friend class FTexture;
 	friend class FOpenGLTexture;
 public:
-	FImage(const std::string& root, const std::string& relative);
+	FImage() = default;
+	FImage(const std::string& root, const std::string& relative, bool b_hdr = false, bool b_flip = false);
 	~FImage();
 
 	void Load(bool b_hdr = false, bool b_flip = false);
@@ -22,6 +26,9 @@ public:
 	inline std::string GetRelativePath()const { return relative_path; };
 	inline std::string GetName()const { return name; };
 	inline std::string GetExtension()const { return extension; };
+public:
+	virtual bool Parse(IN FJson&) final;
+	virtual bool Serialize(OUT FJson&) final;
 private:
 	//=====================//
 	// ¢Ùfull_path = root_path + directory + name + extension
@@ -43,41 +50,33 @@ private:
 
 struct FLORA_API FTextureInfo
 {
-	uint8_t MaxMipLevel = 0;		//max mip level
-	uint8_t MinMipLevel = 0;		//max mip level
+	//=============================//
+	//		Inner Data Desc        //
+	//=============================//
+	uint8_t MaxMipLevel = 0;
+	uint8_t MinMipLevel = 0;
 
-	EWrapMode WrapModeR = EWrapMode_REPEAT;	//sample method when uv is out of range
-	EWrapMode WrapModeS = EWrapMode_REPEAT;	//sample method when uv is out of range
-	EWrapMode WrapModeT = EWrapMode_REPEAT;	//sample method when uv is out of range
+	EWrapMode WrapModeR = EWrapMode_REPEAT;
+	EWrapMode WrapModeS = EWrapMode_REPEAT;
+	EWrapMode WrapModeT = EWrapMode_REPEAT;
 
 	EFilterMode MinFilterMode = EFilterMode_LINEAR;
 	EFilterMode MagFilterMode = EFilterMode_LINEAR;
+
+	vec4 BorderColor = { 0,0,0,0 };
 };
 
 //.ftexture
 class FLORA_API FTexture :public std::enable_shared_from_this<FTexture>,public ISerialization,public IResource
 {
-	friend class FOpenGLInterface;
+protected:
+	FTexture();
 public:
-	static Ref<FTexture> Generate(const char*, uint16_t, uint16_t, uint16_t, ETextureTarget, EInternalFormat, FTextureInfo);
-	static Ref<FTexture> Generate(FImage, bool bMultisample = false, FTextureInfo TexInfo = FTextureInfo());
-	static Ref<FTexture> Generate(uint32_t, uint32_t);
+	virtual ~FTexture() = default;
 
 	static inline Ref<FTexture> GetWhite()   { return White; };
 	static inline Ref<FTexture> GetBlack()   { return Black; };
 	static inline Ref<FTexture> GetDefault() { return Default; };
-
-protected:
-	FTexture();
-	FTexture(const FTexture&) = default;
-	FTexture(FTexture&&) noexcept = default;
-
-	virtual void Reload() = 0;
-public:
-	/// <summary>
-	/// release GPU resource
-	/// </summary>
-	virtual ~FTexture() = default;
 public:
 	//=======================//
 	//		get	& set		 //
@@ -87,45 +86,68 @@ public:
 	inline int				GetHeight()			 const { return Height; };
 	inline int				GetDepth()			 const { return Depth; };
 	inline ETextureTarget	GetTextureType()	 const { return TextureTarget; };
-
 	inline EInternalFormat	GetInternalFormat()	 const { return InternalFormat; };
-	inline FTextureInfo		GetTextureInfo()	 const { return Info; };
-public:
-	virtual uint32_t		GetHandle()			 const = 0;
-	virtual uint32_t		GetShortCut()		 const = 0;
 
-	virtual void			Update(FTextureInfo) = 0;
+	//=======================//
+	//		Texture Info	 //
+	//=======================//
+	inline uint8_t			GetMinMipLevel()const { return Info.MinMipLevel; };
+	inline uint8_t			GetMaxMipLevel()const { return Info.MaxMipLevel; };
 
-	virtual void			SetData(FImage) = 0;
-	virtual void			SetData(ETextureTarget, FImage) = 0;
+	inline EWrapMode        GetWrapModeR()const { return Info.WrapModeR; };
+	inline EWrapMode        GetWrapModeS()const { return Info.WrapModeS; };
+	inline EWrapMode        GetWrapModeT()const { return Info.WrapModeT; };
+
+	inline EFilterMode      GetMinFilterMode()const { return Info.MinFilterMode; };
+	inline EFilterMode      GetMagFilterMode()const { return Info.MagFilterMode; };
+
+	inline vec4				GetBorderColor()const { return Info.BorderColor; };
+
+	inline void	SetMinMipLevel(uint8_t level) { Info.MinMipLevel = level; };
+	inline void	SetMaxMipLevel(uint8_t level) { Info.MaxMipLevel = level; };
+						
+	inline void SetWrapModeR(EWrapMode mode) { Info.WrapModeR = mode; };
+	inline void SetWrapModeS(EWrapMode mode) { Info.WrapModeS = mode; };
+	inline void SetWrapModeT(EWrapMode mode) { Info.WrapModeT = mode; };
+							
+	inline void SetMinFilterMode(EFilterMode mode) { Info.MinFilterMode = mode; };
+	inline void SetMagFilterMode(EFilterMode mode) { Info.MagFilterMode = mode; };
+
+	inline void	SetBorderColor(vec4 color) { Info.BorderColor = color; };
+
+	inline void Rename(const string& name);
 public:
-	virtual bool Parse(IN FJson&)final;
-	virtual bool Serialize(OUT FJson&) final;
+	inline bool IsLoaded()const { return Image != nullptr; };
+public:
+	virtual uint32_t GetHandle()	const = 0;
+	virtual uint32_t GetShortCut()	const = 0;
+
+	virtual void Update() = 0;
+	virtual void SetImageData(Ref<FImage> img) = 0;
+
+	//cube map can not be serialized and displayed in the editor now ( but it work )
+	[[deprecated]] virtual void SetCubeImageData(Ref<FImage> img, ETextureTarget target = ETextureTarget_MAX) = 0;
+public:
+	virtual bool Parse(IN FJson&)		final;
+	virtual bool Serialize(OUT FJson&)	final;
 
 	virtual void Register()final;
 protected:
-	//========================================//
-	//		general field (don't change)      //
-	//========================================//
 	std::string  Name = "";
 
-	int			 Width = 0;
+	int			 Width  = 0;
 	int			 Height = 0;
 
-	int			 Depth = 0;//only for texture 3D
+	int			 Depth  = 0;
 
-	ETextureTarget     TextureTarget = ETextureTarget_2D;
-protected:
-	bool bHdr  = false;
-	bool bFlip = false;
-	bool bMutisample = false;
-public:
-	inline bool IsHdr()					const { return bHdr; };
-	inline bool IsFlip()				const { return bFlip; };
-	inline bool IsLoadedFromFile()		const { return RelativePath != ""; };
-protected:
-	FTextureInfo Info;
+	ETextureTarget	TextureTarget  = ETextureTarget_2D;
 	EInternalFormat InternalFormat = EInternalFormat_RGBA32F;
+
+	FTextureInfo Info;
+
+	uint32_t MultisampleNum = 4;
+protected:
+	Ref<FImage> Image;
 protected:
 	static inline Ref<FTexture> White   = nullptr;
 	static inline Ref<FTexture> Black   = nullptr;

@@ -3,22 +3,30 @@
 class FLORA_API FOpenGLTexture :public FTexture
 {
 public:
-	FOpenGLTexture() = default;
-	static Ref<FOpenGLTexture> Generate(const char*, uint16_t, uint16_t, uint16_t, ETextureTarget, EInternalFormat, FTextureInfo);
-	static Ref<FOpenGLTexture> Generate(FImage, bool bMultisample = false, FTextureInfo TexInfo = FTextureInfo());
-	static Ref<FOpenGLTexture> Generate(uint32_t, uint32_t);
-
+	/// <summary>
+	/// generate an empty texture
+	/// </summary>
+	FOpenGLTexture(
+		IN const char*,		/*Name*/
+		IN uint16_t,		/*Width*/
+		IN uint16_t,		/*Height*/
+		IN uint16_t,		/*Depth*/
+		IN ETextureTarget,	/*Target*/
+		IN EInternalFormat, /*Internal*/
+		IN FTextureInfo Info = FTextureInfo(),/*Texture Params*/
+		IN uint32_t = 4 /*Samples*/
+	);
 	virtual ~FOpenGLTexture();
 
-	virtual uint32_t		GetHandle()			 const override;
-	virtual uint32_t		GetShortCut()		 const override;
+public:
+	virtual uint32_t GetHandle()	const final;
+	virtual uint32_t GetShortCut()	const final;
 
-	virtual void			Update(FTextureInfo) override;
-	
-	virtual void			SetData(FImage) override;
-	virtual void			SetData(ETextureTarget, FImage) override;
+	virtual void Update() final;
+	virtual void SetImageData(Ref<FImage> img) final;
 
-	virtual void			Reload()override;
+	//cube map can not be serialized and displayed in the editor now ( but it work )
+	[[deprecated]] virtual void SetCubeImageData(Ref<FImage> img, ETextureTarget target = ETextureTarget_MAX) final;
 public:
 	uint32_t Texture  = 0;
 	uint32_t ShortCut = 0;

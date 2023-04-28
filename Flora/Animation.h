@@ -29,7 +29,8 @@ protected:
 	void Reload();
 public:
 	virtual  ~FAnimation() = default;
-	static Ref<FAnimation> Generate(const aiAnimation* anim);
+	static Ref<FAnimation> Generate();
+	static Ref<FAnimation> Generate(const char* name, const aiAnimation* anim);
 
 	inline std::string GetName()const { return AnimationName; };
 	inline float       GetDuration()const { return Duration; };
@@ -45,5 +46,7 @@ protected:
 	float       Duration		= 0.0f;/*seconds*/
 	float       TicksPerSecond	= 1.0f;												
 	std::unordered_map<std::string, FBoneTransformTrack> BoneTransforms;
+private:
+	static inline uint32_t DefaultAnimationId = 0;
 };
 

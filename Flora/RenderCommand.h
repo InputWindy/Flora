@@ -23,35 +23,17 @@ public:
 	virtual bool InitResources() = 0;
 public:
 	/// <summary>
-	/// apply for an empty texture
+	/// generate an empty texture
 	/// </summary>
 	virtual Ref<FTexture> GenerateTexture(
-		IN const char* = "",		/*texture name*/
-		IN uint16_t = 0,			/*texture width*/
-		IN uint16_t = 0,			/*texture height*/
-		IN uint16_t = 0,			/*texture depth(for 3D texture)*/
-		IN ETextureTarget = ETextureTarget_2D,			/*texture type*/
-		IN EInternalFormat = EInternalFormat_RGBA32F,	/*texture internal format(default rgba32f)*/
-		IN FTextureInfo = FTextureInfo()				/*texture infos*/
-	) = 0;
-	/// <summary>
-	/// apply for a texture with raw data from disk
-	/// </summary>
-	virtual Ref<FTexture> GenerateTexture(
-		IN FImage,							 /*img data loaded from disk*/
-		IN bool mutisample = false,			 /*enable msaa*/
-		IN FTextureInfo info = FTextureInfo()/*texture infos*/
-	) = 0;
-	/// <summary>
-	/// apply for a texture with img path
-	/// </summary>
-	virtual Ref<FTexture> GenerateTexture(
-		IN const std::string& root,			 /*asset root path*/
-		IN const std::string& relative,		 /*path*/
-		IN bool b_hdr = false,				 /*loaded as float raw data*/
-		IN bool b_flip = false,				 /*flip up and down*/
-		IN bool mutisample = false,			 /*enable msaa*/
-		IN FTextureInfo info = FTextureInfo()/*texture infos*/
+		IN const char*,		/*Name*/
+		IN uint16_t,		/*Width*/
+		IN uint16_t,		/*Height*/
+		IN uint16_t,		/*Depth*/
+		IN ETextureTarget,	/*Target*/
+		IN EInternalFormat, /*Internal*/
+		IN FTextureInfo Info = FTextureInfo(),/*Texture Params*/
+		IN uint32_t = 4 /*Samples*/
 	) = 0;
 
 	/// <summary>
@@ -113,6 +95,7 @@ public:
 	virtual const char* TextureTargetToString(uint32_t) = 0;
 	virtual const char* WrapModeToString(uint32_t) = 0;
 	virtual const char* FilterModeToString(uint32_t) = 0;
+	virtual const char* FormatToString(uint32_t) =0;
 	virtual const char* InternalFormatToString(uint32_t) = 0;
 public:
 	virtual uint32_t StringToCompareMethod(const char*) = 0;
@@ -125,6 +108,7 @@ public:
 	virtual uint32_t StringToTextureTarget(const char*) = 0;
 	virtual uint32_t StringToWrapMode(const char*) = 0;
 	virtual uint32_t StringToFilterMode(const char*) = 0;
+	virtual uint32_t StringToFormat(const char*) = 0;
 	virtual uint32_t StringToInternalFormat(const char*) = 0;
 };
 

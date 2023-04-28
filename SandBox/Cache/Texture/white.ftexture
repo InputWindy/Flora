@@ -1,21 +1,28 @@
 {
 	"Depth" : 0,
-	"Directory" : "/Image",
-	"Extension" : ".jpg",
 	"Height" : 612,
-	"InternalFormat" : "RGBA",
+	"ImageDesc" : 
+	{
+		"Component" : 3,
+		"Directory" : "/Image",
+		"Extension" : ".jpg",
+		"Flip" : false,
+		"Hdr" : false,
+		"Height" : 612,
+		"Name" : "white",
+		"RelativePath" : "/Image/white.jpg",
+		"RootPath" : "C:/Users/InputWindy/Desktop/SandBox/SandBox",
+		"Width" : 750
+	},
+	"InternalFormat" : "RGBA32F",
 	"MagFilterMode" : "LINEAR",
 	"MaxMipLevel" : 0,
 	"MinFilterMode" : "LINEAR",
 	"MinMipLevel" : 0,
 	"Name" : "white",
-	"RelativePath" : "/Image/white.jpg",
-	"RootPath" : "C:/Users/InputWindy/Desktop/SandBox/SandBox",
 	"TextureTarget" : "2D",
 	"Width" : 750,
 	"WrapModeR" : "REPEAT",
 	"WrapModeS" : "REPEAT",
-	"WrapModeT" : "REPEAT",
-	"bFlip" : false,
-	"bHdr" : false
+	"WrapModeT" : "REPEAT"
 }

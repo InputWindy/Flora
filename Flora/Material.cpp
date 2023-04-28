@@ -18,10 +18,11 @@ Ref<FMaterialInstance> FMaterial::GetInstance()
 void FMaterial::Register()
 {
 	FResourceManager& ResourceManager = FResourceManager::Get();
-	if (!ResourceManager.FindObject<FMaterial>(MaterialName))
+	if (ResourceManager.FindObject<FMaterial>(MaterialName))
 	{
-		ResourceManager.Register<FMaterial>(shared_from_this());
-	};
+		ResourceManager.RemoveObject<FMaterial>(MaterialName);
+	}
+	ResourceManager.Register<FMaterial>(shared_from_this());
 }
 
 void FMaterial::GenerateUniforms()
@@ -77,11 +78,6 @@ bool FMaterial::Parse(IN FJson& In)
 	FragShader = In["FragShader"].asString();
 	RenderState.Parse(In["RenderState"]);
 
-	RootPath = In["RootPath"].asString();
-	Directory = In["Directory"].asString();
-	RelativePath = In["RelativePath"].asString();
-	Extension = In["Extension"].asString();
-
 	CachePath = "/Cache/Material/" + MaterialName + ".fmaterial";
 
 	Reload();
@@ -90,11 +86,6 @@ bool FMaterial::Parse(IN FJson& In)
 
 bool FMaterial::Serialize(OUT FJson& Out)
 {
-	Out["RootPath"] = RootPath;
-	Out["Directory"] = Directory;
-	Out["RelativePath"] = RelativePath;
-	Out["Extension"] = Extension;
-
 	Out["MaterialName"] = MaterialName;
 	Out["VertShader"] = VertShader;
 	Out["FragShader"] = FragShader;

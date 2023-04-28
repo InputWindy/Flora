@@ -34,7 +34,7 @@ FContentBrowserContext::FContentBrowserContext()
 	FResourceManager& ResourceManager = FResourceManager::Get();
 	Ref<FTexture> File = ResourceManager.FindObject<FTexture>(string("file"));
 	Ref<FTexture> Directory = ResourceManager.FindObject<FTexture>(string("directory"));
-	if (!File)
+	/*if (!File)
 	{
 		FImage img(_getcwd(nullptr, 0), "/Icon/file.png");
 		img.Load(false, true);
@@ -49,7 +49,7 @@ FContentBrowserContext::FContentBrowserContext()
 		Directory = FTexture::Generate(img);
 		Directory->Register();
 		img.Free();
-	}
+	}*/
 
 	FileIcon = File ? File->GetHandle() : 0;
 	DirectoryIcon = Directory ? Directory->GetHandle() : 0;

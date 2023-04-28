@@ -1,21 +1,28 @@
 {
 	"Depth" : 0,
-	"Directory" : "/Icon",
-	"Extension" : ".png",
 	"Height" : 512,
-	"InternalFormat" : "RGBA",
+	"ImageDesc" : 
+	{
+		"Component" : 4,
+		"Directory" : "/Icon",
+		"Extension" : ".png",
+		"Flip" : false,
+		"Hdr" : false,
+		"Height" : 512,
+		"Name" : "file",
+		"RelativePath" : "/Icon/file.png",
+		"RootPath" : "C:/Users/InputWindy/Desktop/SandBox/SandBox",
+		"Width" : 512
+	},
+	"InternalFormat" : "RGBA32F",
 	"MagFilterMode" : "LINEAR",
 	"MaxMipLevel" : 0,
 	"MinFilterMode" : "LINEAR",
 	"MinMipLevel" : 0,
 	"Name" : "file",
-	"RelativePath" : "/Icon/file.png",
-	"RootPath" : "C:\\Users\\InputWindy\\Desktop\\SandBox\\SandBox",
 	"TextureTarget" : "2D",
 	"Width" : 512,
 	"WrapModeR" : "REPEAT",
 	"WrapModeS" : "REPEAT",
-	"WrapModeT" : "REPEAT",
-	"bFlip" : true,
-	"bHdr" : false
+	"WrapModeT" : "REPEAT"
 }

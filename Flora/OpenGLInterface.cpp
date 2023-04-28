@@ -92,6 +92,24 @@ uint32_t FOpenGLInterface::FilterMode[] =
 	GL_NEAREST_MIPMAP_LINEAR,
 	GL_LINEAR_MIPMAP_LINEAR
 };
+uint32_t FOpenGLInterface::Format[] =
+{
+	GL_RED,
+	GL_RG,
+	GL_RGB,
+	GL_BGR,
+	GL_RGBA,
+	GL_BGRA,
+	GL_RED_INTEGER,
+	GL_RG_INTEGER,
+	GL_RGB_INTEGER,
+	GL_BGR_INTEGER,
+	GL_RGBA_INTEGER,
+	GL_BGRA_INTEGER,
+	GL_STENCIL_INDEX,
+	GL_DEPTH_COMPONENT,
+	GL_DEPTH_STENCIL
+};
 
 uint32_t FOpenGLInterface::InternalFormat[] =
 {
@@ -182,14 +200,14 @@ bool FOpenGLInterface::InitResources()
 {
 	FContentBrowserContext& Content = FContentBrowserContext::Get();
 
-	//load engine texture
-	FTexture::White   = GenerateTexture(Content.RootPath, "/Image/white.jpg");
-	FTexture::Black   = GenerateTexture(Content.RootPath, "/Image/black.jpg");
-	FTexture::Default = GenerateTexture(Content.RootPath, "/Image/default.jpg");
+	////load engine texture
+	//FTexture::White   = GenerateTexture(Content.RootPath, "/Image/white.jpg");
+	//FTexture::Black   = GenerateTexture(Content.RootPath, "/Image/black.jpg");
+	//FTexture::Default = GenerateTexture(Content.RootPath, "/Image/default.jpg");
 
-	FTexture::White->Register();
-	FTexture::Black->Register();
-	FTexture::Default->Register();
+	//FTexture::White->Register();
+	//FTexture::Black->Register();
+	//FTexture::Default->Register();
 
 	//load engine material
 	const char* EquirectangularMapToCubemapVShader =
@@ -241,27 +259,11 @@ bool FOpenGLInterface::InitResources()
 	return true;
 }
 
-Ref<FTexture> FOpenGLInterface::GenerateTexture(IN const char* name, IN uint16_t w, IN uint16_t h, IN uint16_t z, IN ETextureTarget type, IN EInternalFormat inform, IN FTextureInfo info)
+Ref<FTexture> FOpenGLInterface::GenerateTexture(IN const char* name, IN uint16_t w, IN uint16_t h, IN uint16_t z,
+	IN ETextureTarget target, IN EInternalFormat inform, IN FTextureInfo info, IN uint32_t samples)
 {
-	return FOpenGLTexture::Generate(name,w,h,z,type,inform,info);
+	return make_shared<FOpenGLTexture>(name,w,h,z,target,inform, info,samples);
 }
-
-Ref<FTexture> FOpenGLInterface::GenerateTexture(IN FImage img, IN bool mutisample, IN FTextureInfo info)
-{
-	return FOpenGLTexture::Generate(img, mutisample, info);
-}
-
-Ref<FTexture> FOpenGLInterface::GenerateTexture(IN const std::string& root, IN const std::string& relative, IN bool b_hdr, IN bool b_flip, IN bool mutisample, IN FTextureInfo info)
-{
-	FImage img(root, relative);
-	img.Load(b_hdr, b_flip);
-
-	Ref<FTexture> Tex = FTexture::Generate(img, mutisample,info);
-
-	img.Free();
-	return Tex;
-}
-
 
 Ref<FMaterial> FOpenGLInterface::GenerateMaterial(IN const char* Name, IN const char* vshader, IN const char* fshader)
 {
@@ -630,6 +632,31 @@ const char* FOpenGLInterface::FilterModeToString(uint32_t t)
 	return nullptr;
 }
 
+const char* FOpenGLInterface::FormatToString(uint32_t t)
+{
+	switch (t)
+	{
+	case 0:   return "RED";
+	case 1:   return "RG";
+	case 2:   return "RGB";
+	case 3:   return "BGR";
+	case 4:   return "RGBA";
+	case 5:   return "BGRA";
+	case 6:   return "RED_INTEGER";
+	case 7:   return "RG_INTEGER";
+	case 8:   return "RGB_INTEGER";
+	case 9:   return "BGR_INTEGER";
+	case 10:  return "RGBA_INTEGER";
+	case 11:  return "BGRA_INTEGER";
+	case 12:  return "STENCIL_INDEX";
+	case 13:  return "DEPTH_COMPONENT";
+	case 14:  return "DEPTH_STENCIL";
+	default:
+		break;
+	}
+	return nullptr;
+}
+
 const char* FOpenGLInterface::InternalFormatToString(uint32_t t)
 {
 	switch (t)
@@ -791,6 +818,27 @@ uint32_t FOpenGLInterface::StringToFilterMode(const char*s)
 	if (ss == "NEAREST_MIPMAP_LINEAR")return 4;
 	if (ss == "LINEAR_MIPMAP_LINEA")return 5;
 	else return 1;
+}
+
+uint32_t FOpenGLInterface::StringToFormat(const char* s)
+{
+	string ss = s;
+	if (ss == "RED")return 0;
+	if (ss == "RG")return 1;
+	if (ss == "RGB")return 2;
+	if (ss == "BGR")return 3;
+	if (ss == "RGBA")return 4;
+	if (ss == "BGRA")return 5;
+	if (ss == "RED_INTEGER")return 6;
+	if (ss == "RG_INTEGER")return 7;
+	if (ss == "RGB_INTEGER")return 8;
+	if (ss == "BGR_INTEGER")return 9;
+	if (ss == "RGBA_INTEGER")return 10;
+	if (ss == "BGRA_INTEGER")return 11;
+	if (ss == "STENCIL_INDEX")return 12;
+	if (ss == "DEPTH_COMPONENT")return 13;
+	if (ss == "DEPTH_STENCIL")return 14;
+	else return 4;
 }
 
 uint32_t FOpenGLInterface::StringToInternalFormat(const char*s)

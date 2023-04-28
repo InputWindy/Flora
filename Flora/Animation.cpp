@@ -23,9 +23,14 @@ void FAnimation::Reload()
 
 }
 
-Ref<FAnimation> FAnimation::Generate(const aiAnimation* anim)
+Ref<FAnimation> FAnimation::Generate()
 {
-    if (!anim)return nullptr;
+	return std::make_shared<FAnimationEnabler>();;
+}
+
+Ref<FAnimation> FAnimation::Generate(const char* name, const aiAnimation* anim)
+{
+    if (!anim || !name)return nullptr;
 
 	auto assimpToGlmVec3 = [](aiVector3D vec)->glm::vec3
 	{
@@ -44,7 +49,7 @@ Ref<FAnimation> FAnimation::Generate(const aiAnimation* anim)
 
     Ref<FAnimation> Res = std::make_shared<FAnimationEnabler>();
 
-    Res->AnimationName = anim->mName.C_Str();
+	Res->AnimationName = name;
 	Res->Duration = anim->mDuration;
 	Res->TicksPerSecond = anim->mTicksPerSecond;
 	Res->BoneTransforms.clear();
@@ -80,38 +85,80 @@ bool FAnimation::Parse(IN FJson& In)
 {
 	AnimationName = In["AnimationName"].asString();
 
-	RootPath = In["RootPath"].asString();
-	Directory = In["Directory"].asString();
-	RelativePath = In["RelativePath"].asString();
-	Extension = In["Extension"].asString();
-
 	CachePath = "/Cache/Animation/" + AnimationName + ".fanimation";
 
+	Duration = In["Duration"].asFloat();
+	TicksPerSecond = In["TicksPerSecond"].asFloat();
+	FJson& bone_transforms = In["BoneTransforms"];
+	for (auto& transform : bone_transforms)
+	{
+		string BoneName = transform["BoneName"].asString();
+		FBoneTransformTrack Transform;
+
+		FJson& positions = transform["Positions"];
+		FJson& rotations = transform["Rotations"];
+		FJson& scales = transform["Scales"];
+
+		FJson& position_timestamps = transform["PositionTimestamps"];
+		FJson& rotation_timestamps = transform["RotationTimestamps"];
+		FJson& scale_timestamps = transform["ScaleTimestamps"];
+
+		for (auto& position : positions)
+		{
+			Transform.positions.push_back({ 
+				position["x"].asFloat() ,
+				position["y"].asFloat() ,
+				position["z"].asFloat() });
+		}
+		for (auto& rotation : rotations)
+		{
+			Transform.rotations.push_back({
+				rotation["x"].asFloat() ,
+				rotation["y"].asFloat() ,
+				rotation["z"].asFloat() ,
+				rotation["w"].asFloat() });
+		}
+		for (auto& scale : scales)
+		{
+			Transform.scales.push_back({
+				scale["x"].asFloat() ,
+				scale["y"].asFloat() ,
+				scale["z"].asFloat() });
+		}
+
+		for (auto& pos_timesptamp : position_timestamps)
+			Transform.positionTimestamps.push_back(pos_timesptamp.asFloat());
+		for (auto& rot_timesptamp : rotation_timestamps)
+			Transform.rotationTimestamps.push_back(rot_timesptamp.asFloat());
+		for (auto& scl_timesptamp : scale_timestamps)
+			Transform.scaleTimestamps.push_back(scl_timesptamp.asFloat());
+
+		BoneTransforms.insert({BoneName,std::move(Transform)});
+	}
 	return true;
 }
 
 bool FAnimation::Serialize(OUT FJson& Out)
 {
-	Out["RootPath"] = RootPath;
-	Out["Directory"] = Directory;
-	Out["RelativePath"] = RelativePath;
-	Out["Extension"] = Extension;
-
 	Out["AnimationName"] = AnimationName;
 	Out["Duration"] = Duration;
 	Out["TicksPerSecond"] = TicksPerSecond;
-	FJson bone_transforms = Out["BoneTransforms"];
+	FJson& bone_transforms = Out["BoneTransforms"];
 	for (auto& Transform : BoneTransforms)
 	{
-		bone_transforms["BoneName"] = Transform.first;
+		FJson bone_transform;
 
-		FJson positions = bone_transforms["Positions"];
-		FJson rotations = bone_transforms["Rotations"];
-		FJson scales	= bone_transforms["Scales"];
+		FJson& bone_name = bone_transform["BoneName"];
 
-		FJson position_timestamps = bone_transforms["PositionTimestamps"];
-		FJson rotation_timestamps = bone_transforms["RotationTimestamps"];
-		FJson scale_timestamps	  = bone_transforms["ScaleTimestamps"];
+		FJson& positions = bone_transform["Positions"];
+		FJson& rotations = bone_transform["Rotations"];
+		FJson& scales	 = bone_transform["Scales"];
+
+		FJson& position_timestamps = bone_transform["PositionTimestamps"];
+		FJson& rotation_timestamps = bone_transform["RotationTimestamps"];
+		FJson& scale_timestamps	   = bone_transform["ScaleTimestamps"];
+
+		bone_name = Transform.first;
 
 		for (auto& Position : Transform.second.positions)
 		{
@@ -145,6 +192,8 @@ bool FAnimation::Serialize(OUT FJson& Out)
 			rotation_timestamps.append(rot_timesptamp);
 		for (auto& scl_timesptamp : Transform.second.scaleTimestamps)
 			scale_timestamps.append(scl_timesptamp);
+
+		bone_transforms.append(bone_transform);
 	}
 	return true;
 }
@@ -152,8 +201,9 @@ bool FAnimation::Serialize(OUT FJson& Out)
 void FAnimation::Register()
 {
 	FResourceManager& ResourceManager = FResourceManager::Get();
-	if (!ResourceManager.FindObject<FAnimation>(AnimationName))
+	if (ResourceManager.FindObject<FAnimation>(AnimationName))
 	{
-		ResourceManager.Register<FAnimation>(shared_from_this());
-	};
+		ResourceManager.RemoveObject<FAnimation>(AnimationName);
+	}
+	ResourceManager.Register<FAnimation>(shared_from_this());
 }

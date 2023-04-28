@@ -8,6 +8,12 @@
 
 #include "Texture.h"
 
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+#include <assimp/Importer.hpp>
+
+#pragma comment(lib,"assimp-vc142-mtd.lib")
+
 #define REVERSE_BIT(x,y)  x^=(1<<y)
 
 void EditorLayer::OnAwake()
@@ -295,36 +301,53 @@ void PayloadFromContentBrowser(const ImGuiPayload* payload, void* userdata)
 
 	//load map
 
-	//load model & skeleton & animation
+	//load model
 
+	//load animation
+	/*Assimp::Importer importer;
+	const aiScene* scene = importer.ReadFile(path.generic_string().c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
+	FAnimation::Generate(path.stem().generic_string().c_str(),scene->HasAnimations() ? scene->mAnimations[0] : nullptr)->Register();*/
 
+	/*Ref<FAnimation> Animation = FAnimation::Generate();
+	Animation->LoadFromFile(path.generic_string().c_str());
+	Animation->Register();*/
+
+	//load skeleton
+	/*Assimp::Importer importer;
+	const aiScene* scene = importer.ReadFile(path.generic_string().c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
+	FSkeleton::Generate(path.stem().generic_string().c_str(),scene)->Register();*/
+	/*Ref<FSkeleton> Skeleton = FSkeleton::Generate();
+	Skeleton->LoadFromFile(path.generic_string().c_str());
+	Skeleton->Register();*/
 	//load audio
 
-	//load material
-	Ref<FMaterial> Mat = ResourceManager.FindObject<FMaterial>(path.stem().generic_string());
-	if (!Mat)
-	{
-		string filepath = path.generic_string().c_str();
-		//filepath = filepath.substr(Content.RootPath.size(), filepath.size() - 1);
-		Mat = FApplication::GetRHI()->GenerateMaterial();
-		Mat->LoadFromFile(filepath);
-		//Tex->SaveToFile(Content.RootPath + "/Cache/Texture/" + Tex->GetName() + ".ftexture");
-		Mat->Register();
-	}
-
-	////load test texture
-	//Ref<FTexture> Tex = ResourceManager.FindObject<FTexture>(path.stem().generic_string());
-	//if (!Tex)
+	////load material
+	//Ref<FMaterial> Mat = ResourceManager.FindObject<FMaterial>(path.stem().generic_string());
+	//if (!Mat)
 	//{
 	//	string filepath = path.generic_string().c_str();
 	//	//filepath = filepath.substr(Content.RootPath.size(), filepath.size() - 1);
-	//	Tex = FApplication::GetRHI()->GenerateTexture();
-	//	Tex->LoadFromFile(filepath);
+	//	Mat = FApplication::GetRHI()->GenerateMaterial();
+	//	Mat->LoadFromFile(filepath);
 	//	//Tex->SaveToFile(Content.RootPath + "/Cache/Texture/" + Tex->GetName() + ".ftexture");
-	//	Tex->Register();
+	//	Mat->Register();
 	//}
 
-	//if (Tex)	*(uint32_t*)userdata = Tex->GetHandle();
+	////load test texture
+	string filepath = path.generic_string().c_str();
+	filepath = filepath.substr(Content.RootPath.size(), filepath.size() - 1);
+	Ref<FImage> Img = std::make_shared<FImage>(Content.RootPath, filepath);
+	Ref<FTexture> Tex = FApplication::GetRHI()->GenerateTexture(path.stem().generic_string().c_str(), 100, 100, 0, ETextureTarget_2D,
+		EInternalFormat_RGBA32F);
+	//Tex->SetImageData(Img);
+	Tex->LoadFromFile(path.generic_string().c_str());
+	Tex->Register();
+	
+	//Ref<FTexture> Tex = FApplication::GetRHI()->GenerateTexture();
+	//Tex->LoadFromFile(filepath);
+	//Tex->Register();
+
+	if (Tex)	*(uint32_t*)userdata = Tex->GetHandle();
 	
 }
 
@@ -389,6 +412,7 @@ void EditorLayer::ResourceViewer()
 			const auto& Textures = Manager.GetTextures();
 			const auto& Materials = Manager.GetMaterials();
 			const auto& Animations = Manager.GetAnimations();
+			const auto& Skeletons = Manager.GetSkeletons();
 			if (FUI::CollapsingHeader("Texture"))
 			{
 				FUI::BeginGroup();
@@ -398,35 +422,29 @@ void EditorLayer::ResourceViewer()
 					{
 						FRenderCommand* Rhi = FApplication::GetRHI();
 						FUI::LabelText("Texture Type", Rhi->TextureTargetToString(Texture.second->GetTextureType()));
-						uint32_t ShortCut = Texture.second->GetShortCut();
-						FUI::ImageButton((ImTextureID)ShortCut, { 100 ,100 });
-						if (FUI::BeginDragDropSource())
-						{
-							FUI::SetDragDropPayload("TEXTURE_ITEM",
-								Texture.second->GetName().c_str(), Texture.second->GetName().size() + 1);
-							FUI::EndDragDropSource();
-						}
-						FUI::LabelText("Width", std::to_string(Texture.second->GetWidth()).c_str());
-						FUI::LabelText("Height", std::to_string(Texture.second->GetHeight()).c_str());
-						FUI::LabelText("Depth", std::to_string(Texture.second->GetDepth()).c_str());
 
-						FUI::LabelText("Min Mip Level", std::to_string(Texture.second->GetTextureInfo().MinMipLevel).c_str());
-						FUI::LabelText("Max Mip Level", std::to_string(Texture.second->GetTextureInfo().MaxMipLevel).c_str());
+						FUI::ImageButton((ImTextureID)Texture.second->GetShortCut(), { 100 ,100 });
 
-						FUI::LabelText("Wrap Mode R", Rhi->WrapModeToString(Texture.second->GetTextureInfo().WrapModeR));
-						FUI::LabelText("Wrap Mode S", Rhi->WrapModeToString(Texture.second->GetTextureInfo().WrapModeS));
-						FUI::LabelText("Wrap Mode T", Rhi->WrapModeToString(Texture.second->GetTextureInfo().WrapModeT));
+						FUI::LabelText("Width" , "%d", Texture.second->GetWidth());
+						FUI::LabelText("Height", "%d",Texture.second->GetHeight());
+						FUI::LabelText("Depth" , "%d", Texture.second->GetDepth());
 
-						FUI::LabelText("Min Filter Mode", Rhi->FilterModeToString(Texture.second->GetTextureInfo().MinFilterMode));
-						FUI::LabelText("Mag Filter Mode", Rhi->FilterModeToString(Texture.second->GetTextureInfo().MagFilterMode));
+						FUI::LabelText("Min Mip Level","%d", Texture.second->GetMinMipLevel());
+						FUI::LabelText("Max Mip Level","%d", Texture.second->GetMaxMipLevel());
+
+						FUI::LabelText("Wrap Mode R", Rhi->WrapModeToString(Texture.second->GetWrapModeR()));
+						FUI::LabelText("Wrap Mode S", Rhi->WrapModeToString(Texture.second->GetWrapModeS()));
+						FUI::LabelText("Wrap Mode T", Rhi->WrapModeToString(Texture.second->GetWrapModeT()));
+
+						FUI::LabelText("Min Filter Mode", Rhi->FilterModeToString(Texture.second->GetMinFilterMode()));
+						FUI::LabelText("Mag Filter Mode", Rhi->FilterModeToString(Texture.second->GetMagFilterMode()));
 
 						FUI::LabelText("Internal Format", Rhi->InternalFormatToString(Texture.second->GetInternalFormat()));
 
-						FUI::LabelText("Load From File", Texture.second->IsLoadedFromFile() ? "True" : "False");
+						FUI::LabelText("Load From File", Texture.second->IsLoaded() ? "True" : "False");
 
-						if (Texture.second->GetRelativePath().size())
+						if (Texture.second->IsLoaded())
 						{
-							FUI::LabelText("File Path", Texture.second->GetRelativePath().c_str());
 							FUI::LabelText("Cache Path", Texture.second->GetCachePath().c_str());
 						}
 
@@ -451,11 +469,19 @@ void EditorLayer::ResourceViewer()
 
 			if (FUI::CollapsingHeader("Animation"))
 			{
+				static uint32_t Id = 0;
+
 				FUI::BeginGroup();
 				for (auto& Animation : Animations)
 				{
-					if (FUI::TreeNode(Animation.second->GetName().c_str()))
+					++Id;
+					if (FUI::TreeNode(
+						/*Animation.second->GetName().c_str()? 
+						Animation.second->GetName().c_str():*/
+						to_string(Id).c_str())
+						)
 					{
+						FUI::LabelText("Name",Animation.second->GetName().c_str());
 						FUI::LabelText("Duration", "%f", Animation.second->GetDuration());
 						FUI::LabelText("Ticks Per Second", "%f", Animation.second->GetTicksPerSecond());
 						auto& Bones = Animation.second->GetBoneTransforms();
@@ -465,6 +491,39 @@ void EditorLayer::ResourceViewer()
 							FUI::LabelText("Bone", Bone.first.c_str());
 						}
 						FUI::Separator();
+						FUI::TreePop();
+					}
+				}
+				FUI::EndGroup();
+
+				Id = 0;
+			}
+
+			if (FUI::CollapsingHeader("Skeleton"))
+			{
+				std::function<void(const FBone& Bone)> DisplayBoneTree = [&DisplayBoneTree](const FBone& Bone)
+				{
+					if (FUI::TreeNode(Bone.Name.c_str()))
+					{
+						FUI::SeparatorEx(ImGuiSeparatorFlags_Vertical);
+						FUI::SameLine();
+						FUI::Text(to_string(Bone.Id).c_str());
+						FUI::SameLine();
+						FUI::SeparatorEx(ImGuiSeparatorFlags_Vertical);
+						for (auto& Child : Bone.Children)
+						{
+							DisplayBoneTree(Child);
+						}
+						FUI::TreePop();
+					}
+				};
+
+				FUI::BeginGroup();
+				for (auto& Skeleton : Skeletons)
+				{
+					if (FUI::TreeNode(Skeleton.second->GetName().c_str()))
+					{
+						DisplayBoneTree(Skeleton.second->GetBoneTree());
 						FUI::TreePop();
 					}
 				}

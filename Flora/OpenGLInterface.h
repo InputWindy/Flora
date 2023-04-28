@@ -12,36 +12,19 @@ public:
 	virtual bool InitResources() final;
 public:
 	/// <summary>
-	/// apply for an empty texture
+	/// generate an empty texture
 	/// </summary>
 	virtual Ref<FTexture> GenerateTexture(
-		IN const char*,		/*texture name*/								
-		IN uint16_t,		/*texture width*/								
-		IN uint16_t,		/*texture height*/							
-		IN uint16_t,		/*texture depth(for 3D texture)*/				
-		IN ETextureTarget,	/*texture type*/								
-		IN EInternalFormat,	/*texture internal format(default rgba32f)*/	 
-		IN FTextureInfo		/*texture infos*/								
+		IN const char*,		/*Name*/
+		IN uint16_t,		/*Width*/
+		IN uint16_t,		/*Height*/
+		IN uint16_t,		/*Depth*/
+		IN ETextureTarget,	/*Target*/
+		IN EInternalFormat, /*Internal*/
+		IN FTextureInfo Info = FTextureInfo(),/*Texture Params*/
+		IN uint32_t = 4 /*Samples*/
 	)final;
-	/// <summary>
-	/// apply for a texture with raw data from disk
-	/// </summary>
-	virtual Ref<FTexture> GenerateTexture(
-		IN FImage,							 /*img data loaded from disk*/
-		IN bool mutisample = false,			 /*enable msaa*/
-		IN FTextureInfo info = FTextureInfo()/*texture infos*/
-	)final;
-	/// <summary>
-	/// apply for a texture with img path
-	/// </summary>
-	virtual Ref<FTexture> GenerateTexture(
-		IN const std::string& root,			 /*asset root path*/
-		IN const std::string& relative,		 /*path*/
-		IN bool b_hdr = false,				 /*loaded as float raw data*/
-		IN bool b_flip = false,				 /*flip up and down*/
-		IN bool mutisample = false,			 /*enable msaa*/
-		IN FTextureInfo info = FTextureInfo()/*texture infos*/
-	)final;
+
 	/// <summary>
 	/// apply for a new material
 	/// </summary>
@@ -99,6 +82,7 @@ private:
 	static uint32_t TextureTarget[];
 	static uint32_t WrapMode[];
 	static uint32_t FilterMode[];
+	static uint32_t Format[];
 	static uint32_t InternalFormat[];
 	static uint32_t ColorAttachment[];
 public:
@@ -112,6 +96,7 @@ public:
 	virtual const char* TextureTargetToString(uint32_t)override;
 	virtual const char* WrapModeToString(uint32_t)override;
 	virtual const char* FilterModeToString(uint32_t)override;
+	virtual const char* FormatToString(uint32_t)override;
 	virtual const char* InternalFormatToString(uint32_t)override;
 public:
 	virtual uint32_t StringToCompareMethod(const char*)override;
@@ -124,6 +109,7 @@ public:
 	virtual uint32_t StringToTextureTarget(const char*)override;
 	virtual uint32_t StringToWrapMode(const char*)override;
 	virtual uint32_t StringToFilterMode(const char*)override;
+	virtual uint32_t StringToFormat(const char*) override;
 	virtual uint32_t StringToInternalFormat(const char*)override;
 };
 

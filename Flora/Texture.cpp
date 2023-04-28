@@ -7,18 +7,21 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 using namespace std;
-FImage::FImage(const std::string& root, const std::string& relative)
+
+FImage::FImage(const std::string& root, const std::string& relative, bool b_hdr, bool b_flip)
 	:root_path(root), relative_path(relative)
 {
 	std::filesystem::path path(relative);
 	name = path.stem().generic_string();
 	extension = path.extension().generic_string();
 	directory = relative.substr(0, relative.find_last_of('/'));
+
+	Load(b_hdr, b_flip);
 }
 
 FImage::~FImage()
 {
-	
+	Free();
 }
 
 void FImage::Load(bool b_hdr, bool b_flip)
@@ -41,9 +44,87 @@ void FImage::Free()
 	}
 }
 
-FTexture::FTexture()
+bool FImage::Parse(IN FJson& In)
 {
-	Type = EResourceType::Texture;
+	root_path = In["RootPath"].asString();
+	directory = In["Directory"].asString();
+	relative_path = In["RelativePath"].asString();
+	name = In["Name"].asString();
+	extension = In["Extension"].asString();
+
+	w = In["Width"].asInt();
+	h = In["Height"].asInt();
+	comp = In["Component"].asInt();
+
+	hdr = In["Hdr"].asBool();
+	flip = In["Flip"].asBool();
+
+	Load(hdr,flip);
+
+	/*FJson& Data = In["Data"];
+	if (hdr)
+	{
+		int data_num = w * h * comp;
+		int id = 0;
+
+		float* p_f = (float*)malloc(sizeof(float) * data_num);
+		for (auto& d : Data)
+		{
+			p_f[id++] = d.as<float>();
+		}
+	}
+	else
+	{
+		int data_num = w * h * comp;
+		int id = 0;
+
+		unsigned char* p_uc = (unsigned char*)malloc(sizeof(unsigned char) * data_num);
+		for (auto& d : Data)
+		{
+			p_uc[id++] = d.asUInt();
+		}
+	}*/
+
+	return true;
+}
+
+bool FImage::Serialize(OUT FJson& Out)
+{
+	Out["RootPath"] = root_path;
+	Out["Directory"] = directory;
+	Out["RelativePath"] = relative_path;
+	Out["Name"] = name;
+	Out["Extension"] = extension;
+
+	Out["Width"] = w;
+	Out["Height"] = h;
+	Out["Component"] = comp;
+
+	Out["Hdr"] = hdr;
+	Out["Flip"] = flip;
+	//Out["DataNum"] = w * h * comp;
+
+	/*FJson& Data = Out["Data"];
+	if (hdr)
+	{
+		float* p_f = (float*)data;
+		for (size_t i = 0; i < w * h * comp; i++)
+		{
+			Data.append(p_f[i]);
+		}
+		data = p_f;
+	}
+	else
+	{
+		unsigned char* p_uc = (unsigned char*)data;
+		for (size_t i = 0; i < w * h * comp; i++)
+		{
+			Data.append(p_uc[i]);
+		}
+		data = p_uc;
+	}*/
+
+	return true;
 }
 
 bool FTexture::Parse(IN FJson& in)
@@ -54,17 +135,9 @@ bool FTexture::Parse(IN FJson& in)
 	Width  = in["Width"].asInt();
 	Height = in["Height"].asInt();
 	Depth  = in["Depth"].asInt();
-	
-	RootPath = in["RootPath"].asString();
-	Directory = in["Directory"].asString();
-	RelativePath = in["RelativePath"].asString();
-	Extension = in["Extension"].asString();
 
 	CachePath = "/Cache/Texture/" + Name + ".ftexture";
 
-	bHdr = in["bHdr"].asBool();
-	bFlip = in["bFlip"].asBool();
-	
 	TextureTarget = Rhi->StringToTextureTarget(in["TextureTarget"].asCString());
 	InternalFormat = Rhi->StringToInternalFormat(in["InternalFormat"].asCString());
 
@@ -78,7 +151,13 @@ bool FTexture::Parse(IN FJson& in)
 	Info.MinFilterMode = Rhi->StringToFilterMode(in["MinFilterMode"].asCString());
 	Info.MagFilterMode = Rhi->StringToFilterMode(in["MinFilterMode"].asCString());
 
-	Reload();
+	if (in["ImageDesc"].isNull() == false)
+	{
+		Image = make_shared<FImage>();
+		Image->Parse(in["ImageDesc"]);
+		SetImageData(Image);
+	}
+
 	return true;
 }
 
@@ -90,14 +169,6 @@ bool FTexture::Serialize(OUT FJson& out)
 	out["Width"] = Width;
 	out["Height"] = Height;
 	out["Depth"] = Depth;
-
-	out["RootPath"] = RootPath;
-	out["Directory"] = Directory;
-	out["RelativePath"] = RelativePath;
-	out["Extension"] = Extension;
-
-	out["bHdr"] = bHdr;
-	out["bFlip"] = bFlip;
 
 	out["TextureTarget"] = Rhi->TextureTargetToString(TextureTarget);
 	out["InternalFormat"] = Rhi->InternalFormatToString(InternalFormat);
@@ -112,28 +183,33 @@ bool FTexture::Serialize(OUT FJson& out)
 
 	out["MinFilterMode"] = Rhi->FilterModeToString(Info.MinFilterMode);
 	out["MagFilterMode"] = Rhi->FilterModeToString(Info.MagFilterMode);
+
+	//image info
+	FJson& img_info = out["ImageDesc"];
+	if (Image)
+	{
+		Image->Serialize(img_info);
+	}
 	return true;
 }
 
 void FTexture::Register()
 {
 	FResourceManager& ResourceManager = FResourceManager::Get();
-	if (!ResourceManager.FindObject<FTexture>(Name))
+	if (ResourceManager.FindObject<FTexture>(Name))
 	{
-		ResourceManager.Register<FTexture>(shared_from_this());
-	};
+		ResourceManager.RemoveObject<FTexture>(Name);
+	}
+	ResourceManager.Register<FTexture>(shared_from_this());
 }
 
+FTexture::FTexture()
+{
+	Type = EResourceType::Texture;
+}
 
-Ref<FTexture> FTexture::Generate(const char* Name, uint16_t W, uint16_t H, uint16_t Z, ETextureTarget Type, EInternalFormat InForm, FTextureInfo Info)
+inline void FTexture::Rename(const string& name)
 {
-	return FOpenGLTexture::Generate(Name,W,H,Z,Type, InForm,Info);
-};
-Ref<FTexture> FTexture::Generate(FImage img, bool bMultisample, FTextureInfo TexInfo)
-{
-	return FOpenGLTexture::Generate(img, bMultisample, TexInfo);
-};
-Ref<FTexture> FTexture::Generate(uint32_t shortcut, uint32_t handle)
-{
-	return FOpenGLTexture::Generate(shortcut,handle);
-};
+	Name = name;
+	CachePath = "/Cache/Texture/" + Name + ".ftexture";
+}

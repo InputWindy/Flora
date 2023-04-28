@@ -232,6 +232,14 @@ bool FUI::CollapsingHeader(const char* label, ImGuiTreeNodeFlags flags)
 	return ImGui::CollapsingHeader(label,flags);
 }
 
+void FUI::Text(const char* fmt, ...)
+{
+	va_list args;
+	va_start(args, fmt);
+	ImGui::TextV(fmt, args);
+	va_end(args);
+}
+
 void FUI::Separator()
 {
 	ImGui::Separator();

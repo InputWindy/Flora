@@ -52,6 +52,7 @@ struct FLORA_API FUI
 	static void TableNextRow();
 	static bool TableSetColumnIndex(int column_n);
 	static void TextColored(const ImVec4& color,const char* fmt,...);
+	static void Text(const char* fmt, ...);
 	static bool CollapsingHeader(const char* label, ImGuiTreeNodeFlags flags = 0);
 	static bool TreeNode(const char* label);
 	static void LabelText(const char* label, const char* fmt, ...);

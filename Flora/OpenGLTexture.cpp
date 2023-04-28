@@ -2,79 +2,95 @@
 #include "OpenGLInterface.h"
 #include <assert.h>
 #include <glad.h>
-Ref<FOpenGLTexture> FOpenGLTexture::Generate(const char* Name, uint16_t W, uint16_t H, uint16_t Z, ETextureTarget Type, EInternalFormat InForm, FTextureInfo info)
+
+FOpenGLTexture::FOpenGLTexture(IN const char* name, IN uint16_t w, IN uint16_t h, IN uint16_t z, 
+	IN ETextureTarget target, IN EInternalFormat inform, IN FTextureInfo info ,IN uint32_t samples)
 {
-	Ref<FOpenGLTexture> Res = make_shared<FOpenGLTexture>();
+	bool bValid = name and target != ETextureTarget_MAX;
 
-	Res->Name = Name;
-	Res->Width = W;
-	Res->Height = H;
-	Res->Depth = Z;
-	Res->TextureTarget = Type;
-	Res->InternalFormat = InForm;
-	Res->ShortCut = 0;
+	assert(bValid,"Apply For An InValid Texture!");
 
-	Res->CachePath = "/Cache/Texture/" + Res->Name + ".ftexture";
-
-	GLenum texture_type = FOpenGLInterface::TextureTarget[Type];
-
-	glCreateTextures(texture_type, 1, &Res->Texture);
-	glBindTexture(texture_type, Res->Texture);
-	if (texture_type == GL_TEXTURE_CUBE_MAP)
+	if (bValid)
 	{
-		for (unsigned int i = 0; i < 6; ++i)
+		Rename(name);
+
+		Width = w;
+		Height = h;
+		Depth = z;
+		TextureTarget = target;
+		InternalFormat = inform;
+
+		MultisampleNum = samples;
+
+		Info.MaxMipLevel = info.MaxMipLevel;
+		Info.MinMipLevel = info.MinMipLevel;
+
+		Info.WrapModeR = info.WrapModeR;
+		Info.WrapModeS = info.WrapModeS;
+		Info.WrapModeT = info.WrapModeT;
+
+		Info.MinFilterMode = info.MinFilterMode;
+		Info.MagFilterMode = info.MagFilterMode;
+
+		Info.BorderColor = info.BorderColor;
+
+		GLenum texture_type = FOpenGLInterface::TextureTarget[TextureTarget];
+
+		glCreateTextures(texture_type, 1, &Texture);
+		glBindTexture(texture_type, Texture);
+
+		switch (texture_type)
 		{
-			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, info.MinMipLevel, FOpenGLInterface::InternalFormat[InForm], Res->Width, Res->Height, 0, GL_RGBA, GL_FLOAT, nullptr);
+		case GL_TEXTURE_1D:
+		{
+			glTexImage1D(GL_TEXTURE_1D, info.MinMipLevel, FOpenGLInterface::InternalFormat[InternalFormat],Width, 0, GL_RGBA, GL_FLOAT, nullptr);
+			break;
 		}
+		case GL_TEXTURE_2D:
+		{
+			glTexImage2D(GL_TEXTURE_2D, info.MinMipLevel, FOpenGLInterface::InternalFormat[InternalFormat],Width, Height, 0, GL_RGBA, GL_FLOAT, nullptr);
+			break;
+		}
+		case GL_TEXTURE_2D_MULTISAMPLE:
+		{
+			glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, MultisampleNum, FOpenGLInterface::InternalFormat[InternalFormat],Width,Height,true);
+			break;
+		}
+		case GL_TEXTURE_3D:
+		{
+			glTexImage3D(GL_TEXTURE_3D, info.MinMipLevel, FOpenGLInterface::InternalFormat[InternalFormat], Width, Height, Depth, 0, GL_RGBA, GL_FLOAT, nullptr);
+			break;
+		}
+		case GL_TEXTURE_2D_MULTISAMPLE_ARRAY:
+		{
+			glTexImage3DMultisample(GL_TEXTURE_2D_MULTISAMPLE_ARRAY,MultisampleNum, FOpenGLInterface::InternalFormat[InternalFormat], Width, Height, Depth,true);
+			break;
+		}
+		case GL_TEXTURE_CUBE_MAP:
+		{
+			for (unsigned int Face = 0; Face < 6; ++Face)
+			{
+				glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + Face, info.MinMipLevel, FOpenGLInterface::InternalFormat[InternalFormat], Width, Height, 0, GL_RGBA, GL_FLOAT, nullptr);
+			}
+			break;
+		}
+		default:assert(0, "InValid Texture Target!"); break;
+		}
+
+		Update();
+
+		ShortCut = Texture;
+
+		glBindTexture(texture_type, 0);
+
+		assert(Texture,"Fail To Generate Texture");
 	}
-	else if (texture_type == GL_TEXTURE_1D)
-	{
-		glTexImage1D(texture_type, info.MinMipLevel, FOpenGLInterface::InternalFormat[InForm], Res->Width, 0, GL_RGBA, GL_FLOAT, nullptr);
-	}
-	else if (texture_type == GL_TEXTURE_2D_MULTISAMPLE || texture_type == GL_TEXTURE_2D)
-	{
-		glTexImage2D(texture_type, info.MinMipLevel, FOpenGLInterface::InternalFormat[InForm], Res->Width, Res->Height, 0, GL_RGBA, GL_FLOAT, nullptr);
-	}
-	else if (texture_type == GL_TEXTURE_2D_MULTISAMPLE_ARRAY || texture_type == GL_TEXTURE_3D)
-	{
-		glTexImage3D(texture_type, info.MinMipLevel, FOpenGLInterface::InternalFormat[InForm], Res->Width, Res->Height, Res->Depth, 0, GL_RGBA, GL_FLOAT, nullptr);
-	}
-	else assert(0);
-
-	glBindTexture(texture_type, 0);
-
-	Res->Update(info);
-
-	return Res;
-}
-
-Ref<FOpenGLTexture> FOpenGLTexture::Generate(FImage img, bool bMultisample, FTextureInfo TexInfo)
-{
-	if (!img.data)return nullptr;
-
-	Ref<FOpenGLTexture> Res = Generate(img.name.c_str(), img.w, img.h, 0,
-		bMultisample ? ETextureTarget_2D_Multisample : ETextureTarget_2D,
-		img.hdr ? EInternalFormat_RGBA16F : EInternalFormat_RGBA, TexInfo);
-
-	Res->SetData(img);
-
-	Res->ShortCut = Res->Texture;
-
-	return Res;
-}
-
-Ref<FOpenGLTexture> FOpenGLTexture::Generate(uint32_t shortcut, uint32_t handle)
-{
-	Ref<FOpenGLTexture> Res = make_shared<FOpenGLTexture>();
-	Res->ShortCut = shortcut;
-	Res->Texture = handle;
-	return Res;
 }
 
 FOpenGLTexture::~FOpenGLTexture()
 {
 	glDeleteTextures(1, &Texture);
-	//glDeleteTextures(1, &ShortCut);
+	Image = nullptr;
 }
 
 uint32_t FOpenGLTexture::GetHandle() const
@@ -87,58 +103,60 @@ uint32_t FOpenGLTexture::GetShortCut() const
 	return ShortCut;
 }
 
-void FOpenGLTexture::Update(FTextureInfo info)
+void FOpenGLTexture::Update()
 {
-	Info.WrapModeR = info.WrapModeR;
-	Info.WrapModeS = info.WrapModeS;
-	Info.WrapModeT = info.WrapModeT;
-
-	Info.MinFilterMode = info.MinFilterMode;
-	Info.MagFilterMode = info.MagFilterMode;
-
-	Info.MaxMipLevel = info.MaxMipLevel;
-	Info.MinMipLevel = info.MinMipLevel;
-
 	GLenum texture_type = FOpenGLInterface::TextureTarget[TextureTarget];
 
-	GLenum wrap_r = 0, wrap_s = 0, wrap_t = 0;
-	GLenum min_filter = 0, mag_filter = 0;
-	{
-		mag_filter = FOpenGLInterface::FilterMode[Info.MagFilterMode];
-		min_filter = FOpenGLInterface::FilterMode[Info.MinFilterMode];
-
-		wrap_r = FOpenGLInterface::WrapMode[Info.WrapModeR];
-		wrap_s = FOpenGLInterface::WrapMode[Info.WrapModeS];
-		wrap_t = FOpenGLInterface::WrapMode[Info.WrapModeT];
-	}
 	glBindTexture(texture_type, Texture);
-	glTexParameteri(texture_type, GL_TEXTURE_WRAP_S, (GLenum)wrap_s);
-	glTexParameteri(texture_type, GL_TEXTURE_WRAP_T, (GLenum)wrap_t);
-	glTexParameteri(texture_type, GL_TEXTURE_WRAP_R, (GLenum)wrap_r);
+	glTexParameteri(texture_type, GL_TEXTURE_WRAP_S, (GLenum)FOpenGLInterface::WrapMode[Info.WrapModeR]);
+	glTexParameteri(texture_type, GL_TEXTURE_WRAP_T, (GLenum)FOpenGLInterface::WrapMode[Info.WrapModeS]);
+	glTexParameteri(texture_type, GL_TEXTURE_WRAP_R, (GLenum)FOpenGLInterface::WrapMode[Info.WrapModeT]);
 
-	glTexParameteri(texture_type, GL_TEXTURE_MIN_FILTER, (GLenum)min_filter);
-	glTexParameteri(texture_type, GL_TEXTURE_MAG_FILTER, (GLenum)mag_filter);
+	glTexParameteri(texture_type, GL_TEXTURE_MIN_FILTER, (GLenum)FOpenGLInterface::FilterMode[Info.MagFilterMode]);
+	glTexParameteri(texture_type, GL_TEXTURE_MAG_FILTER, (GLenum)FOpenGLInterface::FilterMode[Info.MinFilterMode]);
 
 	glTexParameteri(texture_type, GL_TEXTURE_BASE_LEVEL, (GLenum)Info.MinMipLevel);
 	glTexParameteri(texture_type, GL_TEXTURE_MAX_LEVEL, (GLenum)Info.MaxMipLevel);
+
+	glTexParameterfv(texture_type, GL_TEXTURE_BORDER_COLOR, &(Info.BorderColor[0]));
+
 	glBindTexture(texture_type, 0);
 }
 
-void FOpenGLTexture::SetData(FImage img)
+void FOpenGLTexture::SetCubeImageData(Ref<FImage> img, ETextureTarget target)
 {
-	RootPath     = img.root_path;
-	Directory    = img.directory;
-	RelativePath = img.relative_path;
-	Extension	 = img.extension;
-	
+	bool bValid = target >= ETextureTarget_Cubic_NX and target <= ETextureTarget_Cubic_PZ;
+	assert(bValid, "InValid Cubemap Face");
+	if (bValid)
+	{
+		GLenum format = 0;
+		switch (img->comp)
+		{
+		case 1:format = GL_RED; break;
+		case 2:format = GL_RG; break;
+		case 3:format = GL_RGB; break;
+		case 4:format = GL_RGBA; break;
+		default:
+			break;
+		}
 
-	bHdr  = img.hdr;
-	bFlip = img.flip;
+		glBindTexture(GL_TEXTURE_CUBE_MAP, Texture);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + target - ETextureTarget_Cubic_NX,
+			Info.MinMipLevel, FOpenGLInterface::InternalFormat[InternalFormat], Width, Height, 0, format, img->hdr ? GL_FLOAT : GL_UNSIGNED_BYTE, (img->data));
+		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+	}
+}
+
+void FOpenGLTexture::SetImageData(Ref<FImage> img)
+{
+	Image = img;
+
+	Width = img->w;
+	Height = img->h;
 
 	GLenum texture_type = FOpenGLInterface::TextureTarget[TextureTarget];
-
 	GLenum format = 0;
-	switch (img.comp)
+	switch (img->comp)
 	{
 	case 1:format = GL_RED; break;
 	case 2:format = GL_RG; break;
@@ -150,57 +168,6 @@ void FOpenGLTexture::SetData(FImage img)
 
 	glBindTexture(texture_type, Texture);
 	glTexImage2D(texture_type, Info.MinMipLevel,
-		FOpenGLInterface::InternalFormat[InternalFormat], Width, Height, 0, format, img.hdr ? GL_FLOAT : GL_UNSIGNED_BYTE, (img.data));
+		FOpenGLInterface::InternalFormat[InternalFormat], Width, Height, 0, format, img->hdr ? GL_FLOAT : GL_UNSIGNED_BYTE, (img->data));
 	glBindTexture(texture_type, 0);
-}
-void FOpenGLTexture::SetData(ETextureTarget target, FImage img)
-{
-	RootPath     = img.root_path;
-	Directory    = img.directory;
-	RelativePath = img.relative_path;
-	Extension    = img.extension;
-
-	bHdr  = img.hdr;
-	bFlip = img.flip;
-
-	GLenum texture_type = FOpenGLInterface::TextureTarget[TextureTarget];
-	GLenum texture_target = FOpenGLInterface::TextureTarget[target];
-
-	GLenum format = 0;
-	switch (img.comp)
-	{
-	case 1:format = GL_RED; break;
-	case 2:format = GL_RG; break;
-	case 3:format = GL_RGB; break;
-	case 4:format = GL_RGBA; break;
-	default:
-		break;
-	}
-
-	glBindTexture(GL_TEXTURE_CUBE_MAP, Texture);
-	for (unsigned int i = 0; i < 6; ++i)
-	{
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, Info.MinMipLevel, FOpenGLInterface::InternalFormat[InternalFormat], Width, Height, 0, format, img.hdr ? GL_FLOAT : GL_UNSIGNED_BYTE, (img.data));
-	}
-	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-}
-
-void FOpenGLTexture::Reload()
-{
-	glDeleteTextures(1, &Texture);
-
-	FImage img(RootPath, RelativePath);
-	img.Load(bHdr, bFlip);
-
-	Ref<FOpenGLTexture> Tmp = FOpenGLTexture::Generate(img,false,Info);
-
-	Texture = Tmp->Texture;
-	ShortCut = Tmp->ShortCut;
-
-
-	Tmp->Texture = 0;
-	Tmp->ShortCut = 0;
-
-	img.Free();
-
 }

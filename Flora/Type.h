@@ -1,6 +1,7 @@
 #pragma once
 typedef unsigned int EWrapMode;
 typedef unsigned int EFilterMode;
+typedef unsigned int EFormat;
 typedef unsigned int EInternalFormat;
 typedef unsigned int ECompareMethod;
 typedef unsigned int EOperation;
@@ -39,6 +40,25 @@ enum :unsigned int
 	EFilterMode_LINEAR_MIPMAP_NEAREST,
 	EFilterMode_NEAREST_MIPMAP_LINEAR,
 	EFilterMode_LINEAR_MIPMAP_LINEAR
+};
+
+enum :unsigned int
+{
+	EFormat_RED,
+	EFormat_RG, 
+	EFormat_RGB, 
+	EFormat_BGR, 
+	EFormat_RGBA,
+	EFormat_BGRA, 
+	EFormat_RED_INTEGER, 
+	EFormat_RG_INTEGER, 
+	EFormat_RGB_INTEGER, 
+	EFormat_BGR_INTEGER, 
+	EFormat_RGBA_INTEGER, 
+	EFormat_BGRA_INTEGER, 
+	EFormat_STENCIL_INDEX, 
+	EFormat_DEPTH_COMPONENT,
+	EFormat_DEPTH_STENCIL
 };
 
 //EInternalFormat_
