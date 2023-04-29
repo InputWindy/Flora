@@ -4,6 +4,7 @@
 #include "Texture.h"
 #include "RenderState.h"
 #include "Material.h"
+#include "Mesh.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -35,6 +36,11 @@ public:
 		IN FTextureInfo Info = FTextureInfo(),/*Texture Params*/
 		IN uint32_t = 4 /*Samples*/
 	) = 0;
+
+	/// <summary>
+	/// apply for a new mesh(empty)
+	/// </summary>
+	virtual Ref<FMesh> GenerateMesh(IN const char* Name) = 0;
 
 	/// <summary>
 	/// apply for a new material(empty)

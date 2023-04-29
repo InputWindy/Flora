@@ -8,7 +8,6 @@ public:
 	FloraEditor()
 	{
 		InitProjectSettings();
-
 		LayerStack.push_back(new EditorLayer);
 	};
 

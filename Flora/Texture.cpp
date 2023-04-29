@@ -3,6 +3,7 @@
 #include "OpenGLInterface.h"
 #include "ResourceManager.h"
 #include "Application.h"
+#include "Console.h"
 #include <filesystem>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
@@ -194,9 +195,9 @@ bool FTexture::Serialize(OUT FJson& out)
 void FTexture::Register()
 {
 	FResourceManager& ResourceManager = FResourceManager::Get();
-	if (ResourceManager.FindObject<FTexture>(Name))
+	if (ResourceManager.FindObject<FTexture>(LastName))
 	{
-		ResourceManager.RemoveObject<FTexture>(Name);
+		ResourceManager.RemoveObject<FTexture>(LastName);
 	}
 	ResourceManager.Register<FTexture>(shared_from_this());
 }
@@ -208,6 +209,12 @@ FTexture::FTexture()
 
 void FTexture::Rename(const string& name)
 {
+	string comment = "Rename From ";
+	comment += Name;
+	comment += " To ";
+	comment += name;
+	PUSH_TRACE_MSG("Texture", comment.c_str());
+	LastName = Name;
 	Name = name;
 	CachePath = "/Cache/Texture/" + Name + ".ftexture";
 }

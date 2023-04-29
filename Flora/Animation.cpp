@@ -1,5 +1,6 @@
 #include "Animation.h"
 #include "ResourceManager.h"
+#include "Console.h"
 #include <functional>
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -184,15 +185,17 @@ void FAnimation::SetData(const aiAnimation* anim)
 void FAnimation::Register()
 {
 	FResourceManager& ResourceManager = FResourceManager::Get();
-	if (ResourceManager.FindObject<FAnimation>(AnimationName))
+	if (ResourceManager.FindObject<FAnimation>(LastName))
 	{
-		ResourceManager.RemoveObject<FAnimation>(AnimationName);
+		ResourceManager.RemoveObject<FAnimation>(LastName);
 	}
 	ResourceManager.Register<FAnimation>(shared_from_this());
 }
 
 void FAnimation::Rename(const string& name)
 {
+	//PUSH_TRACE_MSG("Animation", "Rename From %s To %s", AnimationName.c_str(), name.c_str());
+	LastName = AnimationName;
 	AnimationName = name;
 	CachePath = "/Cache/Animation/" + AnimationName + ".fanimation";
 }

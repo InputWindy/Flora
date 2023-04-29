@@ -72,6 +72,7 @@ void FConsoleContext::AddDebugLog(uint8_t Type, const char* category, const char
             }
             format++;
         }
+        ss << "\0";
         return ss.str();
     };
 

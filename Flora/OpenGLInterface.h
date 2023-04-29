@@ -26,6 +26,11 @@ public:
 	)final;
 
 	/// <summary>
+	/// apply for a new mesh(empty)
+	/// </summary>
+	virtual Ref<FMesh> GenerateMesh(IN const char* Name) final;
+
+	/// <summary>
 	/// apply for a new material(empty)
 	/// </summary>
 	virtual Ref<FMaterial> GenerateMaterial(IN const char* Name) final;

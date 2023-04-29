@@ -4,7 +4,9 @@
 #include "Material.h"
 #include "Animation.h"
 #include "Skeleton.h"
+#include "Mesh.h"
 #include <unordered_map>
+#include <unordered_set>
 class FLORA_API FResourceManager
 {
 protected:
@@ -31,11 +33,15 @@ public:
 	inline const auto& GetMaterials()	const { return Materials; };
 	inline const auto& GetAnimations()	const { return Animations; };
 	inline const auto& GetSkeletons()	const { return Skeletons; };
+	inline const auto& GetMeshes()		const { return Meshes; };
 private:
 	std::unordered_map<std::string, Ref<FTexture>>   Textures;
 	std::unordered_map<std::string, Ref<FMaterial>>  Materials;
 	std::unordered_map<std::string, Ref<FAnimation>> Animations;
 	std::unordered_map<std::string, Ref<FSkeleton>>  Skeletons;
+	std::unordered_map<std::string, Ref<FMesh>>		 Meshes;
+private:
+	static inline std::unordered_set<std::string> LoadedResourcePath;
 };
 
 

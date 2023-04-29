@@ -30,9 +30,6 @@
     <Filter Include="源文件\Core\Serialization">
       <UniqueIdentifier>{f8efdbb1-ad7b-44ee-bb69-3f561f067d03}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\Core\Viewport">
-      <UniqueIdentifier>{8705d12c-a3a6-4df6-a639-a2179aefcfd9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="源文件\Core\UI">
       <UniqueIdentifier>{f5bc9afb-32df-4f63-bad1-daf6985d4f2e}</UniqueIdentifier>
     </Filter>
@@ -66,6 +63,9 @@
     <Filter Include="源文件\Core\Resource\Mesh">
       <UniqueIdentifier>{147ec802-d639-4172-badc-264a7301bbcf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Core\Misc\Viewport">
+      <UniqueIdentifier>{8705d12c-a3a6-4df6-a639-a2179aefcfd9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -78,7 +78,7 @@
       <Filter>源文件\Core\UI</Filter>
     </ClCompile>
     <ClCompile Include="Viewport.cpp">
-      <Filter>源文件\Core\Viewport</Filter>
+      <Filter>源文件\Core\Misc\Viewport</Filter>
     </ClCompile>
     <ClCompile Include="Serialization.cpp">
       <Filter>源文件\Core\Serialization</Filter>
@@ -131,6 +131,15 @@
     <ClCompile Include="Skeleton.cpp">
       <Filter>源文件\Core\Resource\Skeleton</Filter>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>源文件\Core\Resource\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGLMesh.cpp">
+      <Filter>源文件\ThirdParty\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="AABB.cpp">
+      <Filter>源文件\Core\Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Flora.h">
@@ -149,7 +158,7 @@
       <Filter>源文件\Core\UI</Filter>
     </ClInclude>
     <ClInclude Include="Viewport.h">
-      <Filter>源文件\Core\Viewport</Filter>
+      <Filter>源文件\Core\Misc\Viewport</Filter>
     </ClInclude>
     <ClInclude Include="Type.h">
       <Filter>源文件\Core</Filter>
@@ -201,6 +210,24 @@
     </ClInclude>
     <ClInclude Include="Skeleton.h">
       <Filter>源文件\Core\Resource\Skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>源文件\Core\Resource\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGLMesh.h">
+      <Filter>源文件\ThirdParty\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="AABB.h">
+      <Filter>源文件\Core\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc.h">
+      <Filter>源文件\Core\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Render.h">
+      <Filter>源文件\Core\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty.h">
+      <Filter>源文件\ThirdParty</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

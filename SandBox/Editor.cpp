@@ -298,6 +298,7 @@ void PayloadFromContentBrowser(const ImGuiPayload* payload, void* userdata)
 	ResourceManager.LoadObject<FSkeleton>(path.generic_string());
 	ResourceManager.LoadObject<FAnimation>(path.generic_string());
 	ResourceManager.LoadObject<FMaterial>(path.generic_string());
+	ResourceManager.LoadObject<FMesh>(path.generic_string());
 
 	Ref<FTexture> Tex = ResourceManager.LoadObject<FTexture>(path.generic_string());
 	if (Tex)
@@ -369,6 +370,7 @@ void EditorLayer::ResourceViewer()
 			const auto& Materials = Manager.GetMaterials();
 			const auto& Animations = Manager.GetAnimations();
 			const auto& Skeletons = Manager.GetSkeletons();
+			const auto& Meshes = Manager.GetMeshes();
 			if (FUI::CollapsingHeader("Texture"))
 			{
 				FUI::BeginGroup();
@@ -417,6 +419,21 @@ void EditorLayer::ResourceViewer()
 				{
 					if (FUI::TreeNode(Material.second->GetName().c_str()))
 					{
+						FUI::TreePop();
+					}
+				}
+				FUI::EndGroup();
+			}
+
+			if (FUI::CollapsingHeader("Mesh"))
+			{
+				FUI::BeginGroup();
+				for (auto& Mesh : Meshes)
+				{
+					if (FUI::TreeNode(Mesh.second->GetName().c_str()))
+					{
+						FUI::LabelText("Vertex Num","%d", Mesh.second->GetVertexNum());
+						FUI::LabelText("Index Num", "%d", Mesh.second->GetIndexNum());
 						FUI::TreePop();
 					}
 				}

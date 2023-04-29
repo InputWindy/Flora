@@ -2,15 +2,15 @@
 #include "Core.h"
 #include "Type.h"
 #include "Application.h"
-#include "UI.h"
-#include "Viewport.h"
-#include "Resource.h"
-#include "Texture.h"
+#include "Misc.h"
+#include "Render.h"
 #include "ResourceManager.h"
-#include "RenderCommand.h"
-#include "RenderState.h"
-#include "Console.h"
-#include "ContentBrowser.h"
+#include "Serialization.h"
+#include "UI.h"
+
+#ifdef EXPORT_THIRD_PARTY
+#include "ThirdParty.h"
+#endif // EXPORT_THIRD_PARTY
 
 #pragma comment(lib,"ImGui.lib")
 #pragma comment(lib,"Flora.lib")

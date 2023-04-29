@@ -23,6 +23,7 @@ public:
 	inline std::string	 GetCachePath()	  const { return CachePath; };
 protected:
 	EResourceType Type = EResourceType::None;
+	std::string LastName = "";
 
 	std::string CachePath;
 };

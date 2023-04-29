@@ -159,8 +159,11 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="jsoncpp.cpp" />
     <ClCompile Include="Material.cpp" />
+    <ClCompile Include="AABB.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="OpenGLInterface.cpp" />
     <ClCompile Include="OpenGLMaterial.cpp" />
+    <ClCompile Include="OpenGLMesh.cpp" />
     <ClCompile Include="OpenGLTexture.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="RenderCommand.cpp" />
@@ -182,10 +185,15 @@
     <ClInclude Include="Flora.h" />
     <ClInclude Include="EntryPoint.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="AABB.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Misc.h" />
     <ClInclude Include="OpenGLInterface.h" />
     <ClInclude Include="OpenGLMaterial.h" />
+    <ClInclude Include="OpenGLMesh.h" />
     <ClInclude Include="OpenGLTexture.h" />
     <ClInclude Include="Parser.h" />
+    <ClInclude Include="Render.h" />
     <ClInclude Include="RenderCommand.h" />
     <ClInclude Include="RenderState.h" />
     <ClInclude Include="Resource.h" />
@@ -193,6 +201,7 @@
     <ClInclude Include="Serialization.h" />
     <ClInclude Include="Skeleton.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="ThirdParty.h" />
     <ClInclude Include="Type.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Uniform.h" />

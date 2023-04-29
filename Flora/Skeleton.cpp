@@ -1,6 +1,7 @@
 #include "Skeleton.h"
 #include <functional>
 #include "ResourceManager.h"
+#include "Console.h"
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include <assimp/Importer.hpp>
@@ -75,15 +76,17 @@ bool FSkeleton::Serialize(OUT FJson& Out)
 void FSkeleton::Register()
 {
 	FResourceManager& ResourceManager = FResourceManager::Get();
-	if (ResourceManager.FindObject<FSkeleton>(SkeletonName))
+	if (ResourceManager.FindObject<FSkeleton>(LastName))
 	{
-		ResourceManager.RemoveObject<FSkeleton>(SkeletonName);
+		ResourceManager.RemoveObject<FSkeleton>(LastName);
 	}
 	ResourceManager.Register<FSkeleton>(shared_from_this());
 }
 
 void FSkeleton::Rename(const string& name)
 {
+	//PUSH_TRACE_MSG("Skeleton", "Rename From %s To %s", SkeletonName, name);
+	LastName = SkeletonName;
 	SkeletonName = name;
 	CachePath = "/Cache/Skeleton/" + SkeletonName + ".fskeleton";
 }
@@ -103,8 +106,6 @@ void FSkeleton::SetData(const aiScene* scene)
 		}
 		return m;
 	};
-
-	unordered_map<string, pair<int, mat4>> BoneInfoTable;
 
 	for (uint32_t Idx = 0; Idx < scene->mNumMeshes; Idx++)
 	{

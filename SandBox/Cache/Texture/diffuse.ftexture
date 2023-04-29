@@ -1,0 +1,28 @@
+{
+	"Depth" : 0,
+	"Height" : 1024,
+	"ImageDesc" : 
+	{
+		"Component" : 4,
+		"Directory" : "/Model/man",
+		"Extension" : ".png",
+		"Flip" : false,
+		"Hdr" : false,
+		"Height" : 1024,
+		"Name" : "diffuse",
+		"RelativePath" : "/Model/man/diffuse.png",
+		"RootPath" : "C:/Users/InputWindy/Desktop/SandBox/SandBox",
+		"Width" : 1024
+	},
+	"InternalFormat" : "RGBA32F",
+	"MagFilterMode" : "LINEAR",
+	"MaxMipLevel" : 0,
+	"MinFilterMode" : "LINEAR",
+	"MinMipLevel" : 0,
+	"Name" : "diffuse",
+	"TextureTarget" : "2D",
+	"Width" : 1024,
+	"WrapModeR" : "REPEAT",
+	"WrapModeS" : "REPEAT",
+	"WrapModeT" : "REPEAT"
+}

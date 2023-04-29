@@ -1,6 +1,8 @@
 #include "OpenGLInterface.h"
 #include "OpenGLTexture.h"
 #include "OpenGLMaterial.h"
+#include "OpenGLMesh.h"
+#include "ResourceManager.h"
 #include "Console.h"
 #include "ContentBrowser.h"
 #include "Application.h"
@@ -267,7 +269,82 @@ bool FOpenGLInterface::InitResources()
 	FMaterial::StandardOpacityShader->Register();
 
 	//load engine mesh (cube & sphere & cone & plane)
+	{
+		vector<FVertex> Vertices;
+		vector<unsigned int> Indices;
 
+		FAABB OBB;
+
+		Vertices.push_back({ -1, 1,-1 });
+		Vertices.push_back({ -1, 1, 1 });
+		Vertices.push_back({  1, 1, 1 });
+		Vertices.push_back({  1, 1,-1 });
+		Vertices.push_back({ -1,-1,-1 });
+		Vertices.push_back({ -1,-1, 1 });
+		Vertices.push_back({  1,-1, 1 });
+		Vertices.push_back({  1,-1,-1 });
+		Indices =
+		{
+			0,1,2,3,0,
+			4,7,3,
+			2,6,7,
+			4,5,6,2,
+			1,5,4
+		};
+
+		for (auto& Vert : Vertices)
+		{
+			OBB.AddPoint(Vert.Position);
+		}
+
+		FMesh::CubeFrame = GenerateMesh("CubeFrame");
+		FMesh::CubeFrame->SetData(Vertices,Indices,OBB);
+		FMesh::CubeFrame->Register();
+	}
+
+	{
+		vector<FVertex> Vertices;
+		vector<unsigned int> Indices;
+
+		FAABB OBB;
+
+		Vertices.push_back({ 0,0,0 });
+		Vertices.push_back({ 0,1,0 });
+		Vertices.push_back({ 1,1,0 });
+		Vertices.push_back({ 1,0,0 });
+		Indices =
+		{
+			0,1,2,
+			2,0,3
+		};
+
+		for (auto& Vert : Vertices)
+		{
+			OBB.AddPoint(Vert.Position);
+		}
+
+		FMesh::Screen = GenerateMesh("Screen");
+		FMesh::Screen->SetData(Vertices, Indices, OBB);
+		FMesh::Screen->Register();
+	}
+
+
+	FResourceManager& ResourceManager = FResourceManager::Get();
+	FMesh::Cube = ResourceManager.LoadObject<FMesh>(Content.RootPath + "/Model/Engine/Cube.fbx");
+	FMesh::Cube->Rename("Cube");
+	FMesh::Cube->Register();
+	FMesh::Sphere = ResourceManager.LoadObject<FMesh>(Content.RootPath + "/Model/Engine/Sphere.fbx");
+	FMesh::Sphere->Rename("Sphere");
+	FMesh::Sphere->Register();
+	FMesh::Cone = ResourceManager.LoadObject<FMesh>(Content.RootPath + "/Model/Engine/Cone.fbx");
+	FMesh::Cone->Rename("Cone");
+	FMesh::Cone->Register();
+	FMesh::Cylinder = ResourceManager.LoadObject<FMesh>(Content.RootPath + "/Model/Engine/Cylinder.fbx");
+	FMesh::Cylinder->Rename("Cylinder");
+	FMesh::Cylinder->Register();
+	FMesh::Plane = ResourceManager.LoadObject<FMesh>(Content.RootPath + "/Model/Engine/Plane.fbx");
+	FMesh::Plane->Rename("Plane");
+	FMesh::Plane->Register();
 	return true;
 }
 
@@ -275,6 +352,11 @@ Ref<FTexture> FOpenGLInterface::GenerateTexture(IN const char* name, IN uint16_t
 	IN ETextureTarget target, IN EInternalFormat inform, IN FTextureInfo info, IN uint32_t samples)
 {
 	return make_shared<FOpenGLTexture>(name,w,h,z,target,inform, info,samples);
+}
+
+Ref<FMesh> FOpenGLInterface::GenerateMesh(IN const char* Name)
+{
+	return make_shared<FOpenGLMesh>(Name);
 }
 
 Ref<FMaterial> FOpenGLInterface::GenerateMaterial(IN const char* Name)

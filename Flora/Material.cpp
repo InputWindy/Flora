@@ -1,5 +1,6 @@
 #include "Material.h"
 #include "ResourceManager.h"
+#include "Console.h"
 #include "Parser.h"
 FMaterial::FMaterial()
 {
@@ -18,15 +19,17 @@ Ref<FMaterialInstance> FMaterial::GetInstance()
 void FMaterial::Register()
 {
 	FResourceManager& ResourceManager = FResourceManager::Get();
-	if (ResourceManager.FindObject<FMaterial>(MaterialName))
+	if (ResourceManager.FindObject<FMaterial>(LastName))
 	{
-		ResourceManager.RemoveObject<FMaterial>(MaterialName);
+		ResourceManager.RemoveObject<FMaterial>(LastName);
 	}
 	ResourceManager.Register<FMaterial>(shared_from_this());
 }
 
 void FMaterial::Rename(const string& name)
 {
+	//PUSH_TRACE_MSG("Material", "Rename From %s To %s", MaterialName, name);
+	LastName = MaterialName;
 	MaterialName = name;
 	CachePath = "/Cache/Material/" + MaterialName + ".fmaterial";
 }

@@ -33,6 +33,7 @@ public:
 	inline uint32_t		 GetBoneNum() const { return BoneNum; };
 
 	void GetBoneTransforms(std::vector<glm::mat4>& InOut);
+	inline auto& GetBoneInfoTable(){ return BoneInfoTable; };
 public:
 	virtual void SetData(const aiScene*);
 public:
@@ -47,5 +48,7 @@ protected:
 	FBone		RootBone;
 	uint32_t	BoneNum;
 	glm::mat4	GlobalInverseMatrix = glm::identity<glm::mat4>();
+
+	unordered_map<string, pair<int, glm::mat4>> BoneInfoTable;
 };
 
