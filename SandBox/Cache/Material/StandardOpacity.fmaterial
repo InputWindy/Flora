@@ -12,7 +12,7 @@
 		},
 		"Culling" : 
 		{
-			"CullMode" : "CW",
+			"CullMode" : "BACK",
 			"EnableCull" : false,
 			"FrontDefinition" : "CCW"
 		},

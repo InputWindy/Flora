@@ -3,15 +3,11 @@
 class FLORA_API FOpenGLMaterial:public FMaterial
 {
 public:
-	FOpenGLMaterial()= default;
-public:
+	FOpenGLMaterial(const char*);
 	virtual ~FOpenGLMaterial();
-	static Ref<FOpenGLMaterial> Generate();
-	static Ref<FOpenGLMaterial> Generate(const char*, const char* = "", const char* = "");
 public:
+	virtual void	 SetData(const string&, const string&) final;
 	virtual uint32_t GetHandle()const final;
-
-	virtual void Reload() final;
 protected:
 	uint32_t Handle = 0;
 };

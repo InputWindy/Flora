@@ -8,11 +8,7 @@
 
 #include "Texture.h"
 
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-#include <assimp/Importer.hpp>
 
-#pragma comment(lib,"assimp-vc142-mtd.lib")
 
 #define REVERSE_BIT(x,y)  x^=(1<<y)
 
@@ -232,7 +228,7 @@ void EditorLayer::ContentBrowser()
 					{
 						FContentBrowserContext::FTreeNode& ChildNode = FContentBrowserContext::FTreeNode::GetTreeNodes()[CurrentNode.ChildIdx + Idx];
 						
-						uint32_t Handle = ChildNode.ChildCount == -1 ? Content.FileIcon : Content.DirectoryIcon;
+						uint32_t Handle = ChildNode.ChildCount == -1 ? Content.FileIcon->GetHandle() : Content.DirectoryIcon->GetHandle();
 						
 						FUI::ImageButton((ImTextureID)Handle, { 100 ,100 },ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
 						if (FUI::IsItemClicked(ImGuiMouseButton_Left))
@@ -299,55 +295,15 @@ void PayloadFromContentBrowser(const ImGuiPayload* payload, void* userdata)
 
 	std::filesystem::path& path = *((std::filesystem::path*)payload->Data);
 
-	//load map
+	ResourceManager.LoadObject<FSkeleton>(path.generic_string());
+	ResourceManager.LoadObject<FAnimation>(path.generic_string());
+	ResourceManager.LoadObject<FMaterial>(path.generic_string());
 
-	//load model
-
-	//load animation
-	/*Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(path.generic_string().c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
-	FAnimation::Generate(path.stem().generic_string().c_str(),scene->HasAnimations() ? scene->mAnimations[0] : nullptr)->Register();*/
-
-	/*Ref<FAnimation> Animation = FAnimation::Generate();
-	Animation->LoadFromFile(path.generic_string().c_str());
-	Animation->Register();*/
-
-	//load skeleton
-	/*Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(path.generic_string().c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
-	FSkeleton::Generate(path.stem().generic_string().c_str(),scene)->Register();*/
-	/*Ref<FSkeleton> Skeleton = FSkeleton::Generate();
-	Skeleton->LoadFromFile(path.generic_string().c_str());
-	Skeleton->Register();*/
-	//load audio
-
-	////load material
-	//Ref<FMaterial> Mat = ResourceManager.FindObject<FMaterial>(path.stem().generic_string());
-	//if (!Mat)
-	//{
-	//	string filepath = path.generic_string().c_str();
-	//	//filepath = filepath.substr(Content.RootPath.size(), filepath.size() - 1);
-	//	Mat = FApplication::GetRHI()->GenerateMaterial();
-	//	Mat->LoadFromFile(filepath);
-	//	//Tex->SaveToFile(Content.RootPath + "/Cache/Texture/" + Tex->GetName() + ".ftexture");
-	//	Mat->Register();
-	//}
-
-	////load test texture
-	string filepath = path.generic_string().c_str();
-	filepath = filepath.substr(Content.RootPath.size(), filepath.size() - 1);
-	Ref<FImage> Img = std::make_shared<FImage>(Content.RootPath, filepath);
-	Ref<FTexture> Tex = FApplication::GetRHI()->GenerateTexture(path.stem().generic_string().c_str(), 100, 100, 0, ETextureTarget_2D,
-		EInternalFormat_RGBA32F);
-	//Tex->SetImageData(Img);
-	Tex->LoadFromFile(path.generic_string().c_str());
-	Tex->Register();
-	
-	//Ref<FTexture> Tex = FApplication::GetRHI()->GenerateTexture();
-	//Tex->LoadFromFile(filepath);
-	//Tex->Register();
-
-	if (Tex)	*(uint32_t*)userdata = Tex->GetHandle();
+	Ref<FTexture> Tex = ResourceManager.LoadObject<FTexture>(path.generic_string());
+	if (Tex)
+	{
+		*(uint32_t*)userdata = Tex->GetHandle();
+	}
 	
 }
 
@@ -418,7 +374,7 @@ void EditorLayer::ResourceViewer()
 				FUI::BeginGroup();
 				for (auto& Texture : Textures)
 				{
-					if (FUI::TreeNode(Texture.second->GetName().c_str()))
+					if (FUI::TreeNode(Utils::unicode2utf8(Texture.second->GetName()).c_str()))
 					{
 						FRenderCommand* Rhi = FApplication::GetRHI();
 						FUI::LabelText("Texture Type", Rhi->TextureTargetToString(Texture.second->GetTextureType()));

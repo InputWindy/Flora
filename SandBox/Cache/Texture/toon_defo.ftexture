@@ -1,0 +1,28 @@
+{
+	"Depth" : 0,
+	"Height" : 16,
+	"ImageDesc" : 
+	{
+		"Component" : 3,
+		"Directory" : "/Model/naxida",
+		"Extension" : ".bmp",
+		"Flip" : false,
+		"Hdr" : false,
+		"Height" : 16,
+		"Name" : "toon_defo",
+		"RelativePath" : "/Model/naxida/toon_defo.bmp",
+		"RootPath" : "C:/Users/InputWindy/Desktop/SandBox/SandBox",
+		"Width" : 16
+	},
+	"InternalFormat" : "RGBA32F",
+	"MagFilterMode" : "LINEAR",
+	"MaxMipLevel" : 0,
+	"MinFilterMode" : "LINEAR",
+	"MinMipLevel" : 0,
+	"Name" : "toon_defo",
+	"TextureTarget" : "2D",
+	"Width" : 16,
+	"WrapModeR" : "REPEAT",
+	"WrapModeS" : "REPEAT",
+	"WrapModeT" : "REPEAT"
+}

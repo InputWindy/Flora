@@ -56,6 +56,6 @@ bool FRenderState::Serialize(OUT FJson& Out)
     FJson& Culling = Out["Culling"];
     Culling["EnableCull"] = bEnableCull;
     Culling["FrontDefinition"] = Rhi->FrontFaceToString(mFrontDefinition);
-    Culling["CullMode"] = Rhi->FrontFaceToString(mCullMode);
+    Culling["CullMode"] = Rhi->CullModeToString(mCullMode);
     return true;
 }

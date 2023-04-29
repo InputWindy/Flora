@@ -1,6 +1,8 @@
 #pragma once
 #include "Core.h"
 #include "Serialization.h"
+#include <string>
+using namespace std;
 enum class EResourceType
 {
 	None,
@@ -15,6 +17,7 @@ class FLORA_API IResource
 {
 public:
 	virtual void Register() = 0;
+	virtual void Rename(const string& name) = 0;
 
 	inline EResourceType GetResourceType()const { return Type; };
 	inline std::string	 GetCachePath()	  const { return CachePath; };

@@ -68,7 +68,7 @@ void FApplication::CreateContext(FApplication* app)
 {
 	GEngine = app;
 	GEngine->LoadProjectSettings();
-	GEngine->LoadEngineResources();
+	GRhi->InitResources();
 }
 
 inline FApplication* FApplication::GetApp()
@@ -156,11 +156,6 @@ void FApplication::LoadProjectSettings()
 	glfwSetWindowSize((GLFWwindow*)WindowHandle,Width,Height);
 	GRhi = FRenderCommand::Create(GEngine->RHIType);
 }
-void FApplication::LoadEngineResources()
-{
-	GRhi->InitResources();
-}
-;
 
 #include <windows.h>
 BOOL APIENTRY DllMain(HMODULE hModule,

@@ -3,9 +3,12 @@
 #include "OpenGLMaterial.h"
 #include "Console.h"
 #include "ContentBrowser.h"
+#include "Application.h"
 #include <glad.h>
 #include <iostream>
-
+#include <functional>
+#include <memory>
+using namespace std;
 using namespace glm;
 uint32_t FOpenGLInterface::CompareMethod[] =
 {
@@ -200,14 +203,18 @@ bool FOpenGLInterface::InitResources()
 {
 	FContentBrowserContext& Content = FContentBrowserContext::Get();
 
-	////load engine texture
-	//FTexture::White   = GenerateTexture(Content.RootPath, "/Image/white.jpg");
-	//FTexture::Black   = GenerateTexture(Content.RootPath, "/Image/black.jpg");
-	//FTexture::Default = GenerateTexture(Content.RootPath, "/Image/default.jpg");
+	//load engine texture
+	FTexture::White   = FApplication::GetRHI()->GenerateTexture("white",   0, 0, 0, ETextureTarget_2D, EInternalFormat_RGBA32F);
+	FTexture::Black   = FApplication::GetRHI()->GenerateTexture("black",   0, 0, 0, ETextureTarget_2D, EInternalFormat_RGBA32F);
+	FTexture::Default = FApplication::GetRHI()->GenerateTexture("default", 0, 0, 0, ETextureTarget_2D, EInternalFormat_RGBA32F);
 
-	//FTexture::White->Register();
-	//FTexture::Black->Register();
-	//FTexture::Default->Register();
+	FTexture::White->SetImageData(std::make_shared<FImage>(Content.RootPath, "/Image/white.jpg"));
+	FTexture::Black->SetImageData(std::make_shared<FImage>(Content.RootPath, "/Image/black.jpg"));
+	FTexture::Default->SetImageData(std::make_shared<FImage>(Content.RootPath, "/Image/default.jpg"));
+
+	FTexture::White->Register();
+	FTexture::Black->Register();
+	FTexture::Default->Register();
 
 	//load engine material
 	const char* EquirectangularMapToCubemapVShader =
@@ -231,27 +238,32 @@ bool FOpenGLInterface::InitResources()
 		"\tvec3 color = texture(EquirectangularMap, uv).rgb;\n\n"
 		"\tFragColor = vec4(color, 1.0); \n"
 		"}\n";
-	FMaterial::EquirectangularMapToCubemapShader = GenerateMaterial("EquirectangularMapToCubemap", EquirectangularMapToCubemapVShader, EquirectangularMapToCubemapFShader);
+	FMaterial::EquirectangularMapToCubemapShader = GenerateMaterial("EquirectangularMapToCubemap");
+	FMaterial::EquirectangularMapToCubemapShader->SetData(EquirectangularMapToCubemapVShader, EquirectangularMapToCubemapFShader);
 	FMaterial::EquirectangularMapToCubemapShader->Register();
 
 	const char* SkyBoxVShader = "#version 430 core\nlayout (location = 0) in vec3 aPosition;\n\nout vec3 TexCoords;\n\nuniform mat4 Projection;\nuniform mat4 View;\n\nvoid main()\n{\n\tTexCoords = aPosition;\n\tvec4 pos = Projection * mat4(mat3(View)) * vec4(aPosition, 1.0);\n\tgl_Position = pos.xyww;\n}";
 	const char* SkyBoxFShader = "#version 430 core\nin vec3 TexCoords;\n\nuniform samplerCube Skybox;\n\nvoid main()\n{\n\tgl_FragColor = texture(Skybox, TexCoords);\n}";
-	FMaterial::SkyBoxShader = GenerateMaterial("SkyBox", SkyBoxVShader, SkyBoxFShader);
+	FMaterial::SkyBoxShader = GenerateMaterial("SkyBox");
+	FMaterial::SkyBoxShader->SetData(SkyBoxVShader, SkyBoxFShader);
 	FMaterial::SkyBoxShader->Register();
 
 	const char* StandardPostprocessVShader = "#version 450 core\nlayout(location = 0)  in vec3 aPosition;\nlayout(location = 6)  in vec3 aUV0;\n\nout vec2 TexCoord;\n\nvoid main()\n{\n    TexCoord = aUV0.xy;\n    gl_Position = vec4(aPosition.x, aPosition.y, 0.0, 1.0); \n}";
 	const char* StandardPostprocessFShader = "#version 450 \nin vec2 TexCoord;\n\nuniform sampler2D SceneTexture;\n\nvoid main()\n{\n    gl_FragColor = texture(SceneTexture,TexCoord);\n}";
-	FMaterial::StandardPostprocessShader = GenerateMaterial("StandardPostprocess", StandardPostprocessVShader, StandardPostprocessFShader);
+	FMaterial::StandardPostprocessShader = GenerateMaterial("StandardPostprocess");
+	FMaterial::StandardPostprocessShader->SetData(StandardPostprocessVShader, StandardPostprocessFShader);
 	FMaterial::StandardPostprocessShader->Register();
 
 	const char* DrawDebugCubeVShader = "#version 430 core\nlayout (location = 0) in vec3 aPosition;\n\nuniform mat4 Model[50];\nuniform mat4 Projection;\nuniform mat4 View;\n\nvoid main()\n{\n\tgl_Position = Projection * View * Model[gl_InstanceID] * vec4(aPosition, 1.0);\n} ";
 	const char* DrawDebugCubeFShader = "#version 430 core\n\nvoid main()\n{\n\tgl_FragColor = vec4(1.0f,0.0,0.0,1.0f);\n}";
-	FMaterial::DrawDebugCubeShader = GenerateMaterial("DrawDebugCube", DrawDebugCubeVShader, DrawDebugCubeFShader);
+	FMaterial::DrawDebugCubeShader = GenerateMaterial("DrawDebugCube");
+	FMaterial::DrawDebugCubeShader->SetData(DrawDebugCubeVShader, DrawDebugCubeFShader);
 	FMaterial::DrawDebugCubeShader->Register();
 
 	const char* StandardOpacityVShader = "#version 450 core\nlayout(location = 0)  in vec3 aPosition;\nlayout(location = 1)  in vec3 aTangent;\nlayout(location = 2)  in vec3 aBitangent;\nlayout(location = 3)  in vec3 aNormal;\nlayout(location = 4)  in vec4 aBones;\nlayout(location = 5)  in vec4 aBoneWeights;\nlayout(location = 6)  in vec3 aUV0;\nlayout(location = 7)  in vec3 aUV1;\nlayout(location = 8)  in vec3 aUV2;\nlayout(location = 9)  in vec3 aUV3;\nlayout(location = 10) in vec4 aColor0;\nlayout(location = 11) in vec4 aColor1;\nlayout(location = 12) in vec4 aColor2;\nlayout(location = 13) in vec4 aColor3;\n\n//[internal]\nuniform mat4 Model;   \n//[internal]\nuniform mat4 View;\n//[internal]\nuniform mat4 Projection;\n//[internal]\nuniform mat4 BoneTransforms[50];\n//[internal]\nuniform bool bUseSkeletonAnimation;\n\nout vec2 TexCoord;\n\nvoid main()\n{\n\tmat4 boneTransform  =  mat4(1.0);\n\tboneTransform  +=    BoneTransforms[int(aBones.x)] * aBoneWeights.x;\n\tboneTransform  +=    BoneTransforms[int(aBones.y)] * aBoneWeights.y;\n\tboneTransform  +=  BoneTransforms[int(aBones.z)] * aBoneWeights.z;\n\tboneTransform  +=    BoneTransforms[int(aBones.w)] * aBoneWeights.w;\n\n\tTexCoord = aUV0.xy;\n\tgl_Position =  Projection * View * Model * boneTransform * vec4(aPosition, 1.0);\n}";
 	const char* StandardOpacityFShader = "#version 450 compatibility\nin vec2 TexCoord;\n\nuniform sampler2D gAlbedo;\n\nvoid main()\n{\n\tgl_FragColor = texture(gAlbedo,TexCoord);\n}";
-	FMaterial::StandardOpacityShader = GenerateMaterial("StandardOpacity", StandardOpacityVShader, StandardOpacityFShader);
+	FMaterial::StandardOpacityShader = GenerateMaterial("StandardOpacity");
+	FMaterial::StandardOpacityShader->SetData(StandardOpacityVShader, StandardOpacityFShader);
 	FMaterial::StandardOpacityShader->Register();
 
 	//load engine mesh (cube & sphere & cone & plane)
@@ -265,14 +277,9 @@ Ref<FTexture> FOpenGLInterface::GenerateTexture(IN const char* name, IN uint16_t
 	return make_shared<FOpenGLTexture>(name,w,h,z,target,inform, info,samples);
 }
 
-Ref<FMaterial> FOpenGLInterface::GenerateMaterial(IN const char* Name, IN const char* vshader, IN const char* fshader)
+Ref<FMaterial> FOpenGLInterface::GenerateMaterial(IN const char* Name)
 {
-	return FOpenGLMaterial::Generate(Name, vshader, fshader);
-}
-
-Ref<FMaterial> FOpenGLInterface::GenerateMaterial()
-{
-	return FOpenGLMaterial::Generate();
+	return make_shared<FOpenGLMaterial>(Name);
 }
 
 void FOpenGLInterface::SetBool(const char* Name, uint32_t material, const bool& Data)

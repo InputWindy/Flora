@@ -50,14 +50,18 @@ public:
 	
 	Ref<FMaterialInstance> GetInstance();
 public:
-	virtual uint32_t GetHandle()const = 0;
-public:
+	//resource interface
 	virtual void Register()final;
+	virtual void Rename(const string& name) final;
+
+	//serialize interface
 	virtual bool Parse(IN FJson&)final;
 	virtual bool Serialize(OUT FJson&)final;
+public:
+	virtual void	 SetData(const string&, const string&) = 0;
+	virtual uint32_t GetHandle()const = 0;
 protected:
 	void GenerateUniforms();
-	virtual void Reload() = 0;
 protected:
 	std::string MaterialName;
 

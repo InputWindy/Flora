@@ -5,19 +5,15 @@
 #include <assimp/postprocess.h>
 #include <assimp/Importer.hpp>
 struct FSkeletonEnabler :public FSkeleton {};
-FSkeleton::FSkeleton()
+FSkeleton::FSkeleton(const char* name)
 {
 	Type = EResourceType::Skeleton;
-}
-Ref<FSkeleton> FSkeleton::Generate()
-{
-	return std::make_shared<FSkeletonEnabler>();
-}
-
+	Rename(name);
+};
 
 bool FSkeleton::Parse(IN FJson& In)
 {
-	SkeletonName = In["SkeletonName"].asString();
+	Rename(In["SkeletonName"].asString());
 	BoneNum = In["BoneNum"].asUInt();
 
 	FJson& g_inv_mat = In["GlobalInverseMatrix"];
@@ -86,15 +82,15 @@ void FSkeleton::Register()
 	ResourceManager.Register<FSkeleton>(shared_from_this());
 }
 
-Ref<FSkeleton> FSkeleton::Generate(const char* name, const aiScene* scene)
+void FSkeleton::Rename(const string& name)
 {
-	if (!name || !scene)return nullptr;
-	
-	Ref<FSkeleton> Res = std::make_shared<FSkeletonEnabler>();
+	SkeletonName = name;
+	CachePath = "/Cache/Skeleton/" + SkeletonName + ".fskeleton";
+}
 
-	Res->SkeletonName = name;
-	Res->CachePath = "/Cache/Skeleton/" + Res->SkeletonName + ".fskeleton";
-
+void FSkeleton::SetData(const aiScene* scene)
+{
+	if (!scene)return;
 	auto assimpToGlmMatrix = [](aiMatrix4x4 mat)->glm::mat4
 	{
 		glm::mat4 m;
@@ -121,11 +117,10 @@ Ref<FSkeleton> FSkeleton::Generate(const char* name, const aiScene* scene)
 		}
 	}
 
-	Res->BoneNum = BoneInfoTable.size();
-	//Res->BoneTransforms.resize(Res->BoneNum, mat4(1.0f));
+	BoneNum = BoneInfoTable.size();
 
 	std::function<void(FBone& boneOutput, aiNode* node, std::unordered_map<std::string, std::pair<int, glm::mat4>>& boneInfoTable, glm::mat4)>
-		readSkeleton = [&readSkeleton, &assimpToGlmMatrix, &Res](FBone& boneOutput, aiNode* node, std::unordered_map<std::string, std::pair<int, glm::mat4>>& boneInfoTable, mat4 transform)
+		readSkeleton = [&readSkeleton, &assimpToGlmMatrix,this](FBone& boneOutput, aiNode* node, std::unordered_map<std::string, std::pair<int, glm::mat4>>& boneInfoTable, mat4 transform)
 	{
 		if (boneInfoTable.find(node->mName.C_Str()) != boneInfoTable.end())
 		{
@@ -152,14 +147,13 @@ Ref<FSkeleton> FSkeleton::Generate(const char* name, const aiScene* scene)
 		return;
 	};
 
-	readSkeleton(Res->RootBone, scene->mRootNode, BoneInfoTable, mat4(1.0f));
-
-	return Res;
+	readSkeleton(RootBone, scene->mRootNode, BoneInfoTable, mat4(1.0f));
 }
 
 bool FBone::Parse(IN FJson& In)
 {
 	Name = In["BoneName"].asString();
+	Id = In["Id"].asInt();
 	FJson& offset_matrix = In["OffsetMatrix"];
 	OffsetMatrix[0][0] = offset_matrix["00"].asFloat();
 	OffsetMatrix[0][1] = offset_matrix["01"].asFloat();
@@ -214,6 +208,7 @@ bool FBone::Parse(IN FJson& In)
 bool FBone::Serialize(OUT FJson& Out)
 {
 	Out["BoneName"] = Name;
+	Out["Id"] = Id;
 	FJson& offset_matrix = Out["OffsetMatrix"];
 	offset_matrix["00"] = OffsetMatrix[0][0];
 	offset_matrix["01"] = OffsetMatrix[0][1];

@@ -130,13 +130,11 @@ bool FImage::Serialize(OUT FJson& Out)
 bool FTexture::Parse(IN FJson& in)
 {
 	FRenderCommand* Rhi = FApplication::GetRHI();
+	Rename(in["Name"].asString());
 
-	Name   = in["Name"].asString();
 	Width  = in["Width"].asInt();
 	Height = in["Height"].asInt();
 	Depth  = in["Depth"].asInt();
-
-	CachePath = "/Cache/Texture/" + Name + ".ftexture";
 
 	TextureTarget = Rhi->StringToTextureTarget(in["TextureTarget"].asCString());
 	InternalFormat = Rhi->StringToInternalFormat(in["InternalFormat"].asCString());
@@ -208,7 +206,7 @@ FTexture::FTexture()
 	Type = EResourceType::Texture;
 }
 
-inline void FTexture::Rename(const string& name)
+void FTexture::Rename(const string& name)
 {
 	Name = name;
 	CachePath = "/Cache/Texture/" + Name + ".ftexture";

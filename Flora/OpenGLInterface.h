@@ -26,18 +26,9 @@ public:
 	)final;
 
 	/// <summary>
-	/// apply for a new material
-	/// </summary>
-	virtual Ref<FMaterial> GenerateMaterial(
-		IN const char* Name,/*material name*/
-		IN const char* VertexShader = "",/*vshader(default empty)*/
-		IN const char* FragmentShader = ""/*fshader(default empty)*/
-	)final;
-
-	/// <summary>
 	/// apply for a new material(empty)
 	/// </summary>
-	virtual Ref<FMaterial> GenerateMaterial()final;
+	virtual Ref<FMaterial> GenerateMaterial(IN const char* Name) final;
 public:
 	virtual void SetBool(const char*, uint32_t, const bool&)override;
 	virtual void SetInt(const char*, uint32_t, const int&)override;

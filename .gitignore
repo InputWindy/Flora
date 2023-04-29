@@ -42,6 +42,10 @@
 # Folders
 /.vs
 /x64
+/Flora/x64
+/ImGui/x64
 /SandBox/x64
+/SandBox/Model
+
 
 

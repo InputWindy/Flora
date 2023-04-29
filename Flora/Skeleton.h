@@ -24,12 +24,9 @@ public:
 
 class FLORA_API FSkeleton :public std::enable_shared_from_this<FSkeleton>, public IResource, public ISerialization
 {
-protected:
-	FSkeleton();
 public:
+	FSkeleton(const char*);
 	virtual ~FSkeleton() = default;
-	static Ref<FSkeleton> Generate();
-	static Ref<FSkeleton> Generate(const char*, const aiScene*);
 
 	inline std::string	 GetName()	  const { return SkeletonName; };
 	inline const FBone&	 GetBoneTree()const { return RootBone; };
@@ -37,10 +34,13 @@ public:
 
 	void GetBoneTransforms(std::vector<glm::mat4>& InOut);
 public:
+	virtual void SetData(const aiScene*);
+public:
 	virtual bool Parse(IN FJson&) final;
 	virtual bool Serialize(OUT FJson&) final;
 
 	virtual void Register() final;
+	virtual void Rename(const string& name) final;
 protected:
 	std::string	SkeletonName;
 

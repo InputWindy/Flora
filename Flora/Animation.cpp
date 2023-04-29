@@ -11,76 +11,6 @@
 #include <assimp/Importer.hpp>
 #pragma comment(lib,"assimp-vc142-mtd.lib")
 
-struct FAnimationEnabler :public FAnimation {};
-
-FAnimation::FAnimation()
-{
-    Type = EResourceType::Animation;
-}
-
-void FAnimation::Reload()
-{
-
-}
-
-Ref<FAnimation> FAnimation::Generate()
-{
-	return std::make_shared<FAnimationEnabler>();;
-}
-
-Ref<FAnimation> FAnimation::Generate(const char* name, const aiAnimation* anim)
-{
-    if (!anim || !name)return nullptr;
-
-	auto assimpToGlmVec3 = [](aiVector3D vec)->glm::vec3
-	{
-		return glm::vec3(vec.x, vec.y, vec.z);
-	};
-	auto assimpToGlmQuat = [](aiQuaternion quat)->glm::quat 
-	{
-		glm::quat q;
-		q.x = quat.x;
-		q.y = quat.y;
-		q.z = quat.z;
-		q.w = quat.w;
-
-		return q;
-	};
-
-    Ref<FAnimation> Res = std::make_shared<FAnimationEnabler>();
-
-	Res->AnimationName = name;
-	Res->Duration = anim->mDuration;
-	Res->TicksPerSecond = anim->mTicksPerSecond;
-	Res->BoneTransforms.clear();
-
-	Res->CachePath = "/Cache/Animation/" + Res->AnimationName + ".fanimation";
-
-	for (int Idx = 0; Idx < anim->mNumChannels; ++Idx)
-	{
-		aiNodeAnim* Channel = anim->mChannels[Idx];
-		FBoneTransformTrack Track;
-		for (int TrackIdx = 0; TrackIdx < Channel->mNumPositionKeys; ++TrackIdx)
-		{
-			Track.positionTimestamps.push_back(Channel->mPositionKeys[TrackIdx].mTime);
-			Track.positions.push_back(assimpToGlmVec3(Channel->mPositionKeys[TrackIdx].mValue));
-		}
-		for (int TrackIdx = 0; TrackIdx < Channel->mNumRotationKeys; ++TrackIdx)
-		{
-			Track.rotationTimestamps.push_back(Channel->mRotationKeys[TrackIdx].mTime);
-			Track.rotations.push_back(assimpToGlmQuat(Channel->mRotationKeys[TrackIdx].mValue));
-		}
-		for (int TrackIdx = 0; TrackIdx < Channel->mNumScalingKeys; ++TrackIdx)
-		{
-			Track.scaleTimestamps.push_back(Channel->mScalingKeys[TrackIdx].mTime);
-			Track.scales.push_back(assimpToGlmVec3(Channel->mScalingKeys[TrackIdx].mValue));
-		}
-		Res->BoneTransforms[Channel->mNodeName.C_Str()] = Track;
-	}
-
-    return Res;
-}
-
 bool FAnimation::Parse(IN FJson& In)
 {
 	AnimationName = In["AnimationName"].asString();
@@ -198,6 +128,59 @@ bool FAnimation::Serialize(OUT FJson& Out)
 	return true;
 }
 
+FAnimation::FAnimation(const char* name)
+{
+	Type = EResourceType::Animation;
+	Rename(name);
+}
+
+void FAnimation::SetData(const aiAnimation* anim)
+{
+	if (!anim)return;
+
+	auto assimpToGlmVec3 = [](aiVector3D vec)->glm::vec3
+	{
+		return glm::vec3(vec.x, vec.y, vec.z);
+	};
+	auto assimpToGlmQuat = [](aiQuaternion quat)->glm::quat
+	{
+		glm::quat q;
+		q.x = quat.x;
+		q.y = quat.y;
+		q.z = quat.z;
+		q.w = quat.w;
+
+		return q;
+	};
+
+	Duration = anim->mDuration;
+	TicksPerSecond = anim->mTicksPerSecond;
+	BoneTransforms.clear();
+
+	for (int Idx = 0; Idx < anim->mNumChannels; ++Idx)
+	{
+		aiNodeAnim* Channel = anim->mChannels[Idx];
+		FBoneTransformTrack Track;
+		for (int TrackIdx = 0; TrackIdx < Channel->mNumPositionKeys; ++TrackIdx)
+		{
+			Track.positionTimestamps.push_back(Channel->mPositionKeys[TrackIdx].mTime);
+			Track.positions.push_back(assimpToGlmVec3(Channel->mPositionKeys[TrackIdx].mValue));
+		}
+		for (int TrackIdx = 0; TrackIdx < Channel->mNumRotationKeys; ++TrackIdx)
+		{
+			Track.rotationTimestamps.push_back(Channel->mRotationKeys[TrackIdx].mTime);
+			Track.rotations.push_back(assimpToGlmQuat(Channel->mRotationKeys[TrackIdx].mValue));
+		}
+		for (int TrackIdx = 0; TrackIdx < Channel->mNumScalingKeys; ++TrackIdx)
+		{
+			Track.scaleTimestamps.push_back(Channel->mScalingKeys[TrackIdx].mTime);
+			Track.scales.push_back(assimpToGlmVec3(Channel->mScalingKeys[TrackIdx].mValue));
+		}
+		BoneTransforms[Channel->mNodeName.C_Str()] = Track;
+	}
+
+}
+
 void FAnimation::Register()
 {
 	FResourceManager& ResourceManager = FResourceManager::Get();
@@ -206,4 +189,10 @@ void FAnimation::Register()
 		ResourceManager.RemoveObject<FAnimation>(AnimationName);
 	}
 	ResourceManager.Register<FAnimation>(shared_from_this());
+}
+
+void FAnimation::Rename(const string& name)
+{
+	AnimationName = name;
+	CachePath = "/Cache/Animation/" + AnimationName + ".fanimation";
 }

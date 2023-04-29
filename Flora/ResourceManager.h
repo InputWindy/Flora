@@ -22,6 +22,9 @@ public:
 	template<typename T>
 	Ref<T> RemoveObject(const string& Hash);
 
+	template<typename T>
+	Ref<T> LoadObject(const string& FilePath);
+
 	void Save();
 public:
 	inline const auto& GetTextures()	const { return Textures; };
@@ -34,23 +37,6 @@ private:
 	std::unordered_map<std::string, Ref<FAnimation>> Animations;
 	std::unordered_map<std::string, Ref<FSkeleton>>  Skeletons;
 };
-
-//template<>
-//inline Ref<FTexture> FResourceManager::Register(Ref<FTexture> Texture)
-//{
-//	Textures[Texture->GetName()] = Texture;
-//	return Texture;
-//}
-//template<>
-//inline Ref<FTexture> FResourceManager::FindObject(const string& hash)
-//{
-//	auto find = Textures.find(hash);
-//	if (find != Textures.end())
-//	{
-//		return find->second->shared_from_this();
-//	}
-//	return nullptr;
-//}
 
 
 

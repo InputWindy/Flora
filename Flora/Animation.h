@@ -8,7 +8,7 @@
 #include <unordered_map>
 #include <glm/glm.hpp>
 #include <glm/gtx/quaternion.hpp>
-
+using namespace std;
 class aiAnimation;
 
 struct FLORA_API FBoneTransformTrack
@@ -24,23 +24,22 @@ struct FLORA_API FBoneTransformTrack
 
 class FLORA_API FAnimation :public std::enable_shared_from_this<FAnimation>, public IResource,public ISerialization
 {
-protected:
-	FAnimation();
-	void Reload();
 public:
-	virtual  ~FAnimation() = default;
-	static Ref<FAnimation> Generate();
-	static Ref<FAnimation> Generate(const char* name, const aiAnimation* anim);
-
+	FAnimation(const char* name);
+	virtual ~FAnimation() = default;
+public:
 	inline std::string GetName()const { return AnimationName; };
 	inline float       GetDuration()const { return Duration; };
 	inline float       GetTicksPerSecond()const { return TicksPerSecond; };
 	inline const auto& GetBoneTransforms() const { return BoneTransforms; };
+
+	virtual void SetData(const aiAnimation*);
 public:
 	virtual bool Parse(IN FJson&) final;
 	virtual bool Serialize(OUT FJson&) final;
 
 	virtual void Register() final;
+	virtual void Rename(const string& name) final;
 protected:
 	std::string AnimationName;
 	float       Duration		= 0.0f;/*seconds*/

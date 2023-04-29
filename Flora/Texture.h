@@ -69,6 +69,7 @@ struct FLORA_API FTextureInfo
 //.ftexture
 class FLORA_API FTexture :public std::enable_shared_from_this<FTexture>,public ISerialization,public IResource
 {
+	friend class FOpenGLInterface;
 protected:
 	FTexture();
 public:
@@ -114,8 +115,6 @@ public:
 	inline void SetMagFilterMode(EFilterMode mode) { Info.MagFilterMode = mode; };
 
 	inline void	SetBorderColor(vec4 color) { Info.BorderColor = color; };
-
-	inline void Rename(const string& name);
 public:
 	inline bool IsLoaded()const { return Image != nullptr; };
 public:
@@ -132,6 +131,7 @@ public:
 	virtual bool Serialize(OUT FJson&)	final;
 
 	virtual void Register()final;
+	virtual void Rename(const string& name) final;
 protected:
 	std::string  Name = "";
 

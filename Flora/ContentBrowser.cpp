@@ -1,5 +1,6 @@
 #include "ContentBrowser.h"
 #include "ResourceManager.h"
+#include "Application.h"
 #include <queue>
 #include <glfw3.h>
 //#define STB_IMAGE_IMPLEMENTATION
@@ -31,34 +32,28 @@ HICON GetFileIcon(const TCHAR* path)
 
 FContentBrowserContext::FContentBrowserContext()
 {
-	FResourceManager& ResourceManager = FResourceManager::Get();
-	Ref<FTexture> File = ResourceManager.FindObject<FTexture>(string("file"));
-	Ref<FTexture> Directory = ResourceManager.FindObject<FTexture>(string("directory"));
-	/*if (!File)
-	{
-		FImage img(_getcwd(nullptr, 0), "/Icon/file.png");
-		img.Load(false, true);
-		File = FTexture::Generate(img);
-		File->Register();
-		img.Free();
-	}
-	if (!Directory)
-	{
-		FImage img(_getcwd(nullptr, 0), "/Icon/directory.png");
-		img.Load(false,true);
-		Directory = FTexture::Generate(img);
-		Directory->Register();
-		img.Free();
-	}*/
-
-	FileIcon = File ? File->GetHandle() : 0;
-	DirectoryIcon = Directory ? Directory->GetHandle() : 0;
 
 	RootPath = _getcwd(nullptr, 0);
-	replace(RootPath.begin(), RootPath.end(),'\\','/');
+	replace(RootPath.begin(), RootPath.end(), '\\', '/');
 
 	CurrentPath = RootPath;
 
+	FResourceManager& ResourceManager = FResourceManager::Get();
+	Ref<FTexture> File = ResourceManager.FindObject<FTexture>(string("file"));
+	Ref<FTexture> Directory = ResourceManager.FindObject<FTexture>(string("directory"));
+	if (!File)
+	{
+		File = FApplication::GetRHI()->GenerateTexture("file", 0, 0, 0, ETextureTarget_2D, EInternalFormat_RGBA);
+		File->SetImageData(std::make_shared<FImage>(RootPath, "/Icon/file.png", false, true));
+	}
+	if (!Directory)
+	{
+		Directory = FApplication::GetRHI()->GenerateTexture("directory", 0, 0, 0, ETextureTarget_2D, EInternalFormat_RGBA);
+		Directory->SetImageData(std::make_shared<FImage>(RootPath, "/Icon/directory.png", false, true));
+	}
+
+	FileIcon = File;
+	DirectoryIcon = Directory;
 	Update();
 }
 

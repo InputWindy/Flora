@@ -1,5 +1,6 @@
 #pragma once
 #include "Core.h"
+#include "Texture.h"
 #include <filesystem>
 #include <direct.h>
 #include <windows.h>
@@ -24,8 +25,8 @@ struct FLORA_API FContentBrowserContext
 		static inline std::vector<FTreeNode>& GetTreeNodes() { return Nodes; };
 	};
 
-	static inline uint32_t FileIcon = 0;
-	static inline uint32_t DirectoryIcon = 0;
+	static inline Ref<FTexture> FileIcon = nullptr;
+	static inline Ref<FTexture> DirectoryIcon = nullptr;
 
 	static inline std::string RootPath;
 	static inline std::string CurrentPath;

@@ -1,27 +1,27 @@
 {
 	"Depth" : 0,
-	"Height" : 512,
+	"Height" : 32,
 	"ImageDesc" : 
 	{
-		"Component" : 4,
-		"Directory" : "/Icon",
-		"Extension" : ".png",
+		"Component" : 3,
+		"Directory" : "/Model/naxida",
+		"Extension" : ".bmp",
 		"Flip" : false,
 		"Hdr" : false,
-		"Height" : 512,
-		"Name" : "file",
-		"RelativePath" : "/Icon/file.png",
+		"Height" : 32,
+		"Name" : "hair",
+		"RelativePath" : "/Model/naxida/hair.bmp",
 		"RootPath" : "C:/Users/InputWindy/Desktop/SandBox/SandBox",
-		"Width" : 512
+		"Width" : 32
 	},
 	"InternalFormat" : "RGBA32F",
 	"MagFilterMode" : "LINEAR",
 	"MaxMipLevel" : 0,
 	"MinFilterMode" : "LINEAR",
 	"MinMipLevel" : 0,
-	"Name" : "file",
+	"Name" : "hair",
 	"TextureTarget" : "2D",
-	"Width" : 512,
+	"Width" : 32,
 	"WrapModeR" : "REPEAT",
 	"WrapModeS" : "REPEAT",
 	"WrapModeT" : "REPEAT"

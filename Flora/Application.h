@@ -56,6 +56,5 @@ protected:
 	virtual void InitProjectSettings() = 0;
 private:
 	void LoadProjectSettings();
-	void LoadEngineResources();
 };
 

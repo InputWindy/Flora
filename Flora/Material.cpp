@@ -25,6 +25,12 @@ void FMaterial::Register()
 	ResourceManager.Register<FMaterial>(shared_from_this());
 }
 
+void FMaterial::Rename(const string& name)
+{
+	MaterialName = name;
+	CachePath = "/Cache/Material/" + MaterialName + ".fmaterial";
+}
+
 void FMaterial::GenerateUniforms()
 {
 	Bools.clear();
@@ -73,14 +79,9 @@ void FMaterial::GenerateUniforms()
 
 bool FMaterial::Parse(IN FJson& In)
 {
-	MaterialName = In["MaterialName"].asString();
-	VertShader = In["VertShader"].asString();
-	FragShader = In["FragShader"].asString();
+	Rename(In["MaterialName"].asString());
+	SetData(In["VertShader"].asString(), In["FragShader"].asString());
 	RenderState.Parse(In["RenderState"]);
-
-	CachePath = "/Cache/Material/" + MaterialName + ".fmaterial";
-
-	Reload();
 	return true;
 }
 
