@@ -5,6 +5,7 @@
 #include "RenderState.h"
 #include "Material.h"
 #include "Mesh.h"
+#include "Canvas.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -46,6 +47,11 @@ public:
 	/// apply for a new material(empty)
 	/// </summary>
 	virtual Ref<FMaterial> GenerateMaterial(IN const char* Name) = 0;
+	
+	/// <summary>
+	/// generate valid canvas with no output bindings & input bindings
+	/// </summary>
+	virtual Ref<FCanvas>   GenerateCanvas(IN uint32_t Wid,IN uint32_t Hei) = 0;
 public:
 	virtual void SetBool(const char*, uint32_t, const bool&) = 0;
 	virtual void SetInt(const char*, uint32_t, const int&) = 0;

@@ -1,5 +1,6 @@
 #pragma once
 #include "Core.h"
+#include "Texture.h"
 #include <imgui.h>
 #include <imgui_internal.h>
 /*						x
@@ -25,7 +26,7 @@
 class FLORA_API FViewport
 {
 public:
-	FViewport(const ImGuiWindow*);
+	FViewport() = default;
 	virtual ~FViewport() = default;
 
 	//query 
@@ -34,8 +35,10 @@ public:
 	ImVec2 GetCursorDelta()			const;
 	ImRect GetImGuiRect()			const;
 	ImVec2 GetImGuiWindowSize()		const;
+	uint32_t GetW()const;
+	uint32_t GetH()const;
 
-	void   ResetWindow(const ImGuiWindow*);
+	bool   ResetWindow(const ImGuiWindow*);
 
 protected:
 	const ImGuiWindow* NativeWindow = nullptr;
@@ -45,11 +48,13 @@ protected:
 class FLORA_API FGameScene :public FViewport
 {
 public:
-	FGameScene(ImGuiWindow*,uint32_t);
+	FGameScene();
 	virtual ~FGameScene() = default;
 
-	inline uint32_t GetBackBuffer()const { return BackBuffer; };
+	void SetBackBuffer(Ref<FTexture>);
+	void Display();
+public:
+	static FGameScene& GetMainScene();
 private:
-	//current frame color
-	uint32_t BackBuffer = 0;
+	Ref<FTexture> BackBuffer = nullptr;
 };

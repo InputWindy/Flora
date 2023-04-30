@@ -209,11 +209,6 @@ FTexture::FTexture()
 
 void FTexture::Rename(const string& name)
 {
-	string comment = "Rename From ";
-	comment += Name;
-	comment += " To ";
-	comment += name;
-	PUSH_TRACE_MSG("Texture", comment.c_str());
 	LastName = Name;
 	Name = name;
 	CachePath = "/Cache/Texture/" + Name + ".ftexture";

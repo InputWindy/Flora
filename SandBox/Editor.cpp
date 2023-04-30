@@ -1,13 +1,8 @@
 #include "Editor.h"
-#include "Flora.h"
-#include "OpenGLInterface.h"
 #include <filesystem>
 #include <direct.h>
 #include <functional>
 #include <stack>
-
-#include "Texture.h"
-
 
 
 #define REVERSE_BIT(x,y)  x^=(1<<y)
@@ -38,7 +33,7 @@ bool EditorLayer::MainRegion()
 			if (FUI::MenuItem("Save", nullptr,nullptr))
 			{
 				//FSceneManager::Get().SaveCurrentScene();
-				//FResourceManager::Get().SaveMaterial();
+				FResourceManager::Get().Save();
 			};
 			FUI::EndMenu();
 		};
@@ -287,10 +282,9 @@ void EditorLayer::EditorSettings()
 		FUI::ShowDemoWindow(&bOpenEditorSettings);
 	}
 }
-#include <iostream>
+
 void PayloadFromContentBrowser(const ImGuiPayload* payload, void* userdata)
 {
-	FContentBrowserContext& Content = FContentBrowserContext::Get();
 	FResourceManager& ResourceManager = FResourceManager::Get();
 
 	std::filesystem::path& path = *((std::filesystem::path*)payload->Data);
@@ -299,24 +293,13 @@ void PayloadFromContentBrowser(const ImGuiPayload* payload, void* userdata)
 	ResourceManager.LoadObject<FAnimation>(path.generic_string());
 	ResourceManager.LoadObject<FMaterial>(path.generic_string());
 	ResourceManager.LoadObject<FMesh>(path.generic_string());
-
-	Ref<FTexture> Tex = ResourceManager.LoadObject<FTexture>(path.generic_string());
-	if (Tex)
-	{
-		*(uint32_t*)userdata = Tex->GetHandle();
-	}
-	
-}
-
-void PayloadFromModelResource(const ImGuiPayload* payload, void* userdata)
-{
-	//add model to map
-
+	ResourceManager.LoadObject<FTexture>(path.generic_string());
 }
 
 void PayloadFromGameObject(const ImGuiPayload* payload, void* userdata)
 {
 	//add model to map
+	FSceneManager& SceneManager = FSceneManager::Get();
 
 }
 
@@ -326,19 +309,15 @@ void EditorLayer::GameScene()
 	{
 		if (FUI::Begin("Game Scene", &bOpenGameScene))
 		{
-			static uint32_t Texture = 0;
+			static FGameScene& EditorGameScene = FGameScene::GetMainScene();
+			static bool b_set_window = EditorGameScene.ResetWindow(FUI::GetCurrentWindow());
 
-			FGameScene EditorGameScene(FUI::GetCurrentWindow(), Texture);
-
-			{
-				FUI::Image((ImTextureID)EditorGameScene.GetBackBuffer(), FUI::GetContentRegionAvail());
-				RenderGizmos();
-			}
+			EditorGameScene.Display();
+			RenderGizmos();
 			
 			if (FUI::BeginDragDropTarget())
 			{
-				FUI::DragDropTargetSpace("CONTENT_BROWSER_ITEM", PayloadFromContentBrowser,&Texture);
-				FUI::DragDropTargetSpace("MODEL_ITEM", PayloadFromModelResource);
+				FUI::DragDropTargetSpace("CONTENT_BROWSER_ITEM", PayloadFromContentBrowser);
 				FUI::DragDropTargetSpace("GAME_OBJECT_VIEWER_ITEM", PayloadFromGameObject);
 				FUI::EndDragDropTarget();
 			}

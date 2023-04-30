@@ -83,9 +83,9 @@ public:
 	//		get	& set		 //
 	//=======================//
 	inline const string&	GetName()			 const { return Name; };
-	inline int				GetWidth()			 const { return Width; };
-	inline int				GetHeight()			 const { return Height; };
-	inline int				GetDepth()			 const { return Depth; };
+	inline uint32_t			GetWidth()			 const { return Width; };
+	inline uint32_t			GetHeight()			 const { return Height; };
+	inline uint32_t			GetDepth()			 const { return Depth; };
 	inline ETextureTarget	GetTextureType()	 const { return TextureTarget; };
 	inline EInternalFormat	GetInternalFormat()	 const { return InternalFormat; };
 
@@ -135,10 +135,10 @@ public:
 protected:
 	std::string  Name = "";
 
-	int			 Width  = 0;
-	int			 Height = 0;
+	uint32_t	 Width  = 0;
+	uint32_t	 Height = 0;
 
-	int			 Depth  = 0;
+	uint32_t	 Depth  = 0;
 
 	ETextureTarget	TextureTarget  = ETextureTarget_2D;
 	EInternalFormat InternalFormat = EInternalFormat_RGBA32F;

@@ -2,6 +2,7 @@
 #include "OpenGLTexture.h"
 #include "OpenGLMaterial.h"
 #include "OpenGLMesh.h"
+#include "OpenGLCanvas.h"
 #include "ResourceManager.h"
 #include "Console.h"
 #include "ContentBrowser.h"
@@ -362,6 +363,11 @@ Ref<FMesh> FOpenGLInterface::GenerateMesh(IN const char* Name)
 Ref<FMaterial> FOpenGLInterface::GenerateMaterial(IN const char* Name)
 {
 	return make_shared<FOpenGLMaterial>(Name);
+}
+
+Ref<FCanvas> FOpenGLInterface::GenerateCanvas(IN uint32_t Wid, IN uint32_t Hei)
+{
+	return make_shared<FOpenGLCanvas>(Wid,Hei);
 }
 
 void FOpenGLInterface::SetBool(const char* Name, uint32_t material, const bool& Data)

@@ -1,9 +1,7 @@
 #include "Viewport.h"
-
-FViewport::FViewport(const ImGuiWindow* Window):
-	NativeWindow(Window)
-{
-}
+#include "UI.h"
+#include <unordered_map>
+using namespace std;
 
 bool FViewport::IsCursorInsideViewport() const
 {
@@ -65,17 +63,46 @@ ImVec2 FViewport::GetImGuiWindowSize() const
 	if (NativeWindow)return NativeWindow->Size;
 	else
 	{
-		assert(0, "ImGuiWindow Is Missing For Flora Viewport!");
+		//assert(0, "ImGuiWindow Is Missing For Flora Viewport!");
 		return ImVec2();
 	}
 }
 
-void FViewport::ResetWindow(const ImGuiWindow* Window)
+uint32_t FViewport::GetW() const
+{
+	ImVec2 Size = GetImGuiWindowSize();
+	return Size.x;
+}
+
+uint32_t FViewport::GetH() const
+{
+	ImVec2 Size = GetImGuiWindowSize();
+	return Size.y;
+}
+
+bool FViewport::ResetWindow(const ImGuiWindow* Window)
 {
 	NativeWindow = Window;
+	return true;
 };
 
-FGameScene::FGameScene(ImGuiWindow* Window,uint32_t Texture)
-	:FViewport(Window),BackBuffer(Texture)
+static FGameScene MainScene;
+
+FGameScene::FGameScene()
 {
+}
+
+void FGameScene::SetBackBuffer(Ref<FTexture> backbuffer)
+{
+	BackBuffer = backbuffer;
+};
+
+void FGameScene::Display()
+{
+	FUI::Image((ImTextureID)(BackBuffer ? BackBuffer->GetHandle() : 0), FUI::GetContentRegionAvail());
+}
+
+FGameScene& FGameScene::GetMainScene()
+{
+	return MainScene;
 }

@@ -3,6 +3,7 @@
 #include "Type.h"
 #include "Application.h"
 #include "Misc.h"
+#include "GamePlay.h"
 #include "Render.h"
 #include "ResourceManager.h"
 #include "Serialization.h"

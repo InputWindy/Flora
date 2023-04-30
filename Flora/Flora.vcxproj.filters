@@ -66,6 +66,9 @@
     <Filter Include="源文件\Core\Misc\Viewport">
       <UniqueIdentifier>{8705d12c-a3a6-4df6-a639-a2179aefcfd9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Core\GamePlay">
+      <UniqueIdentifier>{fa0da0c1-9d7e-4f95-b156-df90799451ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -139,6 +142,18 @@
     </ClCompile>
     <ClCompile Include="AABB.cpp">
       <Filter>源文件\Core\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>源文件\Core\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>源文件\Core\GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas.cpp">
+      <Filter>源文件\Core\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGLCanvas.cpp">
+      <Filter>源文件\ThirdParty\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +243,21 @@
     </ClInclude>
     <ClInclude Include="ThirdParty.h">
       <Filter>源文件\ThirdParty</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>源文件\Core\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlay.h">
+      <Filter>源文件\Core\GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>源文件\Core\GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas.h">
+      <Filter>源文件\Core\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGLCanvas.h">
+      <Filter>源文件\ThirdParty\OpenGL</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -28,7 +28,7 @@ public:
 	static inline FApplication*   GetApp();
 	static inline FRenderCommand* GetRHI();
 public:
-	//unvirtual
+	//un virtual
 	void MainLoop();
 public:
 	//inline
@@ -39,6 +39,9 @@ public:
 private:
 	void BeginFrame();
 	void EndFrame();
+
+	void RenderScene();
+	void UpdateScene();
 protected:
 	std::vector<FLayer*> LayerStack;
 
