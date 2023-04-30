@@ -155,6 +155,12 @@
     <ClCompile Include="OpenGLCanvas.cpp">
       <Filter>源文件\ThirdParty\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>源文件\Core\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Flora.h">
@@ -259,5 +265,9 @@
     <ClInclude Include="OpenGLCanvas.h">
       <Filter>源文件\ThirdParty\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>源文件\Core\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h" />
   </ItemGroup>
 </Project>
