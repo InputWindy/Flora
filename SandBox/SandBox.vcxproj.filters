@@ -17,9 +17,15 @@
     <ClCompile Include="Editor.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="DebugScene_0.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Editor.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugScene_0.h">
       <Filter>源文件</Filter>
     </ClInclude>
   </ItemGroup>

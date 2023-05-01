@@ -39,13 +39,13 @@ void FOrthographicCamera::Update()
 }
 
 template<>
-FPerspectiveCamera* FLORA_API FCamera::DynamicCast<FPerspectiveCamera>()
+FPerspectiveCamera* FCamera::DynamicCast<FPerspectiveCamera>()
 {
 	return dynamic_cast<FPerspectiveCamera*>(this);
 }
 
 template<>
-FOrthographicCamera* FLORA_API FCamera::DynamicCast<FOrthographicCamera>()
+FOrthographicCamera* FCamera::DynamicCast<FOrthographicCamera>()
 {
 	return dynamic_cast<FOrthographicCamera*>(this);
 }

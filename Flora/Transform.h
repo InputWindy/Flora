@@ -25,7 +25,7 @@ public:
 	inline mat4& GetLocalModelMatrix()	  { return TransformToParent; };
 	inline mat4& MatrixToLocalSpace()	  { return InvTransformToRoot; };
 public:
-	void Update(mat4 InParentTransformToRoot = mat4(1.0f));
+	void Update(const FTransform& Parent);
 	void ToLocalSpace(vec3& v);
 public:
 	void MoveWorldForward(float ds);

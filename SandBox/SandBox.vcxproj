@@ -139,10 +139,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DebugScene_0.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="SandBox.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DebugScene_0.h" />
     <ClInclude Include="Editor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

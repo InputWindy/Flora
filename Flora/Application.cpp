@@ -256,7 +256,9 @@ void FApplication::RenderScene()
 void FApplication::UpdateScene()
 {
 	FSceneManager& SceneManager = FSceneManager::Get();
+	SceneManager.BeginUpdate();
 	SceneManager.Update();
+	SceneManager.EndUpdate();
 }
 
 void FApplication::LoadProjectSettings()

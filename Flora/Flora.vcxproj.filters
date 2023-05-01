@@ -69,6 +69,15 @@
     <Filter Include="源文件\Core\GamePlay">
       <UniqueIdentifier>{fa0da0c1-9d7e-4f95-b156-df90799451ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Core\Misc\Camera">
+      <UniqueIdentifier>{5f381b1d-3f0d-4619-949a-d5ab0de9dd4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Core\GamePlay\Object">
+      <UniqueIdentifier>{5e0f985d-03e9-4d21-9a7d-d88faa6ca04b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Core\Misc\Input">
+      <UniqueIdentifier>{a22befa2-8e67-43d2-9d44-096e522b2d96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -158,8 +167,26 @@
     <ClCompile Include="Transform.cpp">
       <Filter>源文件\Core\Misc</Filter>
     </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>源文件\Core\GamePlay</Filter>
+    </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>源文件</Filter>
+      <Filter>源文件\Core\Misc\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>源文件\Core\GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>源文件\Core\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>源文件\Core\GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraObject.cpp">
+      <Filter>源文件\Core\GamePlay\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>源文件\Core\Misc\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -268,6 +295,26 @@
     <ClInclude Include="Transform.h">
       <Filter>源文件\Core\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Component.h">
+      <Filter>源文件\Core\GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>源文件\Core\Misc\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>源文件\Core\GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>源文件\Core\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>源文件\Core\GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraObject.h">
+      <Filter>源文件\Core\GamePlay\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>源文件\Core\Misc\Input</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -27,10 +27,10 @@ public:
 	inline const auto& GetProjection()const { return Projection; };
 
 	inline void SetNearClip(float nc) { NearClip = nc; };
-	inline void SetFarClip(float fc) { FarClip = fc; };
+	inline void SetFarClip(float fc)  { FarClip = fc; };
 
 	inline float GetNearClip()const { return NearClip; };
-	inline float GetFarClip()const { return FarClip; };
+	inline float GetFarClip()const  { return FarClip; };
 public:
 	virtual void Update() = 0;
 protected:
@@ -61,7 +61,7 @@ private:
 class FLORA_API FOrthographicCamera :public FCamera
 {
 public:
-	FOrthographicCamera() = default;
+	FOrthographicCamera();
 	virtual ~FOrthographicCamera() = default;
 
 	virtual void Update()final;

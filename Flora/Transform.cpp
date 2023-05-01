@@ -9,13 +9,13 @@
 #include <imgui_internal.h>
 #include <ImGuizmo.h>
 using namespace glm;
-void FTransform::Update(mat4 InParentTransformToRoot)
+void FTransform::Update(const FTransform& Parent)
 {
-	glm::mat4 InvParentTransformToRoot = glm::inverse(InParentTransformToRoot);
+	glm::mat4 InvParentTransformToRoot = glm::inverse(Parent.TransformToRoot);
 
 	vec3 parent_pos, parent_rotate, parent_scale;
 	ImGuizmo::DecomposeMatrixToComponents(
-		value_ptr(InParentTransformToRoot), 
+		value_ptr(Parent.TransformToRoot),
 		value_ptr(parent_pos), 
 		value_ptr(parent_rotate), 
 		value_ptr(parent_scale));
@@ -35,7 +35,7 @@ void FTransform::Update(mat4 InParentTransformToRoot)
 	TransformToParent[3][2] = LocalPosition.z / parent_scale.z;
 	TransformToParent[3][3] = 1;
 
-	TransformToRoot = InParentTransformToRoot * TransformToParent;
+	TransformToRoot = Parent.TransformToRoot * TransformToParent;
 }
 
 void FTransform::ToLocalSpace(vec3& v)
