@@ -11,6 +11,7 @@ public:
 	virtual ~FLayer() = default;
 
 	virtual void OnAwake() = 0;
+	virtual void OnRelease() = 0;
 public:
 	virtual void OnUpdate() = 0;
 	virtual void OnGUI() = 0;
@@ -44,6 +45,8 @@ private:
 
 	void RenderScene();
 	void UpdateScene();
+	void AwakeScene();
+	void ReleaseScene();
 protected:
 	std::vector<FLayer*> LayerStack;
 

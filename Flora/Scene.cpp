@@ -6,7 +6,7 @@ using namespace std;
 FScene::FScene(const string& name)
 	:SceneName(name)
 {
-	DebugCamera = make_shared<FCameraObject>("DebugCamera",this);
+	//DebugCamera = make_shared<FCameraObject>("DebugCamera",this);
 }
 
 void FScene::Rename(const string& name)
@@ -38,6 +38,16 @@ void FScene::EndUpdate()
 {
 	DebugCamera->EndUpdate();
 	
+}
+
+void FScene::Awake()
+{
+	DebugCamera->Awake();
+}
+
+void FScene::Release()
+{
+	DebugCamera->Release();
 }
 
 void FScene::ProcessInputEvent()

@@ -12,6 +12,12 @@ public:
 	inline const string&	  GetName()const   { return SceneName; };
 	inline Ref<FCameraObject> GetDebugCamera() { return DebugCamera; };
 public:
+	template<typename TSubClass>
+	inline void SpawnDebugCamera(const char* Name)
+	{
+		DebugCamera = make_shared<TSubClass>(Name, this);
+	};
+public:
 	void Rename(const string&);
 public:
 	virtual bool Parse(IN FJson&) final;
@@ -20,10 +26,18 @@ private:
 	void BeginUpdate();
 	void Update();
 	void EndUpdate();
+
+	void Awake();
+	void Release();
 	void ProcessInputEvent();
 private:
 	string SceneName;
 private:
 	Ref<FCameraObject> DebugCamera;
+
+	//total objects
+	unordered_map<uint32_t, Ref<FGameObject>> GameObjects;
+
+
 };
 

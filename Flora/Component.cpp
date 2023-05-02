@@ -55,27 +55,42 @@ bool FTransformComponent::Serialize(OUT FJson&)
 
 
 
-template<>
-FTransformComponent* FComponent::DynamicCast<FTransformComponent>()
-{
-	return dynamic_cast<FTransformComponent*>(this);
-}
-
-template<>
-FCameraComponent* FComponent::DynamicCast<FCameraComponent>()
-{
-	return dynamic_cast<FCameraComponent*>(this);
-}
-
-template<>
-FScriptComponent* FComponent::DynamicCast<FScriptComponent>()
-{
-	return dynamic_cast<FScriptComponent*>(this);
-}
+//template<>
+//FTransformComponent* FComponent::DynamicCast<FTransformComponent>()
+//{
+//	return dynamic_cast<FTransformComponent*>(this);
+//}
+//
+//template<>
+//FCameraComponent* FComponent::DynamicCast<FCameraComponent>()
+//{
+//	return dynamic_cast<FCameraComponent*>(this);
+//}
+//
+//template<>
+//FScriptComponent* FComponent::DynamicCast<FScriptComponent>()
+//{
+//	return dynamic_cast<FScriptComponent*>(this);
+//}
 
 FScriptComponent::FScriptComponent(FGameObject*o)
 	:FComponent(o, EComponentType::Script)
 {
+}
+
+void FScriptComponent::BindAwakeCallback(OnAwakeCallback callback)
+{
+	OnAwake = callback;
+}
+
+void FScriptComponent::BindReleaseCallback(OnReleaseCallback callback)
+{
+	OnRelease = callback;
+}
+
+void FScriptComponent::BindUpdateCallback(OnUpdateCallback callback)
+{
+	OnUpdate = callback;
 }
 
 bool FScriptComponent::Parse(IN FJson&)

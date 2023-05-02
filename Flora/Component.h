@@ -31,7 +31,10 @@ public:
 	inline void Enable(bool Enable) { bEnable = Enable; };
 
 	template<typename T>
-	T* DynamicCast();
+	inline T* DynamicCast() 
+	{
+		return dynamic_cast<T*>(this);
+	};
 public:
 	virtual bool Parse(IN FJson&) = 0;
 	virtual bool Serialize(OUT FJson&) = 0;
@@ -75,18 +78,24 @@ private:
 
 class FLORA_API FScriptComponent :public FComponent
 {
+	friend class FCameraObject;
 	friend class FGameObject;
-	using OnAwakeCallback  = std::function<void(void)>;
-	using OnUpdateCallback = std::function<void(float)>;
+	using OnAwakeCallback   = std::function<void(void)>;
+	using OnReleaseCallback = std::function<void(void)>;
+	using OnUpdateCallback  = std::function<void(float)>;
 public:
 	FScriptComponent(FGameObject*);
 	virtual ~FScriptComponent() = default;
 
+	void BindAwakeCallback(OnAwakeCallback);
+	void BindReleaseCallback(OnReleaseCallback);
+	void BindUpdateCallback(OnUpdateCallback);
 public:
 	virtual bool Parse(IN FJson&) final;
 	virtual bool Serialize(OUT FJson&) final;
 private:
-	OnAwakeCallback  OnAwake;
-	OnUpdateCallback OnUpdate;
+	OnAwakeCallback   OnAwake;
+	OnReleaseCallback OnRelease;
+	OnUpdateCallback  OnUpdate;
 };
 

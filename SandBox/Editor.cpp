@@ -15,6 +15,10 @@ void EditorLayer::OnAwake()
 	PUSH_WARN_MSG("Temp", "d");*/
 }
 
+void EditorLayer::OnRelease()
+{
+}
+
 void EditorLayer::OnUpdate()
 {
 }

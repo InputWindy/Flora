@@ -4,9 +4,9 @@
 struct EditorLayer :public FLayer
 {
 	virtual void OnAwake();
+	virtual void OnRelease();
 	virtual void OnUpdate();
 	virtual void OnGUI();
-
 private:
 	virtual bool MainRegion();
 	virtual bool RenderGizmos();

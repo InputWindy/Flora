@@ -91,6 +91,9 @@ void FApplication::MainLoop()
 	{
 		Layer->OnAwake();
 	}
+
+	AwakeScene();
+
 	while (!glfwWindowShouldClose((GLFWwindow*)WindowHandle))
 	{
 		BeginFrame();
@@ -109,6 +112,13 @@ void FApplication::MainLoop()
 		}
 
 		EndFrame();
+	}
+
+	ReleaseScene();
+
+	for (FLayer* Layer : LayerStack)
+	{
+		Layer->OnRelease();
 	}
 }
 
@@ -215,6 +225,18 @@ void FApplication::UpdateScene()
 	SceneManager.BeginUpdate();
 	SceneManager.Update();
 	SceneManager.EndUpdate();
+}
+
+void FApplication::AwakeScene()
+{
+	FSceneManager& SceneManager = FSceneManager::Get();
+	SceneManager.Awake();
+}
+
+void FApplication::ReleaseScene()
+{
+	FSceneManager& SceneManager = FSceneManager::Get();
+	SceneManager.Release();
 }
 
 void FApplication::LoadProjectSettings()

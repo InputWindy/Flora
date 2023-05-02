@@ -13,5 +13,4 @@
 #include "ThirdParty.h"
 #endif // EXPORT_THIRD_PARTY
 
-#pragma comment(lib,"ImGui.lib")
 #pragma comment(lib,"Flora.lib")

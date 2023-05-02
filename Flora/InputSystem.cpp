@@ -53,7 +53,7 @@ void FInputSystem::GatherInputEvent()
 	MouseScrolledEvent = { 0, io.MouseWheel };
 
 	{
-		for (uint32_t KeyCode = F_KEY_SPACE; KeyCode <= F_KEY_LAST; ++KeyCode)
+		for (uint32_t KeyCode = ImGuiKey_Tab; KeyCode < ImGuiKey_COUNT; ++KeyCode)
 		{
 			if (ImGui::IsKeyDown(KeyCode))
 				KeyTypedEvents.insert({ KeyCode,{KeyCode} });

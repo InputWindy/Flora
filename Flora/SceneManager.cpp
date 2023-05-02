@@ -30,6 +30,22 @@ void FSceneManager::EndUpdate()
 	}
 }
 
+void FSceneManager::Awake()
+{
+	if (CurrentScene)
+	{
+		CurrentScene->Awake();
+	}
+}
+
+void FSceneManager::Release()
+{
+	if (CurrentScene)
+	{
+		CurrentScene->Release();
+	}
+}
+
 Ref<FScene> FSceneManager::AddScene(const string& name) 
 {
 	Ref<FScene> Res = FindScene(name);

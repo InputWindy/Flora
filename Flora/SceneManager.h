@@ -15,6 +15,10 @@ public:
 	void Update();
 	void EndUpdate();
 
+	void Awake();
+	void Release();
+public:
+
 	Ref<FScene> AddScene(const string&);
 	Ref<FScene> FindScene(const string&);
 	Ref<FScene> GetCurrentScene();

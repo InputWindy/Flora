@@ -8,7 +8,10 @@ using std::unordered_map;
 enum class EGameObjectType
 {
 	None,
-	CameraObject
+	CameraObject,
+	Actor,
+	Pawn,
+	Character
 };
 
 class FScene;
@@ -21,13 +24,96 @@ public:
 	virtual ~FGameObject() = default;
 
 	template<typename T>
-	T* AddComponent();
+	inline T* AddComponent()
+	{
+		if (std::is_same_v<T, FCameraComponent>)
+		{
+			T* Res = new T(this);
+			Components[EComponentType::Camera].reset(Res);
+			return Res;
+		}
+		else if (std::is_same_v<T, FTransformComponent>)
+		{
+			T* Res = new T(this);
+			Components[EComponentType::Transform].reset(Res);
+			return Res;
+		}
+		else if (std::is_same_v<T, FScriptComponent>)
+		{
+			T* Res = new T(this);
+			Components[EComponentType::Script].reset(Res);
+			return Res;
+		}
+		else assert(0);
+		return nullptr;
+	};
 
 	template<typename T>
-	T* GetComponent();
+	inline T* GetComponent()
+	{
+		if (std::is_same_v<T, FCameraComponent>)
+		{
+			auto find = Components.find(EComponentType::Camera);
+			if (find != Components.end())
+			{
+				return (*find).second->DynamicCast<T>();
+			}
+		}
+		else if (std::is_same_v<T, FTransformComponent>)
+		{
+			auto find = Components.find(EComponentType::Transform);
+			if (find != Components.end())
+			{
+				return (*find).second->DynamicCast<T>();
+			}
+		}
+		else if (std::is_same_v<T, FScriptComponent>)
+		{
+			auto find = Components.find(EComponentType::Script);
+			if (find != Components.end())
+			{
+				return (*find).second->DynamicCast<T>();
+			}
+		}
+		else assert(0);
+		
+		return nullptr;
+	};
 
 	template<typename T>
-	bool RemoveComponent();
+	inline bool RemoveComponent()
+	{
+		if (std::is_same_v<T, FCameraComponent>)
+		{
+			auto find = Components.find(EComponentType::Camera);
+			if (find != Components.end())
+			{
+				Components.erase(find);
+				return true;
+			}
+		}
+		else if (std::is_same_v<T, FTransformComponent>)
+		{
+			auto find = Components.find(EComponentType::Transform);
+			if (find != Components.end())
+			{
+				Components.erase(find);
+				return true;
+			}
+		}
+		else if (std::is_same_v<T, FScriptComponent>)
+		{
+			auto find = Components.find(EComponentType::Script);
+			if (find != Components.end())
+			{
+				Components.erase(find);
+				return true;
+			}
+		}
+		else assert(0);
+		
+		return false;
+	};
 public:
 	inline const int&  GetParent() { return ParentId; };
 	inline const auto* GetOwner()  { return Owner; };
@@ -37,18 +123,21 @@ protected:
 	/// <summary>
 	/// Input Event
 	/// </summary>
-	virtual bool OnKeyPressedEvent(FKeyPressedEvent& e) = 0;
-	virtual bool OnKeyReleasedEvent(FKeyReleasedEvent& e) = 0;
-	virtual bool OnKeyTypedEvent(FKeyTypedEvent& e) = 0;
+	virtual bool OnKeyPressedEvent(FKeyPressedEvent& e) ;
+	virtual bool OnKeyReleasedEvent(FKeyReleasedEvent& e) ;
+	virtual bool OnKeyTypedEvent(FKeyTypedEvent& e) ;
 
-	virtual bool OnMouseMoveEvent(FMouseMoveEvent& e) = 0;
-	virtual bool OnMouseScrolledEvent(FMouseScrolledEvent& e) = 0;
-	virtual bool OnMouseButtonPressedEvent(FMouseButtonPressedEvent& e) = 0;
-	virtual bool OnMouseButtonReleasedEvent(FMouseButtonReleasedEvent& e) = 0;
+	virtual bool OnMouseMoveEvent(FMouseMoveEvent& e) ;
+	virtual bool OnMouseScrolledEvent(FMouseScrolledEvent& e) ;
+	virtual bool OnMouseButtonPressedEvent(FMouseButtonPressedEvent& e) ;
+	virtual bool OnMouseButtonReleasedEvent(FMouseButtonReleasedEvent& e) ;
+protected:
+	virtual bool BeginUpdate();
+	virtual bool Update();
+	virtual bool EndUpdate();
 
-	virtual bool BeginUpdate() = 0;
-	virtual bool Update() = 0;
-	virtual bool EndUpdate() = 0;
+	virtual void Awake();
+	virtual void Release();
 public:
 	virtual bool Parse(IN FJson&) = 0;
 	virtual bool Serialize(OUT FJson&) = 0;
