@@ -102,6 +102,15 @@ void FGameScene::Display()
 	FUI::Image((ImTextureID)(BackBuffer ? BackBuffer->GetHandle() : 0), FUI::GetContentRegionAvail());
 }
 
+bool FGameScene::IsFocused() const
+{
+	if (NativeWindow)
+	{
+		return NativeWindow == ImGui::GetCurrentContext()->NavWindow;
+	}
+	return false;
+}
+
 FGameScene& FGameScene::GetMainScene()
 {
 	return MainScene;

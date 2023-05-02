@@ -56,7 +56,6 @@ protected:
 	string Name;
 	EGameObjectType Type = EGameObjectType::None;
 	unordered_map < EComponentType, Ref<FComponent>> Components;
-private:
 	int ParentId = -1;
 	vector<uint32_t> Children;
 

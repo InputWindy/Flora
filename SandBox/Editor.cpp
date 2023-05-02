@@ -336,6 +336,23 @@ void EditorLayer::Inspector()
 
 void EditorLayer::LevelViewer()
 {
+	if (bOpenLevelViewer)
+	{
+		if (FUI::Begin("Level Viewer", &bOpenLevelViewer))
+		{
+			FSceneManager& SceneManager = FSceneManager::Get();
+			const auto& Scenes = SceneManager.GetScenes();
+			for (const auto& Scene : Scenes)
+			{
+				if (FUI::TreeNode(Scene.first.c_str()))
+				{
+					const Ref<FScene> SceneRef = Scene.second;
+					FUI::TreePop();
+				}
+			}
+		}
+		FUI::End();
+	}
 }
 
 void EditorLayer::ResourceViewer()

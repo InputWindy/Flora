@@ -39,7 +39,7 @@ FTransformComponent::FTransformComponent(FGameObject*o)
 
 void FTransformComponent::Update(const FTransform& Parent)
 {
-	Transform.Update(Parent);
+	//Transform.Update(Parent);
 }
 
 bool FTransformComponent::Parse(IN FJson&)
@@ -65,4 +65,25 @@ template<>
 FCameraComponent* FComponent::DynamicCast<FCameraComponent>()
 {
 	return dynamic_cast<FCameraComponent*>(this);
+}
+
+template<>
+FScriptComponent* FComponent::DynamicCast<FScriptComponent>()
+{
+	return dynamic_cast<FScriptComponent*>(this);
+}
+
+FScriptComponent::FScriptComponent(FGameObject*o)
+	:FComponent(o, EComponentType::Script)
+{
+}
+
+bool FScriptComponent::Parse(IN FJson&)
+{
+	return false;
+}
+
+bool FScriptComponent::Serialize(OUT FJson&)
+{
+	return false;
 }

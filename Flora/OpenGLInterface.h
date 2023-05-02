@@ -54,6 +54,9 @@ public:
 	virtual void SetDouble2(const char*, uint32_t, const  glm::dvec2&)override;
 	virtual void SetDouble3(const char*, uint32_t, const  glm::dvec3&)override;
 	virtual void SetDouble4(const char*, uint32_t, const  glm::dvec4&)override;
+	virtual void SetMat2(const char*, uint32_t, const glm::mat2&) override;
+	virtual void SetMat3(const char*, uint32_t, const glm::mat3&) override;
+	virtual void SetMat4(const char*, uint32_t, const glm::mat4&) override;
 	virtual void SetMat2f(const char*, uint32_t, uint32_t, const vector<glm::mat2>&)override;
 	virtual void SetMat3f(const char*, uint32_t, uint32_t, const vector<glm::mat3>&)override;
 	virtual void SetMat4f(const char*, uint32_t, uint32_t, const vector<glm::mat4>&)override;
@@ -73,6 +76,7 @@ public:
 
 	virtual bool CompileShader(uint32_t)override;
 	virtual bool LinkShader(uint32_t)override;
+	virtual void BindShader(uint32_t)override;
 private:
 	static uint32_t CompareMethod[];
 	static uint32_t BlendFunc[];

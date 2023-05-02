@@ -20,6 +20,7 @@ public:
 	Ref<FScene> GetCurrentScene();
 	void RemoveScene(const string&);
 	void SetCurrentScene(Ref<FScene>);
+	const auto& GetScenes()const { return Scenes; };
 
 private:
 	unordered_map<string, Ref<FScene>> Scenes;

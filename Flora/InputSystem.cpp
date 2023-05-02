@@ -1,23 +1,44 @@
 #include "InputSystem.h"
 #include <imgui.h>
 #include <imgui_internal.h>
+#include <glfw3.h>
+#include "Application.h"
+extern FApplication* GEngine;
 bool FInputSystem::IsKeyPressed(uint32_t KeyCode)
 {
-	if (ImGui::IsKeyPressed(KeyCode))return true;
-
-	return false;
+	return glfwGetKey((GLFWwindow*)GEngine->WindowHandle, KeyCode) == F_KEY_PRESS;
 }
 bool FInputSystem::IsKeyReleased(uint32_t KeyCode)
 {
-	if (ImGui::IsKeyReleased(KeyCode))return true;
-
-	return false;
+	return glfwGetKey((GLFWwindow*)GEngine->WindowHandle, KeyCode) == F_KEY_RELEASE;
 }
 bool FInputSystem::IsKeyTyped(uint32_t KeyCode)
 {
-	if (ImGui::IsKeyDown(KeyCode))return true;
+	return glfwGetKey((GLFWwindow*)GEngine->WindowHandle, KeyCode) == F_KEY_REPEAT;
+}
+bool FInputSystem::IsMouseDown(uint32_t KeyCode)
+{
+	if (ImGui::IsMouseDown(KeyCode))return true;
 
 	return false;
+}
+bool FInputSystem::IsMouseClicked(uint32_t KeyCode)
+{
+	if (ImGui::IsMouseClicked(KeyCode))return true;
+	return false;
+}
+bool FInputSystem::IsMouseDoubleClicked(uint32_t KeyCode)
+{
+	if (ImGui::IsMouseDoubleClicked(KeyCode))return true;
+	return false;
+}
+float FInputSystem::MouseDeltaX() const
+{
+	return ImGui::GetIO().MouseDelta.x;
+}
+float FInputSystem::MouseDeltaY() const
+{
+	return ImGui::GetIO().MouseDelta.y;
 }
 void FInputSystem::GatherInputEvent()
 {
@@ -32,7 +53,7 @@ void FInputSystem::GatherInputEvent()
 	MouseScrolledEvent = { 0, io.MouseWheel };
 
 	{
-		for (uint32_t KeyCode = ImGuiKey_Tab; KeyCode <= ImGuiKey_ModSuper; ++KeyCode)
+		for (uint32_t KeyCode = F_KEY_SPACE; KeyCode <= F_KEY_LAST; ++KeyCode)
 		{
 			if (ImGui::IsKeyDown(KeyCode))
 				KeyTypedEvents.insert({ KeyCode,{KeyCode} });

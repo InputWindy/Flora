@@ -25,5 +25,10 @@ protected:
 public:
 	virtual bool Parse(IN FJson&) final;
 	virtual bool Serialize(OUT FJson&) final;
+private:
+	float MovementSpeed = 5.0f;
+	float MouseSensitivity = 0.1f;
+	float MouseWheelSensitivity = 0.1f;
+	//float Zoom = 45.0f;
 };
 

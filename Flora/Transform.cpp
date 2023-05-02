@@ -9,177 +9,99 @@
 #include <imgui_internal.h>
 #include <ImGuizmo.h>
 using namespace glm;
-void FTransform::Update(const FTransform& Parent)
+FTransform::FTransform()
 {
-	glm::mat4 InvParentTransformToRoot = glm::inverse(Parent.TransformToRoot);
+	UpdateCoord();
+}
 
-	vec3 parent_pos, parent_rotate, parent_scale;
-	ImGuizmo::DecomposeMatrixToComponents(
-		value_ptr(Parent.TransformToRoot),
-		value_ptr(parent_pos), 
-		value_ptr(parent_rotate), 
-		value_ptr(parent_scale));
+glm::mat4 FTransform::GetModelMatrix()
+{
+	return glm::inverse(GetViewMatrix());
+}
 
-	//scale->rotate->transform
-	TransformToParent =
+glm::mat4 FTransform::GetViewMatrix()
+{
+	return glm::lookAt(Position, Position + Front, Up);
+}
+
+void FTransform::MoveForward(float ds)
+{
+	Position += Front * ds;
+}
+
+void FTransform::MoveBack(float ds)
+{
+	Position -= Front * ds;
+}
+
+void FTransform::MoveLeft(float ds)
+{
+	Position -= Right * ds;
+}
+
+void FTransform::MoveRight(float ds)
+{
+	Position += Right * ds;
+}
+
+void FTransform::MoveUp(float dS)
+{
+	Position += Up * dS;
+}
+
+void FTransform::MoveDown(float dS)
+{
+	Position -= Up * dS;
+}
+
+void FTransform::RotateX(float dAngle, bool constrain)
+{
+	Rotation.x += dAngle;
+	if (constrain)
 	{
-		LocalScale.x / parent_scale.x,0,0,0,
-		0,LocalScale.y / parent_scale.y,0,0,
-		0,0,LocalScale.z / parent_scale.z,0,
-		0,0,0,1
-	};
-
-	TransformToParent = mat4_cast(glm::qua<float>(glm::radians(LocalRotation))) * TransformToParent;
-	TransformToParent[3][0] = LocalPosition.x / parent_scale.x;
-	TransformToParent[3][1] = LocalPosition.y / parent_scale.y;
-	TransformToParent[3][2] = LocalPosition.z / parent_scale.z;
-	TransformToParent[3][3] = 1;
-
-	TransformToRoot = Parent.TransformToRoot * TransformToParent;
+		if (Rotation.x > 89.0f)
+			Rotation.x = 89.0f;
+		if (Rotation.x < -89.0f)
+			Rotation.x = -89.0f;
+	}
+	UpdateCoord();
 }
 
-void FTransform::ToLocalSpace(vec3& v)
+void FTransform::RotateY(float dAngle, bool constrain)
 {
-	v = InvTransformToRoot * vec4(v, 1.0f);
+	Rotation.y += dAngle;
+	if (constrain)
+	{
+		if (Rotation.y > 89.0f)
+			Rotation.y = 89.0f;
+		if (Rotation.y < -89.0f)
+			Rotation.y = -89.0f;
+	}
+	UpdateCoord();
 }
 
-void FTransform::MoveWorldForward(float ds)
+void FTransform::RotateZ(float dAngle, bool constrain)
 {
-	vec3 Dir = glm::normalize(WorldCoordFront) * ds;
-	ToLocalSpace(Dir);
-	LocalPosition += Dir;
-}
-void FTransform::MoveWorldBack(float ds)
-{
-	vec3 Dir = glm::normalize(WorldCoordFront) * ds;
-	ToLocalSpace(Dir);
-	LocalPosition -= Dir;
-}
-void FTransform::MoveWorldLeft(float ds)
-{
-	vec3 Dir = glm::normalize(WorldCoordRight) * ds;
-	ToLocalSpace(Dir);
-	LocalPosition -= Dir;
-}
-void FTransform::MoveWorldRight(float ds)
-{
-	vec3 Dir = glm::normalize(WorldCoordRight) * ds;
-	ToLocalSpace(Dir);
-	LocalPosition += Dir;
-}
-void FTransform::MoveWorldUp(float ds)
-{
-	vec3 Dir = glm::normalize(WorldCoordUp) * ds;
-	ToLocalSpace(Dir);
-	LocalPosition += Dir;
-}
-void FTransform::MoveWorldDown(float ds)
-{
-	vec3 Dir = glm::normalize(WorldCoordUp) * ds;
-	ToLocalSpace(Dir);
-	LocalPosition -= Dir;
+	Rotation.z += dAngle;
+	if (constrain)
+	{
+		if (Rotation.z > 89.0f)
+			Rotation.z = 89.0f;
+		if (Rotation.z < -89.0f)
+			Rotation.z = -89.0f;
+	}
+	UpdateCoord();
 }
 
-void FTransform::MoveWorldX(float dx)
-{
-	vec3 Dir = { dx,0,0 };
-	ToLocalSpace(Dir);
-	LocalPosition += Dir;
-}
-
-void FTransform::MoveWorldY(float dy)
-{
-	vec3 Dir = { 0,dy,0 };
-	ToLocalSpace(Dir);
-	LocalPosition += Dir;
-}
-
-void FTransform::MoveWorldZ(float dz)
-{
-	vec3 Dir = { 0,0,dz };
-	ToLocalSpace(Dir);
-	LocalPosition += Dir;
-}
-
-void FTransform::MoveWorld(vec3 ds)
-{
-	ToLocalSpace(ds);
-	LocalPosition += ds;
-}
-
-void FTransform::MoveToWorldPos(vec3 WorldPos)
-{
-	ToLocalSpace(WorldPos);
-	LocalPosition = WorldPos;
-}
-
-void FTransform::MoveLocalForward(float ds)
-{
-	vec3 Dir = glm::normalize(WorldCoordFront) * ds;
-	LocalPosition += Dir;
-}
-
-void FTransform::MoveLocalBack(float ds)
-{
-	vec3 Dir = glm::normalize(WorldCoordFront) * ds;
-	LocalPosition -= Dir;
-}
-
-void FTransform::MoveLocalLeft(float ds)
-{
-	vec3 Dir = glm::normalize(WorldCoordRight) * ds;
-	LocalPosition -= Dir;
-}
-
-void FTransform::MoveLocalRight(float ds)
-{
-	vec3 Dir = glm::normalize(WorldCoordRight) * ds;
-	LocalPosition += Dir;
-}
-
-void FTransform::MoveLocalUp(float ds)
-{
-	vec3 Dir = glm::normalize(WorldCoordUp) * ds;
-	LocalPosition += Dir;
-}
-
-void FTransform::MoveLocalDown(float ds)
-{
-	vec3 Dir = glm::normalize(WorldCoordUp) * ds;
-	LocalPosition -= Dir;
-}
-
-void FTransform::MoveLocalX(float dx)
-{
-	LocalPosition.x += dx;
-}
-
-void FTransform::MoveLocalY(float dy)
-{
-	LocalPosition.y += dy;
-}
-
-void FTransform::MoveLocalZ(float dz)
-{
-	LocalPosition.z += dz;
-}
-
-void FTransform::MoveLocal(vec3 ds)
-{
-	LocalPosition += ds;
-}
-
-void FTransform::MoveToLocalPos(vec3 LocalPos)
-{
-	LocalPosition = LocalPos;
-}
-
-void FTransform::RotateToLocal(vec3 Angle)
-{
-	LocalRotation = Angle;
-}
-
-void FTransform::RotateLocal(vec3 dAngle)
-{
-	LocalRotation += dAngle;
+void FTransform::UpdateCoord()
+{ 
+	// calculate the new Front vector
+	glm::vec3 front;
+	front.x = cos(glm::radians(Rotation.y)) * cos(glm::radians(Rotation.x));
+	front.y = sin(glm::radians(Rotation.x));
+	front.z = sin(glm::radians(Rotation.y)) * cos(glm::radians(Rotation.x));
+	Front = glm::normalize(front);
+	// also re-calculate the Right and Up vector
+	Right = glm::normalize(glm::cross(Front, WorldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+	Up = glm::normalize(glm::cross(Right, Front));
 }

@@ -18,6 +18,7 @@ public:
 
 class FLORA_API FApplication
 {
+	friend class FInputSystem;
 protected:
 	FApplication();
 public:
@@ -34,6 +35,7 @@ public:
 	//inline
 	inline std::string	GetAppName();
 	inline double		GetAppTime();
+	inline double		GetAppDeltaTime();
 	inline uint32_t		GetWindowWidth();
 	inline uint32_t		GetWindowHeight();
 private:

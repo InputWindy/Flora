@@ -4,6 +4,8 @@
 #include "Camera.h"
 #include "Transform.h"
 #include <memory>
+#include <functional>
+using std::function;
 
 enum class EComponentType
 {
@@ -12,7 +14,7 @@ enum class EComponentType
 	Camera,
 	Transform,
 	Skeleton,
-	Input,
+	Script,
 
 	Max
 };
@@ -38,6 +40,7 @@ protected:
 	FGameObject*   Owner   = nullptr;
 	bool		   bEnable = true;
 };
+
 
 class FLORA_API FCameraComponent :public FComponent
 {
@@ -68,5 +71,22 @@ public:
 	virtual bool Serialize(OUT FJson&) final;
 private:
 	FTransform Transform;
+};
+
+class FLORA_API FScriptComponent :public FComponent
+{
+	friend class FGameObject;
+	using OnAwakeCallback  = std::function<void(void)>;
+	using OnUpdateCallback = std::function<void(float)>;
+public:
+	FScriptComponent(FGameObject*);
+	virtual ~FScriptComponent() = default;
+
+public:
+	virtual bool Parse(IN FJson&) final;
+	virtual bool Serialize(OUT FJson&) final;
+private:
+	OnAwakeCallback  OnAwake;
+	OnUpdateCallback OnUpdate;
 };
 

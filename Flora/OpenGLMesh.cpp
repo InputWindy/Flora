@@ -1,5 +1,7 @@
 #include "OpenGLMesh.h"
 #include <glad.h>
+#include "Application.h"
+extern FRenderCommand* GRhi;
 FOpenGLMesh::FOpenGLMesh(const char*name)
 {
 	Rename(name);
@@ -49,4 +51,16 @@ void FOpenGLMesh::SetData(const std::vector<FVertex>& vertices, const std::vecto
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Ibo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
 	glBindVertexArray(0);
+}
+
+void FOpenGLMesh::Draw(EDrawMode mode)
+{
+	GRhi->BindDrawData(Vao,Ibo);
+	GRhi->DrawElements(IndexNum,mode);
+}
+
+void FOpenGLMesh::DrawInstanced(EDrawMode mode, int cnt)
+{
+	GRhi->BindDrawData(Vao, Ibo);
+	GRhi->DrawElementsInstanced(IndexNum, cnt, mode);
 }

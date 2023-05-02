@@ -43,6 +43,14 @@ FTransformComponent* FGameObject::AddComponent<FTransformComponent>()
 }
 
 template<>
+FScriptComponent* FGameObject::AddComponent<FScriptComponent>()
+{
+	FScriptComponent* Res = new FScriptComponent(this);
+	Components[EComponentType::Script].reset(Res);
+	return Res;
+}
+
+template<>
 FTransformComponent* FGameObject::GetComponent<FTransformComponent>()
 {
 	auto find = Components.find(EComponentType::Transform);
@@ -54,9 +62,32 @@ FTransformComponent* FGameObject::GetComponent<FTransformComponent>()
 }
 
 template<>
+FScriptComponent* FGameObject::GetComponent<FScriptComponent>()
+{
+	auto find = Components.find(EComponentType::Script);
+	if (find != Components.end())
+	{
+		return (*find).second->DynamicCast<FScriptComponent>();
+	}
+	return nullptr;
+}
+
+template<>
 bool FGameObject::RemoveComponent<FTransformComponent>()
 {
 	auto find = Components.find(EComponentType::Transform);
+	if (find != Components.end())
+	{
+		Components.erase(find);
+		return true;
+	}
+	return false;
+}
+
+template<>
+bool FGameObject::RemoveComponent<FScriptComponent>()
+{
+	auto find = Components.find(EComponentType::Script);
 	if (find != Components.end())
 	{
 		Components.erase(find);

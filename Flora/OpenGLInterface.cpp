@@ -269,6 +269,26 @@ bool FOpenGLInterface::InitResources()
 	FMaterial::StandardOpacityShader->SetData(StandardOpacityVShader, StandardOpacityFShader);
 	FMaterial::StandardOpacityShader->Register();
 
+	const char* vertexShaderSource = "#version 330 core\n"
+		"layout (location = 0) in vec3 aPos;\n"
+		"uniform mat4 model;\n"
+		"uniform mat4 view;\n"
+		"uniform mat4 projection;\n"
+		"void main()\n"
+		"{\n"
+		"   gl_Position = projection * view * model* vec4(aPos, 1.0);\n"
+		"}\0";
+	const char* fragmentShaderSource = "#version 330 core\n"
+		"out vec4 FragColor;\n"
+		"in vec3 color;\n"
+		"void main()\n"
+		"{\n"
+		"   FragColor = vec4(1.0f);\n"
+		"}\n\0";
+	Ref<FMaterial> TestShader = GenerateMaterial("TestShader");
+	TestShader->SetData(vertexShaderSource, fragmentShaderSource);
+	TestShader->Register();
+
 	//load engine mesh (cube & sphere & cone & plane)
 	{
 		vector<FVertex> Vertices;
@@ -435,6 +455,21 @@ void FOpenGLInterface::SetDouble4(const char* Name, uint32_t material, const dve
 	glUniform4d(glGetUniformLocation(material, Name), Data.x, Data.y, Data.z, Data.w);
 }
 
+void FOpenGLInterface::SetMat2(const char* Name, uint32_t material, const glm::mat2& Data)
+{
+	glUniformMatrix2fv(glGetUniformLocation(material, Name), 1, GL_FALSE, &Data[0][0]);
+}
+
+void FOpenGLInterface::SetMat3(const char* Name, uint32_t material, const glm::mat3& Data)
+{
+	glUniformMatrix3fv(glGetUniformLocation(material, Name), 1, GL_FALSE, &Data[0][0]);
+}
+
+void FOpenGLInterface::SetMat4(const char* Name, uint32_t material, const glm::mat4& Data)
+{
+	glUniformMatrix4fv(glGetUniformLocation(material, Name), 1, GL_FALSE, &Data[0][0]);
+}
+
 
 void FOpenGLInterface::SetMat2f(const char* Name, uint32_t material, uint32_t cnt, const vector<mat2>& Data)
 {
@@ -575,6 +610,11 @@ bool FOpenGLInterface::LinkShader(uint32_t Handle)
 		return true;
 	};
 	return CheckLink(Handle);
+}
+
+void FOpenGLInterface::BindShader(uint32_t handle)
+{
+	glUseProgram(handle);
 }
 
 const char* FOpenGLInterface::CompareMethodToString(uint32_t t)

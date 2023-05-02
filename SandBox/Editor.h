@@ -19,10 +19,10 @@ private:
 	virtual void GameScene();			//checked
 	virtual void EditorSettings();		//checked
 	virtual void ResourceViewer();		//checked
-
+	virtual void LevelViewer();			//checked
+	
 	virtual void Hierarchy();
 	virtual void Inspector();
-	virtual void LevelViewer();
 	virtual void GameObjectViewer();
 
 private:
@@ -30,11 +30,11 @@ private:
 	bool bOpenConsole = true;
 	bool bOpenGameScene = true;
 	bool bOpenResourceViewer = true;
-	
+	bool bOpenLevelViewer = true;
 	bool bOpenEditorSettings = false;
+
 	bool bOpenHierarchy = false;
 	bool bOpenInspector = false;
-	bool bOpenLevelViewer = false;
 	bool bOpenGameObjectViewer = false;
 };
 

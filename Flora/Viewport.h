@@ -53,6 +53,8 @@ public:
 
 	void SetBackBuffer(Ref<FTexture>);
 	void Display();
+
+	bool IsFocused()const;
 public:
 	static FGameScene& GetMainScene();
 private:

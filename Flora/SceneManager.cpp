@@ -1,12 +1,16 @@
 #include "SceneManager.h"
 #include "InputSystem.h"
+#include "Viewport.h"
 #include <memory>
 void FSceneManager::BeginUpdate()
 {
+	FInputSystem::Get().GatherInputEvent();
 	if (CurrentScene)
 	{
-		FInputSystem::Get().GatherInputEvent();
-		CurrentScene->ProcessInputEvent();
+		if (FGameScene::GetMainScene().IsFocused())
+		{
+			CurrentScene->ProcessInputEvent();
+		}
 		CurrentScene->BeginUpdate();
 	}
 }

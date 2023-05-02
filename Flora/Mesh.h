@@ -1,5 +1,6 @@
 #pragma once
 #include "Core.h"
+#include "Type.h"
 #include "Serialization.h"
 #include "Resource.h"
 #include "AABB.h"
@@ -53,6 +54,8 @@ public :
 	inline const Ref<FMesh> GetCubeFrame()const { return CubeFrame; };
 public:
 	virtual void SetData(const std::vector<FVertex>&, const std::vector<uint32_t>&,const FAABB&) = 0;
+	virtual void Draw(EDrawMode) = 0;
+	virtual void DrawInstanced(EDrawMode,int) = 0;
 public:
 	//resource interface
 	virtual void Register() final;

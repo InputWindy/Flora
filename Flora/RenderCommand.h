@@ -66,6 +66,9 @@ public:
 	virtual void SetDouble2(const char*, uint32_t, const  glm::dvec2&) = 0;
 	virtual void SetDouble3(const char*, uint32_t, const  glm::dvec3&) = 0;
 	virtual void SetDouble4(const char*, uint32_t, const  glm::dvec4&) = 0;
+	virtual void SetMat2(const char*, uint32_t,const glm::mat2&) = 0;
+	virtual void SetMat3(const char*, uint32_t,const glm::mat3&) = 0;
+	virtual void SetMat4(const char*, uint32_t,const glm::mat4&) = 0;
 	virtual void SetMat2f(const char*, uint32_t, uint32_t, const vector<glm::mat2>&) = 0;
 	virtual void SetMat3f(const char*, uint32_t, uint32_t, const vector<glm::mat3>&) = 0;
 	virtual void SetMat4f(const char*, uint32_t, uint32_t, const vector<glm::mat4>&) = 0;
@@ -85,6 +88,7 @@ public:
 
 	virtual bool CompileShader(uint32_t) = 0;
 	virtual bool LinkShader(uint32_t) = 0;
+	virtual void BindShader(uint32_t) = 0;
 protected:
 	ERenderCommandType Type = E_RHI_OpenGL;
 public:
