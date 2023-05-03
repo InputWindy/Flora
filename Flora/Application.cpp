@@ -184,36 +184,58 @@ void FApplication::RenderScene()
 		Canvas->BindOutput(Renderer.GetBackBuffer(),0);
 		Canvas->ClearAll();
 
-		Ref<FMaterial> TestShader = FResourceManager::Get().FindObject<FMaterial>("TestShader");
-		Cmd->BindShader(TestShader->GetHandle());
+		//render scene objects
 		{
 			Ref<FScene> CurrentScene = FSceneManager::Get().GetCurrentScene();
-			if (CurrentScene and CurrentScene->GetDebugCamera())
+			if (CurrentScene and CurrentScene->GetMainCamera())
 			{
-				Ref<FCameraObject> CameraObject = CurrentScene->GetDebugCamera();
-				FTransform& Transform = CameraObject->GetComponent<FTransformComponent>()->GetTransform();
-				FCamera* Camera = CameraObject->GetComponent<FCameraComponent>()->GetCamera();
-
-				mat4 model =
+				//internal uniforms
+				mat4 ModelMatrix,ViewMatrix, ProjectionMatrix;
+				vec3 CameraPos;
 				{
-					0.01,0,0,0,
-					0,0.01,0,0,
-					0,0,0.01,0,
-					0,0,0,1
-				};
-				Cmd->SetMat4("model", TestShader->GetHandle(), model);
-				Cmd->SetMat4("view", TestShader->GetHandle(), Transform.GetViewMatrix());
-				Cmd->SetMat4("projection", TestShader->GetHandle(), Camera->GetProjection());
+					Ref<FCameraObject> CameraObject = CurrentScene->GetMainCamera();
+					FTransform& Transform = CameraObject->GetComponent<FTransformComponent>()->GetTransform();
+					FCamera* Camera = CameraObject->GetComponent<FCameraComponent>()->GetCamera();
+					ViewMatrix = Transform.GetViewMatrix();
+					ProjectionMatrix = Camera->GetProjection();
+					CameraPos = Transform.GetPosition();
+				}
+				
+				//for obj : gameobjects
+				{
+					//get object shader
+					Ref<FMaterial> TestShader = FResourceManager::Get().FindObject<FMaterial>("TestShader");
+					//get object mesh
+					Ref<FMesh>	   Sphere = FResourceManager::Get().FindObject<FMesh>("Cylinder");
+					//get object transform
+					ModelMatrix =
+					{
+						0.01,0,0,0,
+						0,0.01,0,0,
+						0,0,0.01,0,
+						0,0,0,1
+					};
+					//get object animation
+					if (TestShader and Sphere)
+					{
+						Cmd->BindShader(TestShader->GetHandle());
+						{
+							//set internal uniforms
+							Cmd->SetMat4("model", TestShader->GetHandle(), ModelMatrix);
+							Cmd->SetMat4("view", TestShader->GetHandle(), ViewMatrix);
+							Cmd->SetMat4("projection", TestShader->GetHandle(), ProjectionMatrix);
+
+							//set custom uniforms
+
+							//set render state
+						}
+
+						Sphere->Draw(EDrawMode_TRIANGLES);
+					}
+				}
+				
 			}
-
 		}
-
-		Ref<FMesh> Sphere = FResourceManager::Get().FindObject<FMesh>("Sphere");
-		if (Sphere)
-		{
-			Sphere->Draw(EDrawMode_TRIANGLES);
-		}
-
 		Canvas->Dettach();
 	}
 	FGameScene::GetMainScene().SetBackBuffer(Renderer.GetBackBuffer());

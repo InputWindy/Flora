@@ -102,3 +102,56 @@ bool FScriptComponent::Serialize(OUT FJson&)
 {
 	return false;
 }
+
+FAnimationComponent::FAnimationComponent(FGameObject*o)
+	:FComponent(o, EComponentType::Animation)
+{
+}
+
+void FAnimationComponent::AddAnimation()
+{
+	AnimationMap.insert({"Empty",nullptr});
+}
+
+void FAnimationComponent::ResetAnimation(const string& Name,Ref<FAnimation> Anim)
+{
+	if (AnimationMap.find(Name) != AnimationMap.end())
+	{
+		AnimationMap[Name] = Anim;
+	}
+}
+
+Ref<FAnimation>& FAnimationComponent::operator[](const string& Name)
+{
+	return AnimationMap[Name];
+}
+
+bool FAnimationComponent::Parse(IN FJson&)
+{
+	return false;
+}
+
+bool FAnimationComponent::Serialize(OUT FJson&)
+{
+	return false;
+}
+
+FMeshComponent::FMeshComponent(FGameObject*o)
+	:FComponent(o,EComponentType::Mesh)
+{
+}
+
+Ref<FMesh>& FMeshComponent::operator[](uint32_t Idx)
+{
+	return Meshes[Idx];
+}
+
+bool FMeshComponent::Parse(IN FJson&)
+{
+	return false;
+}
+
+bool FMeshComponent::Serialize(OUT FJson&)
+{
+	return false;
+}

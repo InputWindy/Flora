@@ -1,4 +1,5 @@
-#include "Editor.h"
+#include "EditorScript.h"
+#include "DebugCamera.h"
 #include <filesystem>
 #include <direct.h>
 #include <functional>
@@ -7,28 +8,29 @@
 
 #define REVERSE_BIT(x,y)  x^=(1<<y)
 
-void EditorLayer::OnAwake()
+void EditorScript::OnAwake()
 {
-	/*PUSH_ERROR_MSG("Temp", "Test num :%d %d %f",-200,-100,33.8f);
-	PUSH_TRACE_MSG("Temp", "d");
-	PUSH_INFO_MSG("Temp", "d");
-	PUSH_WARN_MSG("Temp", "d");*/
+	FSceneManager& SceneManager = FSceneManager::Get();
+	Ref<FScene> CurrentScene = SceneManager.AddScene("DebugScene_0");
+	SceneManager.SetCurrentScene(CurrentScene);
+	Ref<FCameraObject> DebugCameraObject = CurrentScene->SpawnCamera<DebugCamera>("DebugCamera");
+	CurrentScene->SetMainCamera(DebugCameraObject);
 }
 
-void EditorLayer::OnRelease()
-{
-}
-
-void EditorLayer::OnUpdate()
+void EditorScript::OnRelease()
 {
 }
 
-void EditorLayer::OnGUI()
+void EditorScript::OnUpdate()
+{
+}
+
+void EditorScript::OnGUI()
 {
 	MainRegion();
 }
 
-bool EditorLayer::MainRegion()
+bool EditorScript::MainRegion()
 {
 	if (FUI::BeginMainMenuBar())
 	{
@@ -96,12 +98,12 @@ bool EditorLayer::MainRegion()
 	return true;
 }
 
-bool EditorLayer::RenderGizmos()
+bool EditorScript::RenderGizmos()
 {
 	return false;
 }
 
-void EditorLayer::Console()
+void EditorScript::Console()
 {
 	if (bOpenConsole)
 	{
@@ -186,7 +188,7 @@ void EditorLayer::Console()
 	}
 }
 
-void EditorLayer::ContentBrowser()
+void EditorScript::ContentBrowser()
 {
 	if (bOpenContentBrowser)
 	{
@@ -279,7 +281,7 @@ void EditorLayer::ContentBrowser()
 	}
 }
 
-void EditorLayer::EditorSettings()
+void EditorScript::EditorSettings()
 {
 	if (bOpenEditorSettings)
 	{
@@ -307,7 +309,7 @@ void PayloadFromGameObject(const ImGuiPayload* payload, void* userdata)
 
 }
 
-void EditorLayer::GameScene()
+void EditorScript::GameScene()
 {
 	if (bOpenGameScene)
 	{
@@ -330,15 +332,15 @@ void EditorLayer::GameScene()
 	}
 }
 
-void EditorLayer::Hierarchy()
+void EditorScript::Hierarchy()
 {
 }
 
-void EditorLayer::Inspector()
+void EditorScript::Inspector()
 {
 }
 
-void EditorLayer::LevelViewer()
+void EditorScript::LevelViewer()
 {
 	if (bOpenLevelViewer)
 	{
@@ -359,7 +361,7 @@ void EditorLayer::LevelViewer()
 	}
 }
 
-void EditorLayer::ResourceViewer()
+void EditorScript::ResourceViewer()
 {
 	if (bOpenResourceViewer)
 	{
@@ -507,6 +509,6 @@ void EditorLayer::ResourceViewer()
 	}
 }
 
-void EditorLayer::GameObjectViewer()
+void EditorScript::GameObjectViewer()
 {
 }

@@ -1,7 +1,7 @@
 #include "DebugCamera.h"
 
-DebugCamera::DebugCamera(const char* name, FScene* scene)
-	:FCameraObject(name,scene)
+DebugCamera::DebugCamera(const char* name, FScene* scene, uint32_t id)
+	:FCameraObject(name, scene, id)
 {
 	FScriptComponent* Script = AddComponent<FScriptComponent>();
 	Script->BindAwakeCallback(std::bind(&DebugCamera::CameraAwake,this));

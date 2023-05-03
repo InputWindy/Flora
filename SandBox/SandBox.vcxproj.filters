@@ -9,30 +9,30 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="源文件\Class">
+      <UniqueIdentifier>{2e5e43d8-b48e-4cc8-9293-dc974a53351d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\LevelScript">
+      <UniqueIdentifier>{84ac0706-0423-4b5b-bf57-3c9b15259ea0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EditorScript.cpp">
+      <Filter>源文件\LevelScript</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugCamera.cpp">
+      <Filter>源文件\Class</Filter>
+    </ClCompile>
     <ClCompile Include="SandBox.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Editor.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="DebugScene_0.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="DebugCamera.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Editor.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="DebugScene_0.h">
-      <Filter>源文件</Filter>
+    <ClInclude Include="EditorScript.h">
+      <Filter>源文件\LevelScript</Filter>
     </ClInclude>
     <ClInclude Include="DebugCamera.h">
-      <Filter>源文件</Filter>
+      <Filter>源文件\Class</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

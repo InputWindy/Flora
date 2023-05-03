@@ -1,7 +1,8 @@
 #pragma once
 #include "Flora.h"
 
-struct EditorLayer :public FLayer
+//level script
+struct EditorScript :public FLayer
 {
 	virtual void OnAwake();
 	virtual void OnRelease();

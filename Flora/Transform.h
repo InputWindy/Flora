@@ -19,13 +19,17 @@ public:
     const static inline vec3 WorldFront  = { 0,0,1 };
     const static inline vec3 WorldOrigin = { 0,0,0 };
 public:
-    vec3 Position = { 0,0,0 };
-    vec3 Rotation = { 0,0,0 };
-    vec3 Scale    = { 0.01,0.01,0.01 };
+    inline vec3& GetPosition(){ return Position; };
+    inline vec3& GetRotation(){ return Rotation; };
+    inline vec3& GetScale(){ return Scale; };
 private:
     vec3 Front;
     vec3 Up;
     vec3 Right;
+
+    vec3 Position = { 0,0,0 };
+    vec3 Rotation = { 0,0,0 };
+    vec3 Scale = { 0.01,0.01,0.01 };
 public:
     FTransform();
 

@@ -2,8 +2,8 @@
 #include <imgui.h>
 #include <functional>
 #define BIND_EVENT_FUNCTION(func) std::bind(&func,this,std::placeholders::_1)
-FGameObject::FGameObject(const char* name, EGameObjectType t, FScene*s)
-	:Name(name),Type(t),Owner(s)
+FGameObject::FGameObject(const char* name, EGameObjectType t, FScene*s, uint32_t id)
+	:Name(name),Type(t),Owner(s),Id(id)
 {
 	assert(Owner);
 	AddComponent<FTransformComponent>();

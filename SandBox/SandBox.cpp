@@ -1,7 +1,6 @@
 #include "EntryPoint.h"
 #include "Flora.h"
-#include "Editor.h"
-#include "DebugScene_0.h"
+#include "EditorScript.h"
 
 class FloraEditor :public FApplication
 {
@@ -9,8 +8,7 @@ public:
 	FloraEditor()
 	{
 		InitProjectSettings();
-		LayerStack.push_back(new EditorLayer);
-		LayerStack.push_back(new DebugScene_0);
+		LayerStack.push_back(new EditorScript);
 	};
 
 	virtual void InitProjectSettings()override

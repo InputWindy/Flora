@@ -33,7 +33,7 @@ enum
 
 struct FLORA_API FConsoleContext
 {
-	friend class EditorLayer;
+	friend class EditorScript;
 
 	struct FDebugMsg
 	{

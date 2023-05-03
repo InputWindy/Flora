@@ -5,8 +5,8 @@
 #include "Viewport.h"
 #include <imgui.h>
 
-FCameraObject::FCameraObject(const char* name, FScene* owner)
-	:FGameObject(name,EGameObjectType::CameraObject,owner)
+FCameraObject::FCameraObject(const char* name, FScene* owner,uint32_t id)
+	:FGameObject(name,EGameObjectType_CameraObject,owner,id)
 {
 	AddComponent<FCameraComponent>();
 }

@@ -140,14 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DebugCamera.cpp" />
-    <ClCompile Include="DebugScene_0.cpp" />
-    <ClCompile Include="Editor.cpp" />
+    <ClCompile Include="EditorScript.cpp" />
     <ClCompile Include="SandBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DebugCamera.h" />
-    <ClInclude Include="DebugScene_0.h" />
-    <ClInclude Include="Editor.h" />
+    <ClInclude Include="EditorScript.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

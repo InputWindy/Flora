@@ -4,7 +4,7 @@
 class DebugCamera:public FCameraObject
 {
 public:
-	DebugCamera(const char*, FScene*);
+	DebugCamera(const char*, FScene*,uint32_t);
 	virtual ~DebugCamera() = default;
 public:
 	void CameraAwake()
@@ -15,10 +15,11 @@ public:
 	void CameraUpdate(float)
 	{
 		FTransformComponent* RootComponent = GetComponent<FTransformComponent>();
-		if (RootComponent)
+		FCameraComponent* CameraComponent = GetComponent<FCameraComponent>();
+		if (RootComponent and CameraComponent)
 		{
-			float MovementSpeed = GetMovementSpeed();
-			float MouseSensitivity = GetMouseSensitivity();
+			float MovementSpeed = CameraComponent->GetMovementSpeed();
+			float MouseSensitivity = CameraComponent->GetMouseSensitivity();
 			if (FGameScene::GetMainScene().IsFocused())
 			{
 				float DeltaTime = FApplication::GetApp()->GetAppDeltaTime();
@@ -50,4 +51,3 @@ public:
 
 	}
 };
-

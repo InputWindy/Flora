@@ -2,9 +2,14 @@
 #include "Core.h"
 #include "Serialization.h"
 #include "Camera.h"
+#include "Animation.h"
+#include "Skeleton.h"
 #include "Transform.h"
+#include "Mesh.h"
 #include <memory>
 #include <functional>
+#include <vector>
+using std::vector;
 using std::function;
 
 enum class EComponentType
@@ -13,7 +18,6 @@ enum class EComponentType
 	Animation,
 	Camera,
 	Transform,
-	Skeleton,
 	Script,
 
 	Max
@@ -53,10 +57,19 @@ public:
 
 	void SetCameraType(ECameraType);
 	inline FCamera* GetCamera() { return Camera.get(); };
+
+public:
+	inline float GetMovementSpeed()const { return MovementSpeed; };
+	inline float GetMouseSensitivity()const { return MouseSensitivity; };
+	inline float GetMouseWheelSensitivity()const { return MouseWheelSensitivity; };
 public:
 	virtual bool Parse(IN FJson&) final;
 	virtual bool Serialize(OUT FJson&) final;
 private:
+	float MovementSpeed = 2.5f;
+	float MouseSensitivity = 0.1f;
+	float MouseWheelSensitivity = 0.1f;
+
 	Scope<FCamera> Camera;
 };
 
@@ -98,4 +111,39 @@ private:
 	OnReleaseCallback OnRelease;
 	OnUpdateCallback  OnUpdate;
 };
+
+class FLORA_API FAnimationComponent :public FComponent
+{
+	friend class FGameObject;
+public:
+	FAnimationComponent(FGameObject*);
+	virtual ~FAnimationComponent() = default;
+
+	void AddAnimation();
+	void ResetAnimation(const string&,Ref<FAnimation>);
+	Ref<FAnimation>& operator[](const string&);
+public:
+	virtual bool Parse(IN FJson&) final;
+	virtual bool Serialize(OUT FJson&) final;
+private:
+	unordered_map<string, Ref<FAnimation>> AnimationMap;
+	Ref<FSkeleton> Skeleton = nullptr;
+};
+
+class FLORA_API FMeshComponent :public FComponent
+{
+	friend class FGameObject;
+public:
+	FMeshComponent(FGameObject*);
+	virtual ~FMeshComponent() = default;
+
+	Ref<FMesh>& operator[](uint32_t);
+public:
+	virtual bool Parse(IN FJson&) final;
+	virtual bool Serialize(OUT FJson&) final;
+private:
+	vector<Ref<FMesh>> Meshes;
+};
+
+
 
