@@ -48,4 +48,3 @@ protected:
 private:
 	static inline uint32_t DefaultAnimationId = 0;
 };
-
