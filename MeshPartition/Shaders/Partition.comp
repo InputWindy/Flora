@@ -1,0 +1,66 @@
+#version 460 core
+
+#include "GpuScene.glsl"
+
+#define NUM_X 32
+#define NUM_Y 32
+
+//center3 + radius 
+uniform vec4 u_RoamingArea;
+
+//LOD0外扩区域大小
+uniform float u_RoamingAreaMargin;
+
+int Classify(vec3 TrianglePos)
+{
+	float Dist = distance(u_RoamingArea.xyz,TrianglePos);
+
+	float R0 = u_RoamingArea.w;// + u_RoamingAreaMargin;
+
+	if(Dist < R0)return 0;
+	else return 1;
+}
+
+vec4 DebugClassify(vec3 TrianglePos)
+{
+	float Dist = distance(u_RoamingArea.xyz,TrianglePos);
+	float R0 = u_RoamingArea.w;// + u_RoamingAreaMargin;
+
+	return vec4(TrianglePos,Dist);
+}
+
+NUM_THREADS(NUM_X,NUM_Y,1)
+void main()
+{
+	// 总共需要处理的三角形数量
+	int NumPrimitives = GetSceneBuffer(0).NumTriangles;
+
+	// 工作线程数量
+	int TotalThreadNum = GROUP_THREAD_NUM * NUM_X * NUM_Y;
+
+	// 循环次数
+	int LoopCnt = NumPrimitives/TotalThreadNum + 1;
+
+	int CurPrimitiveID,LoopIdx,CollectionId;
+
+	for(LoopIdx = 0;LoopIdx < LoopCnt;++LoopIdx)
+	{
+		CurPrimitiveID = LoopIdx * TotalThreadNum + GLOBAL_THREAD_ID_1D;
+
+
+		if(CurPrimitiveID < GetSceneBuffer(0).NumTriangles)
+		{
+			ivec3 VertIDs = GetTriangleBuffer(CurPrimitiveID);
+
+			FVertex V0 = GetVertexBuffer(VertIDs.x);
+			FVertex V1 = GetVertexBuffer(VertIDs.y);
+			FVertex V2 = GetVertexBuffer(VertIDs.z);
+
+			vec3 Center = (V0.Position.xyz + V1.Position.xyz + V2.Position.xyz)/3.0f;
+
+			SetTriangleCollection(CurPrimitiveID,Classify(Center));
+			SetDebugTriangleCollection(CurPrimitiveID,DebugClassify(Center));
+		}
+	}
+
+}

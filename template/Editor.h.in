@@ -1,0 +1,23 @@
+#pragma once 
+#include <CoreMinimal.h>
+
+#include <iostream>
+
+using namespace XVerse;
+
+class XEditor:public XVerse::IEditor
+{
+public:
+	XEditor() = default;
+	XEditor(void* InWindowHandle);
+	virtual ~XEditor() = default;
+
+public:
+	virtual void Terminate()override;
+	virtual void BeginRender()override;
+	virtual void Render()override;
+	virtual void EndRender()override;
+
+protected:
+	void MainMenu();
+};
