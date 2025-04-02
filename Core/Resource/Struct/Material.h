@@ -7,7 +7,7 @@
 
 #include <map>
 #include <string>
-namespace XVerse
+namespace flora
 {
 	struct MaterialIFlags
 	{
@@ -27,7 +27,7 @@ namespace XVerse
 	using MaterialImportSettings = XImportSetting<MaterialIFlags, EFileType::FT_MATERIAL>;
 	using MaterialExportSettings = XExportSetting<MaterialOFlags, EFileType::FT_MATERIAL>;
 
-	class XMaterial : public XVerse::IResource<>, ISerialization
+	class XMaterial : public flora::IResource<>, ISerialization
 	{
 		IMPL_RESOURCE(Material)
 	public:
@@ -38,7 +38,7 @@ namespace XVerse
 		XMaterial() = default;
 		virtual ~XMaterial() = default;
 
-		XMaterial(const std::string& InFilePath) :XVerse::IResource<>(InFilePath) {  }
+		XMaterial(const std::string& InFilePath) :flora::IResource<>(InFilePath) {  }
 
 		std::map<EShaderType, std::string>& GetShaderMap(){ return ShaderMap; };
 		XMaterialState& GetMaterialState(){ return MaterialState; };

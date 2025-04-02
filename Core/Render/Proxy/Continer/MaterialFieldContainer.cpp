@@ -3,13 +3,13 @@
 #include <Render/RHI/RHI.h>
 #include <Render/Proxy/ProxyBase.h>
 
-void XVerse::XMaterialFieldContainer::SetupMaterialState()
+void flora::XMaterialFieldContainer::SetupMaterialState()
 {
 	XRHI* Rhi = GetRHI();
 	Rhi->SetupMaterialState(MaterialState);
 }
 
-//XVerse::XMaterialFieldContainer* XVerse::XMaterialProxy::GetContainer()
+//flora::XMaterialFieldContainer* flora::XMaterialProxy::GetContainer()
 //{
 //	return Container.get();
 //}

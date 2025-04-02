@@ -1,7 +1,7 @@
 #pragma once
 #include <cstring>
 #include <Render/RHI/OpenGL/OpenGLRHI.h>
-namespace XVerse
+namespace flora
 {
 	class XOpenGLTexture2D :public XRHITexture2D
 	{

@@ -4,7 +4,7 @@
 #include <Common/Layout.h>
 #include <memory>
 
-namespace XVerse
+namespace flora
 {
 	class XRHIVertexBuffer;
 	class XRHIIndexBuffer;
@@ -13,7 +13,7 @@ namespace XVerse
 
 	class XModelMesh;
 
-	class XStaticMesh : public XVerse::XTriMesh, public INoneCopyable,public std::enable_shared_from_this<XStaticMesh>
+	class XStaticMesh : public flora::XTriMesh, public INoneCopyable,public std::enable_shared_from_this<XStaticMesh>
 	{
 		friend class XModelMesh;
 	public:
@@ -75,7 +75,7 @@ namespace XVerse
 		virtual ~XStaticMesh() = default;
 	public:
 		const std::string& GetStaticMeshName()const { return Name; }
-		const XVerse::Wrap::GlobalSettings& GetMetaData()const;
+		const flora::Wrap::GlobalSettings& GetMetaData()const;
 	public:
 		inline bool HasDataMask(const int InMaskToBeTested) const { return ((CurrentDataMask & InMaskToBeTested) != 0); }
 		void UpdateDataMask();

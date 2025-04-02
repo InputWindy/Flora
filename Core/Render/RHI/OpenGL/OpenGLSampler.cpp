@@ -1,50 +1,50 @@
 #include "OpenGLSampler.h"
 #include <Render/RHI/OpenGL/OpenGLRHI.h>
-XVerse::XOpenGLSampler::~XOpenGLSampler()
+flora::XOpenGLSampler::~XOpenGLSampler()
 {
     ReleaseRHI();
 }
 
-bool XVerse::XOpenGLSampler::IsValid()
+bool flora::XOpenGLSampler::IsValid()
 {
     return glIsSampler(Handle) == GL_TRUE;
 }
 
-bool XVerse::XOpenGLSampler::InitRHI()
+bool flora::XOpenGLSampler::InitRHI()
 {
     glGenSamplers(1, &Handle);
     return IsValid();
 }
 
-bool XVerse::XOpenGLSampler::ReleaseRHI()
+bool flora::XOpenGLSampler::ReleaseRHI()
 {
     glDeleteSamplers(1, &Handle);
     return true;
 }
 
-bool XVerse::XOpenGLSampler::CopyFrom(std::shared_ptr<XRHIResource>)
+bool flora::XOpenGLSampler::CopyFrom(std::shared_ptr<XRHIResource>)
 {
     return false;
 }
 
-bool XVerse::XOpenGLSampler::UpdateRHI()
+bool flora::XOpenGLSampler::UpdateRHI()
 {
     return true;
 }
 
-void XVerse::XOpenGLSampler::Bind(uint32_t unit)
+void flora::XOpenGLSampler::Bind(uint32_t unit)
 {
     glBindSampler(unit, Handle);
 
 }
 
-void XVerse::XOpenGLSampler::UnBind(uint32_t unit)
+void flora::XOpenGLSampler::UnBind(uint32_t unit)
 {
     glBindSampler(unit, 0);
 
 }
 
-void XVerse::XOpenGLSampler::SetSamplerState(const XRHISamplerCreateInfo& InSampleInfo)
+void flora::XOpenGLSampler::SetSamplerState(const XRHISamplerCreateInfo& InSampleInfo)
 {
     glSamplerParameteri(Handle, GL_TEXTURE_MIN_FILTER, ToGLFilterMode(InSampleInfo.MinFilterMode));
     glSamplerParameteri(Handle, GL_TEXTURE_MAG_FILTER, ToGLFilterMode(InSampleInfo.MagFilterMode));
@@ -65,64 +65,64 @@ void XVerse::XOpenGLSampler::SetSamplerState(const XRHISamplerCreateInfo& InSamp
 }
 //
 //
-//void XVerse::XOpenGLSampler::SetMinFilter(EFilterMode Mode) const
+//void flora::XOpenGLSampler::SetMinFilter(EFilterMode Mode) const
 //{
 //    
 //}
 //
-//void XVerse::XOpenGLSampler::SetMagFilter(EFilterMode Mode) const
+//void flora::XOpenGLSampler::SetMagFilter(EFilterMode Mode) const
 //{
 //    glSamplerParameteri(Handle, GL_TEXTURE_MIN_FILTER, ToGLFilterMode(Mode));
 //}
 //
-//void XVerse::XOpenGLSampler::SetWrapR(EWrapMode Mode) const
+//void flora::XOpenGLSampler::SetWrapR(EWrapMode Mode) const
 //{
 //    glSamplerParameteri(Handle, GL_TEXTURE_WRAP_R, ToGLWrapMode(Mode));
 //}
 //
-//void XVerse::XOpenGLSampler::SetWrapS(EWrapMode Mode) const
+//void flora::XOpenGLSampler::SetWrapS(EWrapMode Mode) const
 //{
 //    glSamplerParameteri(Handle, GL_TEXTURE_WRAP_S, ToGLWrapMode(Mode));
 //
 //}
 //
-//void XVerse::XOpenGLSampler::SetWrapT(EWrapMode Mode) const
+//void flora::XOpenGLSampler::SetWrapT(EWrapMode Mode) const
 //{
 //    glSamplerParameteri(Handle, GL_TEXTURE_WRAP_T, ToGLWrapMode(Mode));
 //
 //}
 //
-//void XVerse::XOpenGLSampler::SetMinLod(uint8_t Lod) const
+//void flora::XOpenGLSampler::SetMinLod(uint8_t Lod) const
 //{
 //    glSamplerParameteri(Handle, GL_TEXTURE_MIN_LOD, Lod);
 //
 //}
 //
-//void XVerse::XOpenGLSampler::SetMaxLod(uint8_t Lod) const
+//void flora::XOpenGLSampler::SetMaxLod(uint8_t Lod) const
 //{
 //    glSamplerParameteri(Handle, GL_TEXTURE_MAX_LOD, Lod);
 //
 //}
 //
-//void XVerse::XOpenGLSampler::SetLodBias(float Bias) const
+//void flora::XOpenGLSampler::SetLodBias(float Bias) const
 //{
 //    glSamplerParameterf(Handle, GL_TEXTURE_LOD_BIAS, Bias);
 //
 //}
 //
-//void XVerse::XOpenGLSampler::SetBorderColor(float R, float G, float B, float A) const
+//void flora::XOpenGLSampler::SetBorderColor(float R, float G, float B, float A) const
 //{
 //    const GLfloat color[4] = { R,G,B,A };
 //    glSamplerParameterfv(Handle, GL_TEXTURE_BORDER_COLOR, color);
 //
 //}
 //
-//void XVerse::XOpenGLSampler::SetCompareMode(ETextureCompareMode Mode) const
+//void flora::XOpenGLSampler::SetCompareMode(ETextureCompareMode Mode) const
 //{
 //    glSamplerParameteri(Handle, GL_TEXTURE_COMPARE_MODE, ToGLTextureCompareMode(Mode));
 //}
 //
-//void XVerse::XOpenGLSampler::SetCompareFunc(ECompareFunc Func) const
+//void flora::XOpenGLSampler::SetCompareFunc(ECompareFunc Func) const
 //{
 //    glSamplerParameteri(Handle, GL_TEXTURE_COMPARE_FUNC, ToGLCompareFunc(Func));
 //}

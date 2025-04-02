@@ -1,6 +1,6 @@
 #pragma once 
 #include <json11.hpp>
-namespace XVerse
+namespace flora
 {
 	class ISerialization
 	{

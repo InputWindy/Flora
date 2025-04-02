@@ -21,9 +21,9 @@ std::string LoadFileToString(const std::string& filePath)
 }
 
 template<>
-std::shared_ptr<XVerse::XMaterial::BaseType> XVerse::XImporter<XVerse::MaterialImportSettings, XVerse::XMaterial::BaseType>::Exec(const std::string& InFilepath, const XVerse::MaterialImportSettings& InSettings)
+std::shared_ptr<flora::XMaterial::BaseType> flora::XImporter<flora::MaterialImportSettings, flora::XMaterial::BaseType>::Exec(const std::string& InFilepath, const flora::MaterialImportSettings& InSettings)
 {
-	std::shared_ptr<XVerse::XMaterial> Ret = std::make_shared<XMaterial>();
+	std::shared_ptr<flora::XMaterial> Ret = std::make_shared<XMaterial>();
 
 	bool bExist = true;
 
@@ -79,7 +79,7 @@ bool FindGLSLFiles(const std::string& folderPath, std::vector<std::string>& Out)
 }
 
 
-void XVerse::XMaterial::ImportShaderHeaderFiles(const std::string& ShaderRootPath)
+void flora::XMaterial::ImportShaderHeaderFiles(const std::string& ShaderRootPath)
 {
 	std::vector<std::string> Filenames;
 	if (!FindGLSLFiles(ShaderRootPath, Filenames))return;
@@ -105,7 +105,7 @@ void ReplaceSubstring(std::string& originalString, const std::string& oldSubstri
 	}
 }
 
-void XVerse::XMaterial::ParseAndReplaceIncludes(const char* Sufix,std::string& Inout)
+void flora::XMaterial::ParseAndReplaceIncludes(const char* Sufix,std::string& Inout)
 {
 	std::string reg = "#include\\s+";
 	reg += '"';
@@ -134,7 +134,7 @@ void XVerse::XMaterial::ParseAndReplaceIncludes(const char* Sufix,std::string& I
 		}
 		else
 		{
-			XVERSE_CORE_WARN("Include file not found: {0}", includeFilename);
+			FLORA_CORE_WARN("Include file not found: {0}", includeFilename);
 			break;
 		}
 	}
@@ -144,7 +144,7 @@ void XVerse::XMaterial::ParseAndReplaceIncludes(const char* Sufix,std::string& I
 
 
 template<>
-bool XVerse::XExporter<XVerse::MaterialImportSettings, XVerse::XMaterial>::Exec(XVerse::XMaterial& Material, const std::string& Filepath, const XVerse::MaterialImportSettings& Settings)
+bool flora::XExporter<flora::MaterialImportSettings, flora::XMaterial>::Exec(flora::XMaterial& Material, const std::string& Filepath, const flora::MaterialImportSettings& Settings)
 {
 	bool Ret = false;
 

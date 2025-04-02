@@ -6,7 +6,7 @@
 
 #include <Render/RHI/RHI.h>
 
-namespace XVerse
+namespace flora
 {
 	class XRHIVertexArray;
 	class XRHIVertexBuffer;
@@ -20,7 +20,7 @@ namespace XVerse
 
 		std::vector<std::byte> VertexBulkData = {};
 		std::vector<uint32_t> IndexBulkData = {};
-		XVerse::BufferLayout VertexBufferLayout = {};
+		flora::BufferLayout VertexBufferLayout = {};
 
 		std::shared_ptr<XRHIVertexArray> MeshRhiResource;
 		std::shared_ptr<XRHIVertexBuffer> VertexRhiResource;

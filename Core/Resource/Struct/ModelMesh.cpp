@@ -11,14 +11,14 @@
 #include <iostream>
 
 using namespace std;
-XVerse::XModelMesh::XModelMesh(const std::string& InFilePath,const XVerse::Wrap::GlobalSettings InSettings, std::vector<std::shared_ptr<XStaticMesh>>InMeshes, std::vector<std::weak_ptr<MeshNode>> InMeshNodes, std::shared_ptr<XModelMesh::MeshNode> InNode)
+flora::XModelMesh::XModelMesh(const std::string& InFilePath,const flora::Wrap::GlobalSettings InSettings, std::vector<std::shared_ptr<XStaticMesh>>InMeshes, std::vector<std::weak_ptr<MeshNode>> InMeshNodes, std::shared_ptr<XModelMesh::MeshNode> InNode)
 	:BaseType(InFilePath),IOSettings(InSettings),Meshes(InMeshes),Root(InNode),MeshNodes(InMeshNodes)
 {
 	
 }
 
 
-void XVerse::XModelMesh::UpdateFaceFaceAdj()
+void flora::XModelMesh::UpdateFaceFaceAdj()
 {
 	for (size_t Idx = 0; Idx < Meshes.size(); Idx++)
 	{
@@ -28,7 +28,7 @@ void XVerse::XModelMesh::UpdateFaceFaceAdj()
 }
 
 
-void XVerse::XModelMesh::UpdateStaticMeshes()
+void flora::XModelMesh::UpdateStaticMeshes()
 {
 	for (size_t Idx = 0; Idx < Meshes.size(); Idx++)
 	{
@@ -48,7 +48,7 @@ void XVerse::XModelMesh::UpdateStaticMeshes()
 	UpdateStaticMeshesOnlyNode();
 }
 
-void XVerse::XModelMesh::UpdateStaticMeshesOnlyNode()
+void flora::XModelMesh::UpdateStaticMeshesOnlyNode()
 {
 	for (size_t Idx = 0; Idx < MeshNodes.size(); Idx++)
 	{
@@ -90,11 +90,11 @@ void XVerse::XModelMesh::UpdateStaticMeshesOnlyNode()
 #include <vcg/complex/algorithms/clean.h>
 #include <vcglib/wrap/io_trimesh/io_mask.h>
 
-static void ProcessMesh(const aiMesh* InMesh, std::shared_ptr<XVerse::XStaticMesh> InoutMesh)
+static void ProcessMesh(const aiMesh* InMesh, std::shared_ptr<flora::XStaticMesh> InoutMesh)
 {
 	InoutMesh->Enable(vcg::tri::io::Mask::IOM_VERTCOORD | vcg::tri::io::Mask::IOM_VERTNORMAL | vcg::tri::io::Mask::IOM_VERTTEXCOORD | vcg::tri::io::Mask::IOM_VERTCOLOR);
 
-	auto VertexIter = vcg::tri::Allocator<XVerse::XStaticMesh>::AddVertices(*InoutMesh, InMesh->mNumVertices);
+	auto VertexIter = vcg::tri::Allocator<flora::XStaticMesh>::AddVertices(*InoutMesh, InMesh->mNumVertices);
 	for (size_t Idx = 0; Idx < InMesh->mNumVertices; Idx++)
 	{
 		if (InMesh->HasPositions() && VertexIter->IsCoordEnabled())
@@ -128,16 +128,16 @@ static void ProcessMesh(const aiMesh* InMesh, std::shared_ptr<XVerse::XStaticMes
 
 		const aiFace& Face = InMesh->mFaces[Idx];
 
-		vcg::tri::Allocator<XVerse::XStaticMesh>::AddFace(*InoutMesh, Face.mIndices[0], Face.mIndices[1], Face.mIndices[2]);
+		vcg::tri::Allocator<flora::XStaticMesh>::AddFace(*InoutMesh, Face.mIndices[0], Face.mIndices[1], Face.mIndices[2]);
 	};
 }
 
 static int MeshCnt = 0;
 
 static void ProcessNode(const aiScene* InScene, aiNode* InNode,
-	std::shared_ptr<XVerse::XModelMesh::MeshNode> InoutTopology, const std::shared_ptr<XVerse::XModelMesh> InOwner, glm::mat4 InCoordMatrix,
+	std::shared_ptr<flora::XModelMesh::MeshNode> InoutTopology, const std::shared_ptr<flora::XModelMesh> InOwner, glm::mat4 InCoordMatrix,
 	glm::mat4 InTransformToRoot = glm::identity<glm::mat4>(),
-	std::shared_ptr<XVerse::XModelMesh::MeshNode> InParentNode = nullptr)
+	std::shared_ptr<flora::XModelMesh::MeshNode> InParentNode = nullptr)
 {
 	//  ȡNode  Ϣ
 	InoutTopology->Name = InNode->mName.C_Str();
@@ -172,8 +172,8 @@ static void ProcessNode(const aiScene* InScene, aiNode* InNode,
 	{
 		aiMesh* MeshItem = InScene->mMeshes[InNode->mMeshes[Idx]];
 
-		std::shared_ptr<XVerse::XStaticMesh> InoutMesh =
-			std::make_shared<XVerse::XStaticMesh>(InOwner, (std::string(MeshItem->mName.C_Str()) + "_" + std::to_string(MeshCnt)).c_str(), InCoordMatrix, InTransformToRoot);
+		std::shared_ptr<flora::XStaticMesh> InoutMesh =
+			std::make_shared<flora::XStaticMesh>(InOwner, (std::string(MeshItem->mName.C_Str()) + "_" + std::to_string(MeshCnt)).c_str(), InCoordMatrix, InTransformToRoot);
 		
 		++MeshCnt;
 		ProcessMesh(MeshItem, InoutMesh);
@@ -185,7 +185,7 @@ static void ProcessNode(const aiScene* InScene, aiNode* InNode,
 	for (size_t Idx = 0; Idx < InNode->mNumChildren; Idx++)
 	{
 		//push_back
-		std::shared_ptr<XVerse::XModelMesh::MeshNode> Child = std::make_shared<XVerse::XModelMesh::MeshNode>();
+		std::shared_ptr<flora::XModelMesh::MeshNode> Child = std::make_shared<flora::XModelMesh::MeshNode>();
 
 		InoutTopology->Children.push_back(Child);
 
@@ -193,7 +193,7 @@ static void ProcessNode(const aiScene* InScene, aiNode* InNode,
 	}
 }
 
-static void ProcessMetaData(const aiScene* InScene, XVerse::Wrap::GlobalSettings& InoutSettings, glm::mat4& InoutCoordMatrix)
+static void ProcessMetaData(const aiScene* InScene, flora::Wrap::GlobalSettings& InoutSettings, glm::mat4& InoutCoordMatrix)
 {
 	InScene->mMetaData->Get<int>("UpAxis", InoutSettings.UpAxis);
 	InScene->mMetaData->Get<int>("UpAxisSign", InoutSettings.UpAxisSign);
@@ -216,9 +216,9 @@ static void ProcessMetaData(const aiScene* InScene, XVerse::Wrap::GlobalSettings
 	InoutSettings.SourceAssetGenerator = s2.C_Str();
 	InoutSettings.SourceAssetFormat = s3.C_Str();
 
-	XVERSE_CORE_INFO("SourceAsset_FormatVersion:{0}", s1.C_Str());
-	XVERSE_CORE_INFO("SourceAsset_Generator:{0}", s2.C_Str());
-	XVERSE_CORE_INFO("SourceAsset_Format:{0}", s3.C_Str());
+	FLORA_CORE_INFO("SourceAsset_FormatVersion:{0}", s1.C_Str());
+	FLORA_CORE_INFO("SourceAsset_Generator:{0}", s2.C_Str());
+	FLORA_CORE_INFO("SourceAsset_Format:{0}", s3.C_Str());
 
 	//CoordSytem
 	aiVector3D UpAxis;// = glm::identity<glm::vec3>();
@@ -273,11 +273,11 @@ static void ProcessMetaData(const aiScene* InScene, XVerse::Wrap::GlobalSettings
 }
 
 template<>
-std::shared_ptr<XVerse::XModelMesh::BaseType> XVerse::XImporter<XVerse::AssimpImportSettings, XVerse::XModelMesh::BaseType>::Exec(const std::string& Filepath, const XVerse::AssimpImportSettings& Settings)
+std::shared_ptr<flora::XModelMesh::BaseType> flora::XImporter<flora::AssimpImportSettings, flora::XModelMesh::BaseType>::Exec(const std::string& Filepath, const flora::AssimpImportSettings& Settings)
 {
 	MeshCnt = 0;
 
-	std::shared_ptr<XVerse::XModelMesh> Ret = nullptr;
+	std::shared_ptr<flora::XModelMesh> Ret = nullptr;
 
 	unsigned int PostprocessFlags = 
 		aiProcess_Triangulate 
@@ -292,7 +292,7 @@ std::shared_ptr<XVerse::XModelMesh::BaseType> XVerse::XImporter<XVerse::AssimpIm
 	if (Settings.bRemoveRedundantMaterials)PostprocessFlags |= aiProcess_RemoveRedundantMaterials;
 	if (Settings.bSortByPType)PostprocessFlags |= aiProcess_SortByPType;
 
-	XVERSE_CORE_TRACE("Open model : {0}", Filepath);
+	FLORA_CORE_TRACE("Open model : {0}", Filepath);
 
 	Assimp::Importer AssImporter;
 	if (const aiScene* Scene = AssImporter.ReadFile(Filepath, PostprocessFlags))
@@ -301,7 +301,7 @@ std::shared_ptr<XVerse::XModelMesh::BaseType> XVerse::XImporter<XVerse::AssimpIm
 		glm::mat4 CoordMatrix = glm::identity<glm::mat4>();
 
 		//    MetaData  ģ   ļ  汾 ţ     ռ䣬  λ   ȣ 
-		XVerse::Wrap::GlobalSettings IOSettings;
+		flora::Wrap::GlobalSettings IOSettings;
 		ProcessMetaData(Scene, IOSettings, CoordMatrix);
 
 		//           ݣ ģ   ļ  ڵ   Ϣ   Լ    ӽڵ ı任    
@@ -310,11 +310,11 @@ std::shared_ptr<XVerse::XModelMesh::BaseType> XVerse::XImporter<XVerse::AssimpIm
 
 		//             ݣ   ȡ         飬      Ⱦ  
 		std::vector<std::shared_ptr<XStaticMesh>> Meshes;
-		std::vector<std::weak_ptr<XVerse::XModelMesh::MeshNode>> MeshNodes;
+		std::vector<std::weak_ptr<flora::XModelMesh::MeshNode>> MeshNodes;
 		Topology->GetMeshes(Topology, Meshes, MeshNodes);
 
 		// ½ һ  ModelMesh  Դ  StaticMesh Ѿ  Ƴ       Դ   ͣ 
-		Ret = std::make_shared<XVerse::XModelMesh>(Filepath, IOSettings, Meshes, MeshNodes, Topology);
+		Ret = std::make_shared<flora::XModelMesh>(Filepath, IOSettings, Meshes, MeshNodes, Topology);
 
 		Ret->UpdateStaticMeshes();
 	}
@@ -333,15 +333,15 @@ std::string GetFileExtensionWithoutDot(const fs::path& Path)
 }
 
 template<>
-bool XVerse::XExporter<XVerse::AssimpExportSettings, XVerse::XModelMesh>::Exec(XVerse::XModelMesh& Mesh, const std::string& Filepath, const XVerse::AssimpExportSettings& Settings)
+bool flora::XExporter<flora::AssimpExportSettings, flora::XModelMesh>::Exec(flora::XModelMesh& Mesh, const std::string& Filepath, const flora::AssimpExportSettings& Settings)
 {
 	bool bRet = false;
 
-	XVERSE_CORE_TRACE("Save model:{0}", Filepath);
+	FLORA_CORE_TRACE("Save model:{0}", Filepath);
 
 	std::filesystem::path Path(Filepath);
 	//     ļ   
-	if (std::filesystem::exists(Path.parent_path()) == false)XVerse::GlobalUtils::CreateDirectoryRecursive(Path.parent_path().generic_string());
+	if (std::filesystem::exists(Path.parent_path()) == false)flora::GlobalUtils::CreateDirectoryRecursive(Path.parent_path().generic_string());
 
 	if (std::filesystem::exists(Path.parent_path()))
 	{
@@ -381,9 +381,9 @@ bool XVerse::XExporter<XVerse::AssimpExportSettings, XVerse::XModelMesh>::Exec(X
 				{
 					for (size_t VertexIdx = 0; VertexIdx < StaticMesh->VN(); VertexIdx++)
 					{
-						if (StaticMesh->HasDataMask(XVerse::XStaticMesh::MeshElement::MM_VERTCOORD))
+						if (StaticMesh->HasDataMask(flora::XStaticMesh::MeshElement::MM_VERTCOORD))
 						{
-							const XVerse::XVertex& Vertex = StaticMesh->vert[VertexIdx];
+							const flora::XVertex& Vertex = StaticMesh->vert[VertexIdx];
 							aiVector3D Position;
 							Position.x = Vertex.P().X();
 							Position.y = Vertex.P().Y();
@@ -391,9 +391,9 @@ bool XVerse::XExporter<XVerse::AssimpExportSettings, XVerse::XModelMesh>::Exec(X
 							Positions.push_back(Position);
 						}
 
-						if (StaticMesh->HasDataMask(XVerse::XStaticMesh::MeshElement::MM_VERTNORMAL))
+						if (StaticMesh->HasDataMask(flora::XStaticMesh::MeshElement::MM_VERTNORMAL))
 						{
-							const XVerse::XVertex& Vertex = StaticMesh->vert[VertexIdx];
+							const flora::XVertex& Vertex = StaticMesh->vert[VertexIdx];
 							aiVector3D Normal;
 							Normal.x = Vertex.N().X();
 							Normal.y = Vertex.N().Y();
@@ -401,9 +401,9 @@ bool XVerse::XExporter<XVerse::AssimpExportSettings, XVerse::XModelMesh>::Exec(X
 							Normals.push_back(Normal);
 						}
 						
-						if (StaticMesh->HasDataMask(XVerse::XStaticMesh::MeshElement::MM_VERTTEXCOORD))
+						if (StaticMesh->HasDataMask(flora::XStaticMesh::MeshElement::MM_VERTTEXCOORD))
 						{
-							const XVerse::XVertex& Vertex = StaticMesh->vert[VertexIdx];
+							const flora::XVertex& Vertex = StaticMesh->vert[VertexIdx];
 							aiVector3D UV;
 							UV.x = Vertex.T().U();
 							UV.y = Vertex.T().V();
@@ -415,7 +415,7 @@ bool XVerse::XExporter<XVerse::AssimpExportSettings, XVerse::XModelMesh>::Exec(X
 					//              
 					for (int FaceIndex = 0; FaceIndex < StaticMesh->FN(); ++FaceIndex) 
 					{
-						const XVerse::XFace& VcgFace = StaticMesh->face[FaceIndex];
+						const flora::XFace& VcgFace = StaticMesh->face[FaceIndex];
 
 						aiFace Face;
 						Face.mIndices = new unsigned int[3];
@@ -528,7 +528,7 @@ bool XVerse::XExporter<XVerse::AssimpExportSettings, XVerse::XModelMesh>::Exec(X
 
 		if (!bRet)
 		{
-			XVERSE_CORE_ERROR("Failed To Export Model {0}", Filepath);
+			FLORA_CORE_ERROR("Failed To Export Model {0}", Filepath);
 		}
 	}
 

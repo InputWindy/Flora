@@ -3,7 +3,7 @@
 #include <Scene/Struct/Transform.h>
 #include <Resource/Struct/ModelMesh.h>
 #include <Common/Common.h>
-namespace XVerse
+namespace flora
 {
 	enum class EComponentType
 	{

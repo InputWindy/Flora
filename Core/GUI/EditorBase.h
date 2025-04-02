@@ -1,5 +1,5 @@
 #pragma once
-namespace XVerse
+namespace flora
 {
 	enum class EEditorType
 	{

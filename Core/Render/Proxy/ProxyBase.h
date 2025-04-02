@@ -5,7 +5,7 @@
 #include <Render/Proxy/Continer/MaterialFieldContainer.h>
 #include <Render/Proxy/Continer/TextureFieldContainer.h>
 
-namespace XVerse
+namespace flora
 {
 	class XStaticMesh;
 	class XMaterial;
@@ -72,7 +72,7 @@ namespace XVerse
 #include <Resource/ResourceManager.h>
 
 // shader utils
-namespace XVerse
+namespace flora
 {
 #define DECLARE_SURFACE_SHADER(ShaderName,VertexShaderName,FragmentShaderName) \
 struct ShaderName\

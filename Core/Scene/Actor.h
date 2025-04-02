@@ -1,7 +1,7 @@
 #pragma once
 #include <Common/Common.h>
 #include <Scene/Component.h>
-namespace XVerse
+namespace flora
 {
 	enum class EActorType
 	{

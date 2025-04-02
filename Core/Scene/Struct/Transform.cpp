@@ -1,5 +1,5 @@
 #include <Scene/Struct/Transform.h>
-glm::mat4 XVerse::XTransform::ModelMatrix()const
+glm::mat4 flora::XTransform::ModelMatrix()const
 {
 	glm::mat4 Model(1.0f);
 	Model = glm::scale(Model, LocalScale);
@@ -13,83 +13,83 @@ glm::mat4 XVerse::XTransform::ModelMatrix()const
 	return Model;
 }
 
-glm::mat4 XVerse::XTransform::ViewMatrix()const
+glm::mat4 flora::XTransform::ViewMatrix()const
 {
 	return glm::lookAt(LocalPosition, LocalPosition + Front, Up);
 }
 
-glm::mat4 XVerse::XTransform::LookAtMatrix(const glm::vec3& LookAtPos)const
+glm::mat4 flora::XTransform::LookAtMatrix(const glm::vec3& LookAtPos)const
 {
 	return glm::lookAt(LocalPosition, LookAtPos, WorldUp());
 };
 
 
-void XVerse::XTransform::LookAtPX()
+void flora::XTransform::LookAtPX()
 {
 	SetRotation({ 0,0,0 });
 }
 
-void XVerse::XTransform::LookAtNX()
+void flora::XTransform::LookAtNX()
 {
 	SetRotation({ 0,0,-180 });
 }
 
-void XVerse::XTransform::LookAtPY()
+void flora::XTransform::LookAtPY()
 {
 	SetRotation({ 0,0,90 });
 }
 
-void XVerse::XTransform::LookAtNY()
+void flora::XTransform::LookAtNY()
 {
 	SetRotation({ 0,0,-90 });
 }
 
-void XVerse::XTransform::LookAtPZ()
+void flora::XTransform::LookAtPZ()
 {
 	SetRotation({ 0,90,0 });
 }
 
-void XVerse::XTransform::LookAtNZ()
+void flora::XTransform::LookAtNZ()
 {
 	SetRotation({ 0,-90,0 });
 }
 
-void XVerse::XTransform::MoveForward(float deltaTime)
+void flora::XTransform::MoveForward(float deltaTime)
 {
 	float velocity = MovementSpeed * deltaTime;
 	LocalPosition += Front * velocity;
 }
 
-void XVerse::XTransform::MoveBackward(float deltaTime)
+void flora::XTransform::MoveBackward(float deltaTime)
 {
 	float velocity = MovementSpeed * deltaTime;
 	LocalPosition -= Front * velocity;
 }
 
-void XVerse::XTransform::MoveLeft(float deltaTime)
+void flora::XTransform::MoveLeft(float deltaTime)
 {
 	float velocity = MovementSpeed * deltaTime;
 	LocalPosition -= Right * velocity;
 }
 
-void XVerse::XTransform::MoveRight(float deltaTime)
+void flora::XTransform::MoveRight(float deltaTime)
 {
 	float velocity = MovementSpeed * deltaTime;
 	LocalPosition += Right * velocity;
 }
 
-void XVerse::XTransform::MoveUp(float deltaTime)
+void flora::XTransform::MoveUp(float deltaTime)
 {
 	float velocity = MovementSpeed * deltaTime;
 	LocalPosition += Up * velocity;
 }
 
-void XVerse::XTransform::MoveDown(float deltaTime)
+void flora::XTransform::MoveDown(float deltaTime)
 {
 	float velocity = MovementSpeed * deltaTime;
 	LocalPosition -= Up * velocity;
 }
-void XVerse::XTransform::Rotate(float deltax, float deltay, float deltaz, bool constrainYaw)
+void flora::XTransform::Rotate(float deltax, float deltay, float deltaz, bool constrainYaw)
 {
 	LocalRotation.x += deltax * MouseSensitivity;
 	LocalRotation.y += deltay * MouseSensitivity;
@@ -108,7 +108,7 @@ void XVerse::XTransform::Rotate(float deltax, float deltay, float deltaz, bool c
 	UpdateLocalVectors();
 }
 
-bool XVerse::XTransform::Parse(const json11::Json& In)
+bool flora::XTransform::Parse(const json11::Json& In)
 {
 	MovementSpeed = In["MovementSpeed"].number_value();
 	MouseSensitivity = In["MouseSensitivity"].number_value();
@@ -129,7 +129,7 @@ bool XVerse::XTransform::Parse(const json11::Json& In)
 	return true;
 }
 
-bool XVerse::XTransform::Serialize(json11::Json& Out)
+bool flora::XTransform::Serialize(json11::Json& Out)
 {
 	Out = json11::Json::object
 	{
@@ -149,7 +149,7 @@ bool XVerse::XTransform::Serialize(json11::Json& Out)
 }
 
 
-void XVerse::XTransform::UpdateLocalVectors()
+void flora::XTransform::UpdateLocalVectors()
 {
 	glm::quat rotationQuat = glm::quat(glm::radians(LocalRotation));
 

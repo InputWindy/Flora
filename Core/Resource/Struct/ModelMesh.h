@@ -6,7 +6,7 @@
 #include <Resource/ResourceManager.h>
 #include <vcglib/wrap/io_trimesh/io_mask.h>
 
-namespace XVerse
+namespace flora
 {
 	/// <summary>
 	/// Assimp for example
@@ -29,7 +29,7 @@ namespace XVerse
 	using AssimpImportSettings = XImportSetting<AssimpIFlags, EFileType::FT_MODEL>;
 	using AssimpExportSettings = XExportSetting<AssimpOFlags, EFileType::FT_MODEL>;
 
-	class XModelMesh : public XVerse::IResource<>,ISerialization
+	class XModelMesh : public flora::IResource<>,ISerialization
 	{
 		IMPL_RESOURCE(ModelMesh)
 	public:
@@ -40,19 +40,19 @@ namespace XVerse
 
 	public:
 		XModelMesh() = default;
-		XModelMesh(const std::string& InFilePath,const XVerse::Wrap::GlobalSettings, std::vector<std::shared_ptr<XStaticMesh>>, std::vector<std::weak_ptr<MeshNode>>,std::shared_ptr<XModelMesh::MeshNode>);//��һ��StaticMesh������ModelMeshĬ�ϲ����κ����˽ṹ������ʱҲû��Node�ṹ
+		XModelMesh(const std::string& InFilePath,const flora::Wrap::GlobalSettings, std::vector<std::shared_ptr<XStaticMesh>>, std::vector<std::weak_ptr<MeshNode>>,std::shared_ptr<XModelMesh::MeshNode>);//��һ��StaticMesh������ModelMeshĬ�ϲ����κ����˽ṹ������ʱҲû��Node�ṹ
 		virtual ~XModelMesh() = default;
 	public:
 		void UpdateFaceFaceAdj();
 		void UpdateStaticMeshes();
 		void UpdateStaticMeshesOnlyNode();
-		const XVerse::Wrap::GlobalSettings& GetMetaData()const { return IOSettings; }
-		std::shared_ptr<XVerse::XModelMesh::MeshNode> AllocateNode();
+		const flora::Wrap::GlobalSettings& GetMetaData()const { return IOSettings; }
+		std::shared_ptr<flora::XModelMesh::MeshNode> AllocateNode();
 	protected:
 		/*
 			MetaData
 		*/
-		XVerse::Wrap::GlobalSettings IOSettings;//fbx�ļ����뵼��MetaData
+		flora::Wrap::GlobalSettings IOSettings;//fbx�ļ����뵼��MetaData
 
 	public:
 		struct MeshNode:public std::enable_shared_from_this<MeshNode>

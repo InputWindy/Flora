@@ -1,7 +1,7 @@
 #pragma once
 #include <Scene/Actor.h>
 #include <Common/Serialize.h>
-namespace XVerse
+namespace flora
 {
 	class XScene :public ISerialization
 	{

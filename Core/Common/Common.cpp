@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cmath>
 using namespace std;
-bool XVerse::GlobalUtils::CreateDirectoryRecursive(const std::string& path)
+bool flora::GlobalUtils::CreateDirectoryRecursive(const std::string& path)
 {
 	std::filesystem::path dir_path(path);
 
@@ -24,7 +24,7 @@ bool XVerse::GlobalUtils::CreateDirectoryRecursive(const std::string& path)
 	return false;
 }
 
-void XVerse::PrintProgressBar(float cc, int allNum)
+void flora::PrintProgressBar(float cc, int allNum)
 {
 	float percentage = cc * 100.0f / allNum;
 	const int barWidth = 50;
@@ -45,7 +45,7 @@ void XVerse::PrintProgressBar(float cc, int allNum)
 	std::cout << "[" << cc << "/" << allNum << "]" << "\r";
 	std::cout.flush();
 }
-int XVerse::MinPowerOfTwo(int x)
+int flora::MinPowerOfTwo(int x)
 {
 	x |= x >> 1;
 	x |= x >> 2;
@@ -55,7 +55,7 @@ int XVerse::MinPowerOfTwo(int x)
 	return x + 1;
 }
 
-std::pair<int, int> XVerse::CalGroupNum(int ClusterNum) 
+std::pair<int, int> flora::CalGroupNum(int ClusterNum) 
 {
 	int PreservedGroupNum = MinPowerOfTwo(ClusterNum);
 

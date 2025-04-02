@@ -6,7 +6,7 @@
 
 #include <Render/RHI/RHI.h>
 
-namespace XVerse
+namespace flora
 {
 	class XRHISampler;
 	class XRHITexture;

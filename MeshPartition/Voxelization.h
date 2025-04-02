@@ -388,7 +388,7 @@ namespace vxl
 
 #include <glm/glm.hpp>
 
-namespace XVerse
+namespace flora
 {
 	struct FVoxelInfo
 	{
@@ -515,7 +515,7 @@ namespace XVerse
 						if (Node)
 						{
 							Node->SetMask(CameraRegion);
-							//XVERSE_CORE_ERROR("Idx Max:{0},{1},{2}", i,j,k)
+							//FLORA_CORE_ERROR("Idx Max:{0},{1},{2}", i,j,k)
 						}
 					}
 				}

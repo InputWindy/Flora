@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace XVerse
+namespace flora
 {
 	extern "C" std::string ExcutePath;
 }

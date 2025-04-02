@@ -12,7 +12,7 @@
 #include <Common/Common.h>
 #include <Common/Serialize.h>
 
-namespace XVerse
+namespace flora
 {
 	using glm::vec3;
 	using glm::mat4;

@@ -6,28 +6,28 @@
 
 using std::string;
 
-bool XVerse::ISerialization::Parse(const json11::Json&)
+bool flora::ISerialization::Parse(const json11::Json&)
 {
 	return true;
 }
 
-bool XVerse::ISerialization::Serialize(json11::Json&)
+bool flora::ISerialization::Serialize(json11::Json&)
 {
 	return true;
 }
 
-void XVerse::ISerialization::SaveToFile(const std::string& filepath)
+void flora::ISerialization::SaveToFile(const std::string& filepath)
 {
 	json11::Json in;
 	Serialize(in);
 
 	std::filesystem::path Path(filepath);
 
-	XVerse::GlobalUtils::CreateDirectoryRecursive(Path.parent_path().generic_string());
+	flora::GlobalUtils::CreateDirectoryRecursive(Path.parent_path().generic_string());
 
 	WriteJsonFile(filepath, in);
 }
-void XVerse::ISerialization::LoadFromFile(const std::string& filepath)
+void flora::ISerialization::LoadFromFile(const std::string& filepath)
 {
 	std::filesystem::path Path(filepath);
 	if (std::filesystem::exists(Path) && std::filesystem::is_regular_file(Path))
@@ -37,7 +37,7 @@ void XVerse::ISerialization::LoadFromFile(const std::string& filepath)
 		Parse(out);
 	}
 }
-json11::Json XVerse::ISerialization::ReadJsonFile(const std::string& filepath)
+json11::Json flora::ISerialization::ReadJsonFile(const std::string& filepath)
 {
 	std::ifstream File;
 	std::stringstream Stream;
@@ -57,7 +57,7 @@ json11::Json XVerse::ISerialization::ReadJsonFile(const std::string& filepath)
 	return mJson;
 }
 
-void XVerse::ISerialization::WriteJsonFile(const std::string& filename, const json11::Json& root)
+void flora::ISerialization::WriteJsonFile(const std::string& filename, const json11::Json& root)
 {
 	string string_json = root.dump();
 	std::ofstream ofile(filename);

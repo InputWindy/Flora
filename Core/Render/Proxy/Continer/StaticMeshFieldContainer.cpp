@@ -4,24 +4,24 @@
 
 #include <Render/RHI/RHI.h>
 
-//XVerse::XStaticMeshFieldContainer* XVerse::XStaticMeshProxy::GetContainer()
+//flora::XStaticMeshFieldContainer* flora::XStaticMeshProxy::GetContainer()
 //{
 //	return Container.get();
 //}
 
-void XVerse::XStaticMeshFieldContainer::DrawElement(EDrawMode InDrawMode)
+void flora::XStaticMeshFieldContainer::DrawElement(EDrawMode InDrawMode)
 {
 	XRHI* Rhi = GetRHI();
 	Rhi->DrawElement(InDrawMode, MeshRhiResource, IndexBulkData.size());
 }
 
-void XVerse::XStaticMeshFieldContainer::DrawElementInstanced(EDrawMode InDrawMode,uint32_t InstanceNum)
+void flora::XStaticMeshFieldContainer::DrawElementInstanced(EDrawMode InDrawMode,uint32_t InstanceNum)
 {
 	XRHI* Rhi = GetRHI();
 	Rhi->DrawElementInstanced(InDrawMode, MeshRhiResource, IndexBulkData.size(), InstanceNum);
 }
 
-void XVerse::XStaticMeshFieldContainer::RegenerateMesh(const std::set<unsigned int>& InPrimitiveArray)
+void flora::XStaticMeshFieldContainer::RegenerateMesh(const std::set<unsigned int>& InPrimitiveArray)
 {
 	std::vector<uint32_t> NewIndices;
 	for (uint32_t PrimitiveId : InPrimitiveArray)

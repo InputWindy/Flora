@@ -1,6 +1,6 @@
 #include <Application/Application.h>
 
-namespace XVerse
+namespace flora
 {
 	void IApp::StartUp()
 	{

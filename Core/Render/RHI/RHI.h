@@ -17,14 +17,14 @@
 #include <Common/Layout.h>
 #include <Common/Log.h>
 
-// #define XRHI_ASSERT_ERROR(...) XVerse::GetRHI()->AssertError(std::format(__VA_ARGS__));
+// #define XRHI_ASSERT_ERROR(...) flora::GetRHI()->AssertError(std::format(__VA_ARGS__));
 
-namespace XVerse
+namespace flora
 {
 	#define MAX_MIP_LEVEL 8
 }
 
-namespace XVerse
+namespace flora
 {
 	enum class ERHIFeatureLevel
 	{
@@ -448,14 +448,14 @@ namespace XVerse
 		EQT_MAX_COUNT
 	};
 
-	XVerse::EInternalFormat MatchFormat(XVerse::EFormat, XVerse::EDataType);
-	std::pair<XVerse::EFormat, XVerse::EDataType> MatchInternalFormat(XVerse::EInternalFormat);
+	flora::EInternalFormat MatchFormat(flora::EFormat, flora::EDataType);
+	std::pair<flora::EFormat, flora::EDataType> MatchInternalFormat(flora::EInternalFormat);
 
 	template<typename T>
-	bool MatchDataType(XVerse::EDataType);
+	bool MatchDataType(flora::EDataType);
 }
 
-namespace XVerse
+namespace flora
 {
 	class XRHIResource;
 	class XRHIShader;
@@ -487,7 +487,7 @@ namespace XVerse
 	struct XMaterialState;
 }
 
-namespace XVerse
+namespace flora
 {
 	struct XRHIShaderCreateInfo
 	{
@@ -576,7 +576,7 @@ namespace XVerse
 	};
 }
 
-namespace XVerse
+namespace flora
 {
 	/// <summary>
 	/// GPU resource
@@ -667,7 +667,7 @@ namespace XVerse
 		XRHI() = default;
 
 	public:
-		template<ERHIFeatureLevel FL = XVerse::ERHIFeatureLevel::FL_OpenGL>
+		template<ERHIFeatureLevel FL = flora::ERHIFeatureLevel::FL_OpenGL>
 		static std::shared_ptr<XRHI> InitRHI(void*);
 
 		virtual ~XRHI() {  }
@@ -682,8 +682,8 @@ namespace XVerse
 		virtual std::shared_ptr<XRHIFrameBuffer>		CreateFrameBuffer(const XRHIFrameBufferCreateInfo&) = 0;
 		virtual std::shared_ptr<XRHIQuery>				CreateQuery(const XRHIQueryCreateInfo&) = 0;
 	public:
-		virtual int GetFormatCompNum(XVerse::EFormat) = 0;
-		virtual int GetDataTypeSize(XVerse::EDataType) = 0;
+		virtual int GetFormatCompNum(flora::EFormat) = 0;
+		virtual int GetDataTypeSize(flora::EDataType) = 0;
 	public:
 		static std::shared_ptr<XRHITextureCube> PanoramaToCubemap(uint32_t CubeSize, std::shared_ptr<XRHITexture2D>);
 		static std::shared_ptr<XRHITexture2D> CubemapFaceToTexture2D(ECubeFace Face, std::shared_ptr<XRHITextureCube>);
@@ -758,7 +758,7 @@ namespace XVerse
 	XRHI* GetRHI();
 }
 
-namespace XVerse
+namespace flora
 {
 	/// <summary>
 	/// shader code
@@ -918,7 +918,7 @@ namespace XVerse
 		/// <summary>
 		/// </summary>
 		/// <param name="buffer"></param>
-		virtual void SetBuffer(std::shared_ptr<XVerse::XRHIBuffer>) const = 0;
+		virtual void SetBuffer(std::shared_ptr<flora::XRHIBuffer>) const = 0;
 
 		/// <summary>
 		/// glsl uniform samplerXX
@@ -1705,7 +1705,7 @@ namespace XVerse
 }
 
 // gpu buffer
-namespace XVerse
+namespace flora
 {
 	struct FBaseBuffer
 	{
@@ -1891,7 +1891,7 @@ namespace XVerse
 }
 
 // profiling
-namespace XVerse
+namespace flora
 {
 	typedef unsigned int EQueryCategory;
 	enum EQueryCategory_
@@ -1939,7 +1939,7 @@ namespace XVerse
 		std::vector<std::shared_ptr<FQueryResult>> Categories[EQC_MAX_COUNT];
 	};
 
-#define SCOPE_TIMER(Name) XVerse::FScopeTimer Timer(#Name);
+#define SCOPE_TIMER(Name) flora::FScopeTimer Timer(#Name);
 	struct FScopeTimer
 	{
 		struct TimeResult :public FQueryResult

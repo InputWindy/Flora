@@ -8,25 +8,25 @@
 #include <glm/fwd.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace XVerse
+namespace flora
 {
-	typedef XVERSE_SCALAR XScalar;
-	typedef vcg::Point2<XVERSE_SCALAR>     XPoint2;
-	typedef vcg::Point3<XVERSE_SCALAR>     XPoint3;
-	typedef vcg::Point4<XVERSE_SCALAR>     XPoint4;
-	typedef vcg::Plane3<XVERSE_SCALAR>     XPlane3;
-	typedef vcg::Segment2<XVERSE_SCALAR>   XSegment2;
-	typedef vcg::Segment3<XVERSE_SCALAR>   XSegment3;
-	typedef vcg::Box3<XVERSE_SCALAR>       XBox3;
-	typedef vcg::Matrix44<XVERSE_SCALAR>   XMatrix44;
-	typedef vcg::Matrix33<XVERSE_SCALAR>   XMatrix33;
-	typedef vcg::Shot<XVERSE_SCALAR>       XShot;
-	typedef vcg::Similarity<XVERSE_SCALAR> XSimilarity;
+	typedef FLORA_SCALAR XScalar;
+	typedef vcg::Point2<FLORA_SCALAR>     XPoint2;
+	typedef vcg::Point3<FLORA_SCALAR>     XPoint3;
+	typedef vcg::Point4<FLORA_SCALAR>     XPoint4;
+	typedef vcg::Plane3<FLORA_SCALAR>     XPlane3;
+	typedef vcg::Segment2<FLORA_SCALAR>   XSegment2;
+	typedef vcg::Segment3<FLORA_SCALAR>   XSegment3;
+	typedef vcg::Box3<FLORA_SCALAR>       XBox3;
+	typedef vcg::Matrix44<FLORA_SCALAR>   XMatrix44;
+	typedef vcg::Matrix33<FLORA_SCALAR>   XMatrix33;
+	typedef vcg::Shot<FLORA_SCALAR>       XShot;
+	typedef vcg::Similarity<FLORA_SCALAR> XSimilarity;
 }
 
 namespace vcg
 {
-	using namespace XVerse;
+	using namespace flora;
 
 	namespace vertex
 	{
@@ -63,7 +63,7 @@ namespace vcg
 	}
 }
 
-namespace XVerse
+namespace flora
 {
 	// Forward declarations needed for creating the used types
 	class XVertex;
@@ -122,7 +122,7 @@ namespace XVerse
 
 }
 
-namespace XVerse
+namespace flora
 {
 	namespace Wrap
 	{

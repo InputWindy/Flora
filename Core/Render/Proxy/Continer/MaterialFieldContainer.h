@@ -2,7 +2,7 @@
 #include <vector>
 #include <memory>
 #include <Render/RHI/RHI.h>
-namespace XVerse
+namespace flora
 {
 	class XRHIShaderProgram;
 

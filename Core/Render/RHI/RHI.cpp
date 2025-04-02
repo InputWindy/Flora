@@ -6,14 +6,14 @@
 #include <cassert>
 #include <CoreMinimal.h>
 
-XVerse::XRHI* GRhi = nullptr;
+flora::XRHI* GRhi = nullptr;
 
 template<>
-std::shared_ptr<XVerse::XRHI> XVerse::XRHI::InitRHI<XVerse::ERHIFeatureLevel::FL_OpenGL>(void* Callback)
+std::shared_ptr<flora::XRHI> flora::XRHI::InitRHI<flora::ERHIFeatureLevel::FL_OpenGL>(void* Callback)
 {
     if (GRhi)return nullptr;
 
-    std::shared_ptr<XVerse::XOpenGLRHI> Rhi = std::make_shared<XVerse::XOpenGLRHI>();
+    std::shared_ptr<flora::XOpenGLRHI> Rhi = std::make_shared<flora::XOpenGLRHI>();
     if (Rhi->InitOpenGL(Callback))
     {
         GRhi = Rhi.get();
@@ -23,86 +23,86 @@ std::shared_ptr<XVerse::XRHI> XVerse::XRHI::InitRHI<XVerse::ERHIFeatureLevel::FL
     return nullptr;
 }
 
-XVerse::XRHI* XVerse::GetRHI()
+flora::XRHI* flora::GetRHI()
 {
     return GRhi;
 }
 
-XVerse::EInternalFormat XVerse::MatchFormat(XVerse::EFormat InFormat, XVerse::EDataType InDataType)
+flora::EInternalFormat flora::MatchFormat(flora::EFormat InFormat, flora::EDataType InDataType)
 {
     //png jpg jpeg tga ...
-    if (InDataType == XVerse::EDataType::DT_UNSIGNED_BYTE)
+    if (InDataType == flora::EDataType::DT_UNSIGNED_BYTE)
     {
         switch (InFormat)
         {
-        case XVerse::EFormat::F_RED:return EInternalFormat::IF_R8;
-        case XVerse::EFormat::F_RG:return EInternalFormat::IF_RG8;
-        case XVerse::EFormat::F_RGB:return EInternalFormat::IF_RGB8;
-        case XVerse::EFormat::F_BGR:break;
-        case XVerse::EFormat::F_RGBA:return EInternalFormat::IF_RGBA8;
-        case XVerse::EFormat::F_BGRA:break;
-        case XVerse::EFormat::F_RED_INTEGER:return EInternalFormat::IF_R8UI;
-        case XVerse::EFormat::F_RG_INTEGER:return EInternalFormat::IF_RG8UI;
-        case XVerse::EFormat::F_RGB_INTEGER:return EInternalFormat::IF_RGB8UI;
-        case XVerse::EFormat::F_BGR_INTEGER:break;
-        case XVerse::EFormat::F_RGBA_INTEGER:return EInternalFormat::IF_RGBA8UI;
-        case XVerse::EFormat::F_BGRA_INTEGER:break;
-        case XVerse::EFormat::F_STENCIL_INDEX:
-        case XVerse::EFormat::F_DEPTH_COMPONENT:
-        case XVerse::EFormat::F_DEPTH_STENCIL:
-        case XVerse::EFormat::F_MAX_COUNT:
+        case flora::EFormat::F_RED:return EInternalFormat::IF_R8;
+        case flora::EFormat::F_RG:return EInternalFormat::IF_RG8;
+        case flora::EFormat::F_RGB:return EInternalFormat::IF_RGB8;
+        case flora::EFormat::F_BGR:break;
+        case flora::EFormat::F_RGBA:return EInternalFormat::IF_RGBA8;
+        case flora::EFormat::F_BGRA:break;
+        case flora::EFormat::F_RED_INTEGER:return EInternalFormat::IF_R8UI;
+        case flora::EFormat::F_RG_INTEGER:return EInternalFormat::IF_RG8UI;
+        case flora::EFormat::F_RGB_INTEGER:return EInternalFormat::IF_RGB8UI;
+        case flora::EFormat::F_BGR_INTEGER:break;
+        case flora::EFormat::F_RGBA_INTEGER:return EInternalFormat::IF_RGBA8UI;
+        case flora::EFormat::F_BGRA_INTEGER:break;
+        case flora::EFormat::F_STENCIL_INDEX:
+        case flora::EFormat::F_DEPTH_COMPONENT:
+        case flora::EFormat::F_DEPTH_STENCIL:
+        case flora::EFormat::F_MAX_COUNT:
         default:
             break;
         }
         assert(0);
     }
     //hdr exr...
-    else if(InDataType == XVerse::EDataType::DT_FLOAT)
+    else if(InDataType == flora::EDataType::DT_FLOAT)
     {
         switch (InFormat)
         {
-        case XVerse::EFormat::F_RED:return EInternalFormat::IF_R32F;
-        case XVerse::EFormat::F_RG:return EInternalFormat::IF_RG32F;
-        case XVerse::EFormat::F_RGB:return EInternalFormat::IF_RGB32F;
-        case XVerse::EFormat::F_BGR:break;
-        case XVerse::EFormat::F_RGBA:return EInternalFormat::IF_RGBA32F;
-        case XVerse::EFormat::F_BGRA:break;
-        case XVerse::EFormat::F_RED_INTEGER:break;
-        case XVerse::EFormat::F_RG_INTEGER:break;
-        case XVerse::EFormat::F_RGB_INTEGER:break;
-        case XVerse::EFormat::F_BGR_INTEGER:break;
-        case XVerse::EFormat::F_RGBA_INTEGER:break;
-        case XVerse::EFormat::F_BGRA_INTEGER:break;
-        case XVerse::EFormat::F_STENCIL_INDEX:
-        case XVerse::EFormat::F_DEPTH_COMPONENT:
-        case XVerse::EFormat::F_DEPTH_STENCIL:
-        case XVerse::EFormat::F_MAX_COUNT:
+        case flora::EFormat::F_RED:return EInternalFormat::IF_R32F;
+        case flora::EFormat::F_RG:return EInternalFormat::IF_RG32F;
+        case flora::EFormat::F_RGB:return EInternalFormat::IF_RGB32F;
+        case flora::EFormat::F_BGR:break;
+        case flora::EFormat::F_RGBA:return EInternalFormat::IF_RGBA32F;
+        case flora::EFormat::F_BGRA:break;
+        case flora::EFormat::F_RED_INTEGER:break;
+        case flora::EFormat::F_RG_INTEGER:break;
+        case flora::EFormat::F_RGB_INTEGER:break;
+        case flora::EFormat::F_BGR_INTEGER:break;
+        case flora::EFormat::F_RGBA_INTEGER:break;
+        case flora::EFormat::F_BGRA_INTEGER:break;
+        case flora::EFormat::F_STENCIL_INDEX:
+        case flora::EFormat::F_DEPTH_COMPONENT:
+        case flora::EFormat::F_DEPTH_STENCIL:
+        case flora::EFormat::F_MAX_COUNT:
         default:
             break;
         }
         assert(0);
     }
     //hdr exr...
-    else if (InDataType == XVerse::EDataType::DT_HALF_FLOAT)
+    else if (InDataType == flora::EDataType::DT_HALF_FLOAT)
     {
         switch (InFormat)
         {
-        case XVerse::EFormat::F_RED:return EInternalFormat::IF_R16F;
-        case XVerse::EFormat::F_RG:return EInternalFormat::IF_RG16F;
-        case XVerse::EFormat::F_RGB:return EInternalFormat::IF_RGB16F;
-        case XVerse::EFormat::F_BGR:break;
-        case XVerse::EFormat::F_RGBA:return EInternalFormat::IF_RGBA16F;
-        case XVerse::EFormat::F_BGRA:break;
-        case XVerse::EFormat::F_RED_INTEGER:break;
-        case XVerse::EFormat::F_RG_INTEGER:break;
-        case XVerse::EFormat::F_RGB_INTEGER:break;
-        case XVerse::EFormat::F_BGR_INTEGER:break;
-        case XVerse::EFormat::F_RGBA_INTEGER:break;
-        case XVerse::EFormat::F_BGRA_INTEGER:break;
-        case XVerse::EFormat::F_STENCIL_INDEX:
-        case XVerse::EFormat::F_DEPTH_COMPONENT:
-        case XVerse::EFormat::F_DEPTH_STENCIL:
-        case XVerse::EFormat::F_MAX_COUNT:
+        case flora::EFormat::F_RED:return EInternalFormat::IF_R16F;
+        case flora::EFormat::F_RG:return EInternalFormat::IF_RG16F;
+        case flora::EFormat::F_RGB:return EInternalFormat::IF_RGB16F;
+        case flora::EFormat::F_BGR:break;
+        case flora::EFormat::F_RGBA:return EInternalFormat::IF_RGBA16F;
+        case flora::EFormat::F_BGRA:break;
+        case flora::EFormat::F_RED_INTEGER:break;
+        case flora::EFormat::F_RG_INTEGER:break;
+        case flora::EFormat::F_RGB_INTEGER:break;
+        case flora::EFormat::F_BGR_INTEGER:break;
+        case flora::EFormat::F_RGBA_INTEGER:break;
+        case flora::EFormat::F_BGRA_INTEGER:break;
+        case flora::EFormat::F_STENCIL_INDEX:
+        case flora::EFormat::F_DEPTH_COMPONENT:
+        case flora::EFormat::F_DEPTH_STENCIL:
+        case flora::EFormat::F_MAX_COUNT:
         default:
             break;
         }
@@ -112,72 +112,72 @@ XVerse::EInternalFormat XVerse::MatchFormat(XVerse::EFormat InFormat, XVerse::ED
 
 }
 
-std::pair<XVerse::EFormat, XVerse::EDataType> XVerse::MatchInternalFormat(XVerse::EInternalFormat InInternalFormat)
+std::pair<flora::EFormat, flora::EDataType> flora::MatchInternalFormat(flora::EInternalFormat InInternalFormat)
 {
-    std::pair<XVerse::EFormat, XVerse::EDataType> Ret;
+    std::pair<flora::EFormat, flora::EDataType> Ret;
 
     switch (InInternalFormat)
     {
-    case XVerse::EInternalFormat::IF_R8:        Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RED, XVerse::EDataType::DT_UNSIGNED_BYTE); break;
-    case XVerse::EInternalFormat::IF_R8I:       Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RED_INTEGER, XVerse::EDataType::DT_BYTE); break;
-    case XVerse::EInternalFormat::IF_R8UI:      Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RED_INTEGER, XVerse::EDataType::DT_UNSIGNED_BYTE); break;
+    case flora::EInternalFormat::IF_R8:        Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RED, flora::EDataType::DT_UNSIGNED_BYTE); break;
+    case flora::EInternalFormat::IF_R8I:       Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RED_INTEGER, flora::EDataType::DT_BYTE); break;
+    case flora::EInternalFormat::IF_R8UI:      Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RED_INTEGER, flora::EDataType::DT_UNSIGNED_BYTE); break;
 
-    case XVerse::EInternalFormat::IF_R16:       Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RED, XVerse::EDataType::DT_UNSIGNED_SHORT); break;
-    case XVerse::EInternalFormat::IF_R16I:      Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RED_INTEGER, XVerse::EDataType::DT_SHORT); break;
-    case XVerse::EInternalFormat::IF_R16UI:     Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RED_INTEGER, XVerse::EDataType::DT_UNSIGNED_SHORT); break;
+    case flora::EInternalFormat::IF_R16:       Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RED, flora::EDataType::DT_UNSIGNED_SHORT); break;
+    case flora::EInternalFormat::IF_R16I:      Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RED_INTEGER, flora::EDataType::DT_SHORT); break;
+    case flora::EInternalFormat::IF_R16UI:     Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RED_INTEGER, flora::EDataType::DT_UNSIGNED_SHORT); break;
 
-    case XVerse::EInternalFormat::IF_R32I:      Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RED_INTEGER, XVerse::EDataType::DT_INT); break;
-    case XVerse::EInternalFormat::IF_R32UI:     Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RED_INTEGER, XVerse::EDataType::DT_UNSIGNED_INT); break;
+    case flora::EInternalFormat::IF_R32I:      Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RED_INTEGER, flora::EDataType::DT_INT); break;
+    case flora::EInternalFormat::IF_R32UI:     Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RED_INTEGER, flora::EDataType::DT_UNSIGNED_INT); break;
 
-    case XVerse::EInternalFormat::IF_RG8:       Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RG, XVerse::EDataType::DT_UNSIGNED_BYTE); break;
-    case XVerse::EInternalFormat::IF_RG8I:      Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RG_INTEGER, XVerse::EDataType::DT_BYTE); break;
-    case XVerse::EInternalFormat::IF_RG8UI:     Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RG_INTEGER, XVerse::EDataType::DT_UNSIGNED_BYTE); break;
+    case flora::EInternalFormat::IF_RG8:       Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RG, flora::EDataType::DT_UNSIGNED_BYTE); break;
+    case flora::EInternalFormat::IF_RG8I:      Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RG_INTEGER, flora::EDataType::DT_BYTE); break;
+    case flora::EInternalFormat::IF_RG8UI:     Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RG_INTEGER, flora::EDataType::DT_UNSIGNED_BYTE); break;
 
-    case XVerse::EInternalFormat::IF_RG16:      Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RG, XVerse::EDataType::DT_UNSIGNED_SHORT); break;
-    case XVerse::EInternalFormat::IF_RG16I:     Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RG_INTEGER, XVerse::EDataType::DT_SHORT); break;
-    case XVerse::EInternalFormat::IF_RG16UI:    Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RG_INTEGER, XVerse::EDataType::DT_UNSIGNED_SHORT); break;
+    case flora::EInternalFormat::IF_RG16:      Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RG, flora::EDataType::DT_UNSIGNED_SHORT); break;
+    case flora::EInternalFormat::IF_RG16I:     Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RG_INTEGER, flora::EDataType::DT_SHORT); break;
+    case flora::EInternalFormat::IF_RG16UI:    Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RG_INTEGER, flora::EDataType::DT_UNSIGNED_SHORT); break;
 
-    case XVerse::EInternalFormat::IF_RG32I:     Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RG_INTEGER, XVerse::EDataType::DT_INT); break;
-    case XVerse::EInternalFormat::IF_RG32UI:    Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RG_INTEGER, XVerse::EDataType::DT_UNSIGNED_INT); break;
+    case flora::EInternalFormat::IF_RG32I:     Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RG_INTEGER, flora::EDataType::DT_INT); break;
+    case flora::EInternalFormat::IF_RG32UI:    Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RG_INTEGER, flora::EDataType::DT_UNSIGNED_INT); break;
 
-    case XVerse::EInternalFormat::IF_RGB8:      Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGB, XVerse::EDataType::DT_UNSIGNED_BYTE);              break;
-    case XVerse::EInternalFormat::IF_RGB8I:     Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGB_INTEGER, XVerse::EDataType::DT_BYTE); break;
-    case XVerse::EInternalFormat::IF_RGB8UI:    Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGB_INTEGER, XVerse::EDataType::DT_UNSIGNED_BYTE); break;
+    case flora::EInternalFormat::IF_RGB8:      Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGB, flora::EDataType::DT_UNSIGNED_BYTE);              break;
+    case flora::EInternalFormat::IF_RGB8I:     Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGB_INTEGER, flora::EDataType::DT_BYTE); break;
+    case flora::EInternalFormat::IF_RGB8UI:    Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGB_INTEGER, flora::EDataType::DT_UNSIGNED_BYTE); break;
 
-    case XVerse::EInternalFormat::IF_RGB16:     Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGB, XVerse::EDataType::DT_UNSIGNED_SHORT); break;
-    case XVerse::EInternalFormat::IF_RGB16I:    Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGB_INTEGER, XVerse::EDataType::DT_SHORT); break;
-    case XVerse::EInternalFormat::IF_RGB16UI:   Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGB_INTEGER, XVerse::EDataType::DT_UNSIGNED_SHORT); break;
+    case flora::EInternalFormat::IF_RGB16:     Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGB, flora::EDataType::DT_UNSIGNED_SHORT); break;
+    case flora::EInternalFormat::IF_RGB16I:    Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGB_INTEGER, flora::EDataType::DT_SHORT); break;
+    case flora::EInternalFormat::IF_RGB16UI:   Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGB_INTEGER, flora::EDataType::DT_UNSIGNED_SHORT); break;
     
-    case XVerse::EInternalFormat::IF_RGB32I:    Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGB_INTEGER, XVerse::EDataType::DT_INT); break;
-    case XVerse::EInternalFormat::IF_RGB32UI:   Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGB_INTEGER, XVerse::EDataType::DT_UNSIGNED_INT); break;
+    case flora::EInternalFormat::IF_RGB32I:    Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGB_INTEGER, flora::EDataType::DT_INT); break;
+    case flora::EInternalFormat::IF_RGB32UI:   Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGB_INTEGER, flora::EDataType::DT_UNSIGNED_INT); break;
     
-    case XVerse::EInternalFormat::IF_RGBA8:     Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGBA, XVerse::EDataType::DT_UNSIGNED_BYTE);              break;
-    case XVerse::EInternalFormat::IF_RGBA8I:    Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGBA_INTEGER, XVerse::EDataType::DT_BYTE); break;
-    case XVerse::EInternalFormat::IF_RGBA8UI:   Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGBA_INTEGER, XVerse::EDataType::DT_UNSIGNED_BYTE); break;
+    case flora::EInternalFormat::IF_RGBA8:     Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGBA, flora::EDataType::DT_UNSIGNED_BYTE);              break;
+    case flora::EInternalFormat::IF_RGBA8I:    Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGBA_INTEGER, flora::EDataType::DT_BYTE); break;
+    case flora::EInternalFormat::IF_RGBA8UI:   Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGBA_INTEGER, flora::EDataType::DT_UNSIGNED_BYTE); break;
     
-    case XVerse::EInternalFormat::IF_RGBA16:    Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGBA, XVerse::EDataType::DT_UNSIGNED_SHORT); break;
-    case XVerse::EInternalFormat::IF_RGBA16I:   Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGBA_INTEGER, XVerse::EDataType::DT_SHORT); break;
-    case XVerse::EInternalFormat::IF_RGBA16UI:  Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGBA_INTEGER, XVerse::EDataType::DT_UNSIGNED_SHORT); break;
+    case flora::EInternalFormat::IF_RGBA16:    Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGBA, flora::EDataType::DT_UNSIGNED_SHORT); break;
+    case flora::EInternalFormat::IF_RGBA16I:   Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGBA_INTEGER, flora::EDataType::DT_SHORT); break;
+    case flora::EInternalFormat::IF_RGBA16UI:  Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGBA_INTEGER, flora::EDataType::DT_UNSIGNED_SHORT); break;
     
-    case XVerse::EInternalFormat::IF_RGBA32I:   Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGBA_INTEGER, XVerse::EDataType::DT_INT); break;
-    case XVerse::EInternalFormat::IF_RGBA32UI:  Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGBA_INTEGER, XVerse::EDataType::DT_UNSIGNED_INT); break;
+    case flora::EInternalFormat::IF_RGBA32I:   Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGBA_INTEGER, flora::EDataType::DT_INT); break;
+    case flora::EInternalFormat::IF_RGBA32UI:  Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGBA_INTEGER, flora::EDataType::DT_UNSIGNED_INT); break;
     
-    case XVerse::EInternalFormat::IF_R16F:      Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RED, XVerse::EDataType::DT_FLOAT); break;
-    case XVerse::EInternalFormat::IF_R32F:      Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RED, XVerse::EDataType::DT_FLOAT);              break;
-    case XVerse::EInternalFormat::IF_RG16F:     Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RG, XVerse::EDataType::DT_FLOAT); break;
-    case XVerse::EInternalFormat::IF_RG32F:     Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RG, XVerse::EDataType::DT_FLOAT);              break;
-    case XVerse::EInternalFormat::IF_RGB16F:    Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGB, XVerse::EDataType::DT_FLOAT); break;
-    case XVerse::EInternalFormat::IF_RGB32F:    Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGB, XVerse::EDataType::DT_FLOAT);              break;
-    case XVerse::EInternalFormat::IF_RGBA16F:   Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGBA, XVerse::EDataType::DT_FLOAT); break;
-    case XVerse::EInternalFormat::IF_RGBA32F:   Ret = std::pair<XVerse::EFormat, XVerse::EDataType>(XVerse::EFormat::F_RGBA, XVerse::EDataType::DT_FLOAT);              break;
+    case flora::EInternalFormat::IF_R16F:      Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RED, flora::EDataType::DT_FLOAT); break;
+    case flora::EInternalFormat::IF_R32F:      Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RED, flora::EDataType::DT_FLOAT);              break;
+    case flora::EInternalFormat::IF_RG16F:     Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RG, flora::EDataType::DT_FLOAT); break;
+    case flora::EInternalFormat::IF_RG32F:     Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RG, flora::EDataType::DT_FLOAT);              break;
+    case flora::EInternalFormat::IF_RGB16F:    Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGB, flora::EDataType::DT_FLOAT); break;
+    case flora::EInternalFormat::IF_RGB32F:    Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGB, flora::EDataType::DT_FLOAT);              break;
+    case flora::EInternalFormat::IF_RGBA16F:   Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGBA, flora::EDataType::DT_FLOAT); break;
+    case flora::EInternalFormat::IF_RGBA32F:   Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGBA, flora::EDataType::DT_FLOAT);              break;
 
-    case XVerse::EInternalFormat::IF_DEPTH_COMPONENT16: break;
-    case XVerse::EInternalFormat::IF_DEPTH_COMPONENT24: break;
-    case XVerse::EInternalFormat::IF_DEPTH_COMPONENT32F:break;
-    case XVerse::EInternalFormat::IF_DEPTH24_STENCIL8:break;
-    case XVerse::EInternalFormat::IF_DEPTH32F_STENCIL8:break;
-    case XVerse::EInternalFormat::IF_STENCIL_INDEX:break;
-    case XVerse::EInternalFormat::IF_MAX_COUNT:
+    case flora::EInternalFormat::IF_DEPTH_COMPONENT16: break;
+    case flora::EInternalFormat::IF_DEPTH_COMPONENT24: break;
+    case flora::EInternalFormat::IF_DEPTH_COMPONENT32F:break;
+    case flora::EInternalFormat::IF_DEPTH24_STENCIL8:break;
+    case flora::EInternalFormat::IF_DEPTH32F_STENCIL8:break;
+    case flora::EInternalFormat::IF_STENCIL_INDEX:break;
+    case flora::EInternalFormat::IF_MAX_COUNT:
     default:
         break;
     }
@@ -185,48 +185,48 @@ std::pair<XVerse::EFormat, XVerse::EDataType> XVerse::MatchInternalFormat(XVerse
 }
 
 template<>
-bool XVerse::MatchDataType<signed char>(XVerse::EDataType DT)
+bool flora::MatchDataType<signed char>(flora::EDataType DT)
 {
     return DT == EDataType::DT_BYTE;
 };
 
 template<>
-bool XVerse::MatchDataType<unsigned char>(XVerse::EDataType DT)
+bool flora::MatchDataType<unsigned char>(flora::EDataType DT)
 {
     return DT == EDataType::DT_UNSIGNED_BYTE;
 };
 
 template<>
-bool XVerse::MatchDataType<signed short>(XVerse::EDataType DT)
+bool flora::MatchDataType<signed short>(flora::EDataType DT)
 {
     return DT == EDataType::DT_SHORT;
 };
 
 template<>
-bool XVerse::MatchDataType<unsigned short>(XVerse::EDataType DT)
+bool flora::MatchDataType<unsigned short>(flora::EDataType DT)
 {
     return DT == EDataType::DT_UNSIGNED_SHORT;
 };
 
 template<>
-bool XVerse::MatchDataType<int>(XVerse::EDataType DT)
+bool flora::MatchDataType<int>(flora::EDataType DT)
 {
     return DT == EDataType::DT_INT;
 };
 
 template<>
-bool XVerse::MatchDataType<unsigned int>(XVerse::EDataType DT)
+bool flora::MatchDataType<unsigned int>(flora::EDataType DT)
 {
     return DT == EDataType::DT_UNSIGNED_INT;
 };
 
 template<>
-bool XVerse::MatchDataType<float>(XVerse::EDataType DT)
+bool flora::MatchDataType<float>(flora::EDataType DT)
 {
     return DT == EDataType::DT_FLOAT;
 };
 
-std::shared_ptr<XVerse::XRHITextureCube> XVerse::XRHI::PanoramaToCubemap(uint32_t CubeSize, std::shared_ptr<XVerse::XRHITexture2D> InPanorama)
+std::shared_ptr<flora::XRHITextureCube> flora::XRHI::PanoramaToCubemap(uint32_t CubeSize, std::shared_ptr<flora::XRHITexture2D> InPanorama)
 {
     if (InPanorama)
     {
@@ -370,14 +370,14 @@ std::shared_ptr<XVerse::XRHITextureCube> XVerse::XRHI::PanoramaToCubemap(uint32_
     return nullptr;
 }
 
-std::shared_ptr<XVerse::XRHITexture2D> XVerse::XRHI::CubemapFaceToTexture2D(ECubeFace Face, std::shared_ptr<XRHITextureCube> Cubemap)
+std::shared_ptr<flora::XRHITexture2D> flora::XRHI::CubemapFaceToTexture2D(ECubeFace Face, std::shared_ptr<XRHITextureCube> Cubemap)
 {
     if (Cubemap)
     {
         uint32_t SizeX = Cubemap->GetSizeX();
         EInternalFormat InternalFormat = Cubemap->GetInternalFormat();
 
-        std::pair<XVerse::EFormat, XVerse::EDataType> ReadFormat = XVerse::MatchInternalFormat(InternalFormat);
+        std::pair<flora::EFormat, flora::EDataType> ReadFormat = flora::MatchInternalFormat(InternalFormat);
 
         std::vector<std::byte> Buffer;
         {
@@ -400,7 +400,7 @@ std::shared_ptr<XVerse::XRHITexture2D> XVerse::XRHI::CubemapFaceToTexture2D(ECub
         Texture2DInfo.SizeY = SizeX;
         Texture2DInfo.InternalFormat = InternalFormat;
 
-        std::shared_ptr<XVerse::XRHITexture2D> Texture2D = GetRHI()->CreateTexture(Texture2DInfo)->DynamicPointerCast<XVerse::XRHITexture2D>();
+        std::shared_ptr<flora::XRHITexture2D> Texture2D = GetRHI()->CreateTexture(Texture2DInfo)->DynamicPointerCast<flora::XRHITexture2D>();
         Texture2D->SetPixels(0,ReadFormat.first, ReadFormat.second, Buffer.data());
         
         return Texture2D;
@@ -409,14 +409,14 @@ std::shared_ptr<XVerse::XRHITexture2D> XVerse::XRHI::CubemapFaceToTexture2D(ECub
     return nullptr;
 }
 
-std::shared_ptr<XVerse::XTexture> XVerse::XRHI::CreateStaticTexture(std::shared_ptr<XRHITexture> InTexture)
+std::shared_ptr<flora::XTexture> flora::XRHI::CreateStaticTexture(std::shared_ptr<XRHITexture> InTexture)
 {
     if (!InTexture)return nullptr;
 
     std::shared_ptr<XTexture> Ret = nullptr;
     switch (InTexture->GetType())
     {
-    case XVerse::ERHIResourceType::RT_Texture2D:
+    case flora::ERHIResourceType::RT_Texture2D:
     {
         auto Texture2D = std::make_shared<XTexture2D>();
         auto Texture2DResource = InTexture->DynamicPointerCast<XRHITexture2D>();
@@ -450,12 +450,12 @@ std::shared_ptr<XVerse::XTexture> XVerse::XRHI::CreateStaticTexture(std::shared_
 
         break;
     }
-    case XVerse::ERHIResourceType::RT_Texture3D:
+    case flora::ERHIResourceType::RT_Texture3D:
     {
 
         break;
     }
-    case XVerse::ERHIResourceType::RT_TextureCube:
+    case flora::ERHIResourceType::RT_TextureCube:
     {
 
         break;
@@ -466,15 +466,15 @@ std::shared_ptr<XVerse::XTexture> XVerse::XRHI::CreateStaticTexture(std::shared_
     return Ret;
 }
 
-std::vector<std::shared_ptr<XVerse::XTexture>> XVerse::XRHI::CreateStaticTextureMipChain(std::shared_ptr<XRHITexture>InTexture)
+std::vector<std::shared_ptr<flora::XTexture>> flora::XRHI::CreateStaticTextureMipChain(std::shared_ptr<XRHITexture>InTexture)
 {
-	std::vector<std::shared_ptr<XVerse::XTexture>> Ret;
+	std::vector<std::shared_ptr<flora::XTexture>> Ret;
 
 	if (!InTexture)return Ret;
 
 	switch (InTexture->GetType())
 	{
-	case XVerse::ERHIResourceType::RT_Texture2D:
+	case flora::ERHIResourceType::RT_Texture2D:
 	{		
 		auto Texture2DResource = InTexture->DynamicPointerCast<XRHITexture2D>();
 		auto MipLevels = Texture2DResource->GetMipLevels();
@@ -507,12 +507,12 @@ std::vector<std::shared_ptr<XVerse::XTexture>> XVerse::XRHI::CreateStaticTexture
         }
 		break;
 	}
-	case XVerse::ERHIResourceType::RT_Texture3D:
+	case flora::ERHIResourceType::RT_Texture3D:
 	{
 
 		break;
 	}
-	case XVerse::ERHIResourceType::RT_TextureCube:
+	case flora::ERHIResourceType::RT_TextureCube:
 	{
 
 		break;
@@ -524,7 +524,7 @@ std::vector<std::shared_ptr<XVerse::XTexture>> XVerse::XRHI::CreateStaticTexture
 }
 
 
-std::shared_ptr<XVerse::XRHITextureCube> XVerse::XRHI::FacesToCubemap(std::vector<std::shared_ptr<XRHITexture2D>> InFaces)
+std::shared_ptr<flora::XRHITextureCube> flora::XRHI::FacesToCubemap(std::vector<std::shared_ptr<XRHITexture2D>> InFaces)
 {
     if (InFaces.size() != 6)return nullptr;
 
@@ -549,7 +549,7 @@ std::shared_ptr<XVerse::XRHITextureCube> XVerse::XRHI::FacesToCubemap(std::vecto
 
         auto Cubemap = GetRHI()->CreateTexture(CubemapInfo)->DynamicPointerCast<XRHITextureCube>();
 
-        std::pair<XVerse::EFormat, XVerse::EDataType> ReadFormat = XVerse::MatchInternalFormat(CubemapInfo.InternalFormat);
+        std::pair<flora::EFormat, flora::EDataType> ReadFormat = flora::MatchInternalFormat(CubemapInfo.InternalFormat);
         std::vector<std::byte> Buffer;
         {
             int Stride = GetRHI()->GetDataTypeSize(ReadFormat.second) * GetRHI()->GetFormatCompNum(ReadFormat.first);

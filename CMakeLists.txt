@@ -4,8 +4,8 @@
 #WORK_DIR请填写.exe的安装目录
 
 #project settings
-set(PROJECT_NAME "MeshPartition")
-set(PROJECT_FILE MeshPartition)
+set(PROJECT_NAME "Example")
+set(PROJECT_FILE Example)
 set(CMAKE_MIN_VERSION 3.17)
 set(CPP_VERSION 20)
 set(WITH_IMGUI 1)
@@ -38,7 +38,7 @@ set(MACRO_NAME
     -DPROJECT_DIR="${WORK_DIR}/${PROJECT_FILE}"
     -DPROJECT_CONTENT_DIR="${WORK_DIR}/${PROJECT_FILE}/content"
 
-    -DXVERSE_SCALAR=float
+    -DFLORA_SCALAR=float
 )
 
 #=================generic project=====================#

@@ -29,19 +29,19 @@ void GetTargetN(int& TargetN, int MaxTriArea, int MaxTargetNum, int TotalTriArea
 
 	TargetN = glm::max(1, glm::min(TargetN, MaxTargetNum));
 
-	XVERSE_CORE_INFO("TriAreaExcceed:{0}", (float(R) / float(MaxTriArea)))
-	XVERSE_CORE_INFO("TotalTriArea:{0}", TotalTriArea)
-	XVERSE_CORE_INFO("MaxAreaExcceedTolerance:{0}", MaxAreaExcceedTolerance)
+	FLORA_CORE_INFO("TriAreaExcceed:{0}", (float(R) / float(MaxTriArea)))
+	FLORA_CORE_INFO("TotalTriArea:{0}", TotalTriArea)
+	FLORA_CORE_INFO("MaxAreaExcceedTolerance:{0}", MaxAreaExcceedTolerance)
 
 }
 
-void XVerse::FTriCollector::Do()
+void flora::FTriCollector::Do()
 {
 	int TargetN;
 	GetTargetN(TargetN, Param.MaxTriArea, Param.MaxTargetNum, TotalTriArea, Param.MaxAreaExcceedTolerance);
 	Param.MaxTriArea = TotalTriArea / TargetN;
 
-	XVERSE_CORE_ERROR("TargetN:{0} , MaxArea:{1}",TargetN,Param.MaxTriArea)
+	FLORA_CORE_ERROR("TargetN:{0} , MaxArea:{1}",TargetN,Param.MaxTriArea)
 
 	int Start = 0, End;
 
@@ -134,11 +134,11 @@ void XVerse::FTriCollector::Do()
 
 
 
-std::shared_ptr<XVerse::XStaticMesh> XVerse::FTriCollector::GenericDebugMesh()
+std::shared_ptr<flora::XStaticMesh> flora::FTriCollector::GenericDebugMesh()
 {
 	std::string MeshName = "DebugMesh";
 
-	std::shared_ptr<XStaticMesh> NewMesh = std::make_shared<XVerse::XStaticMesh>(nullptr, MeshName, glm::identity<glm::mat4>(), glm::identity<mat4>());
+	std::shared_ptr<XStaticMesh> NewMesh = std::make_shared<flora::XStaticMesh>(nullptr, MeshName, glm::identity<glm::mat4>(), glm::identity<mat4>());
 
 	NewMesh->Enable(vcg::tri::io::Mask::IOM_VERTCOORD | vcg::tri::io::Mask::IOM_VERTNORMAL | vcg::tri::io::Mask::IOM_VERTTEXCOORD | vcg::tri::io::Mask::IOM_VERTCOLOR);
 
@@ -157,13 +157,13 @@ std::shared_ptr<XVerse::XStaticMesh> XVerse::FTriCollector::GenericDebugMesh()
 		}
 	}
 
-	XVERSE_CORE_ERROR("BoundMin:{0},{1},{2}", Param.BoundMin.x, Param.BoundMin.y, Param.BoundMin.z)
-	XVERSE_CORE_ERROR("BoundMax:{0},{1},{2}", Param.BoundMax.x, Param.BoundMax.y, Param.BoundMax.z)
+	FLORA_CORE_ERROR("BoundMin:{0},{1},{2}", Param.BoundMin.x, Param.BoundMin.y, Param.BoundMin.z)
+	FLORA_CORE_ERROR("BoundMax:{0},{1},{2}", Param.BoundMax.x, Param.BoundMax.y, Param.BoundMax.z)
 
 	return NewMesh;
 }
 
-void XVerse::FTriCollector::AppendDebugCube(XStaticMesh& Mesh, int IdxX, int IdxY, int IdxZ)
+void flora::FTriCollector::AppendDebugCube(XStaticMesh& Mesh, int IdxX, int IdxY, int IdxZ)
 {
 	const static float vertices[] = 
 	{
@@ -229,7 +229,7 @@ void XVerse::FTriCollector::AppendDebugCube(XStaticMesh& Mesh, int IdxX, int Idx
 	}
 }
 
-//void XVerse::FTriCollector::Finalize(FinalizeFunc&& Func)
+//void flora::FTriCollector::Finalize(FinalizeFunc&& Func)
 //{
 //	for (int i = 0; i < Collections.size(); ++i)
 //	{
@@ -238,7 +238,7 @@ void XVerse::FTriCollector::AppendDebugCube(XStaticMesh& Mesh, int IdxX, int Idx
 //	}
 //}
 
-//void XVerse::FTriCollector::Finalize(int* CollectionBuffer)
+//void flora::FTriCollector::Finalize(int* CollectionBuffer)
 //{
 //	for (int i = 0; i < Collections.size(); ++i)
 //	{

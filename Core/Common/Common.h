@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <memory>
-namespace XVerse
+namespace flora
 {
 	template<typename T>
 	class XSingleton

@@ -2,18 +2,18 @@
 #include "OpenGLRenderBuffer.h"
 #include "OpenGLTexture.h"
 
-XVerse::XOpenGLFrameBuffer::~XOpenGLFrameBuffer()
+flora::XOpenGLFrameBuffer::~XOpenGLFrameBuffer()
 {
     ReleaseRHI();
 }
 
-bool XVerse::XOpenGLFrameBuffer::IsValid()
+bool flora::XOpenGLFrameBuffer::IsValid()
 {
     Bind();
     return glIsFramebuffer(Handle) == GL_TRUE;
 }
 
-bool XVerse::XOpenGLFrameBuffer::InitRHI()
+bool flora::XOpenGLFrameBuffer::InitRHI()
 {
     glGenFramebuffers(1, &Handle);
     Bind();
@@ -25,18 +25,18 @@ bool XVerse::XOpenGLFrameBuffer::InitRHI()
     return IsValid() && IsComplete();
 }
 
-bool XVerse::XOpenGLFrameBuffer::ReleaseRHI()
+bool flora::XOpenGLFrameBuffer::ReleaseRHI()
 {
     glDeleteFramebuffers(1, &Handle);
     return true;
 }
 
-bool XVerse::XOpenGLFrameBuffer::CopyFrom(std::shared_ptr<XRHIResource>)
+bool flora::XOpenGLFrameBuffer::CopyFrom(std::shared_ptr<XRHIResource>)
 {
     return false;
 }
 
-bool XVerse::XOpenGLFrameBuffer::UpdateRHI()
+bool flora::XOpenGLFrameBuffer::UpdateRHI()
 {
     Bind();
 
@@ -96,36 +96,36 @@ bool XVerse::XOpenGLFrameBuffer::UpdateRHI()
     return true;
 }
 
-void XVerse::XOpenGLFrameBuffer::Bind()
+void flora::XOpenGLFrameBuffer::Bind()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, Handle);
 
 }
 
-void XVerse::XOpenGLFrameBuffer::UnBind()
+void flora::XOpenGLFrameBuffer::UnBind()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 }
 
-bool XVerse::XOpenGLFrameBuffer::IsComplete()
+bool flora::XOpenGLFrameBuffer::IsComplete()
 {
     Bind();
     return glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
 }
 
-//void XVerse::XOpenGLFrameBuffer::ClearDepthStencil(float d, int i)
+//void flora::XOpenGLFrameBuffer::ClearDepthStencil(float d, int i)
 //{
 //    Bind();
 //    glClearBufferfi(GL_DEPTH_STENCIL, 0, d, i);
 //}
 
-void XVerse::XOpenGLFrameBuffer::ClearBuffer(EClearBufferBit InBufferBit)
+void flora::XOpenGLFrameBuffer::ClearBuffer(EClearBufferBit InBufferBit)
 {
     glClear(ToGLClearBufferBit(InBufferBit));
 }
 
-void XVerse::XOpenGLFrameBuffer::ClearColor(int i, float r, float g, float b, float a)
+void flora::XOpenGLFrameBuffer::ClearColor(int i, float r, float g, float b, float a)
 {
 	Bind();
     const GLfloat Color[4] = { r, g, b, a };

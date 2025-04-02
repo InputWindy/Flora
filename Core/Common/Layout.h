@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-namespace XVerse
+namespace flora
 {
     enum class BufferElementDataType
 	{

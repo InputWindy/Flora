@@ -1,6 +1,6 @@
 #include <Render/Renderer.h>
 
-void XVerse::IRenderBase::SetOwner(IPass* InPass)
+void flora::IRenderBase::SetOwner(IPass* InPass)
 {
 	InPass->SetOwner(this);
 }

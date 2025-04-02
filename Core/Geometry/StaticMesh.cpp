@@ -3,12 +3,12 @@
 #include <vcglib/wrap/io_trimesh/io_mask.h>
 #include <Resource/Struct/ModelMesh.h>
 
-const XVerse::Wrap::GlobalSettings& XVerse::XStaticMesh::GetMetaData() const
+const flora::Wrap::GlobalSettings& flora::XStaticMesh::GetMetaData() const
 {
 	return Owner.lock()->GetMetaData();
 }
 
-void XVerse::XStaticMesh::UpdateDataMask()
+void flora::XStaticMesh::UpdateDataMask()
 {
 	CurrentDataMask = MM_NONE;
 	CurrentDataMask |=
@@ -42,7 +42,7 @@ void XVerse::XStaticMesh::UpdateDataMask()
 		CurrentDataMask |= MM_WEDGTEXCOORD;
 }
 
-void XVerse::XStaticMesh::UpdateDataMask(int InNeededDataMask)
+void flora::XStaticMesh::UpdateDataMask(int InNeededDataMask)
 {
 	if ((InNeededDataMask & MM_FACEFACETOPO) != 0)
 	{
@@ -78,7 +78,7 @@ void XVerse::XStaticMesh::UpdateDataMask(int InNeededDataMask)
 	CurrentDataMask |= InNeededDataMask;
 }
 
-void XVerse::XStaticMesh::ClearDataMask(int InUnneededDataMask)
+void flora::XStaticMesh::ClearDataMask(int InUnneededDataMask)
 {
 	if (((InUnneededDataMask & MM_VERTFACETOPO) != 0) && HasDataMask(MM_VERTFACETOPO)) {
 		this->face.DisableVFAdjacency();
@@ -99,18 +99,18 @@ void XVerse::XStaticMesh::ClearDataMask(int InUnneededDataMask)
 	CurrentDataMask &= (~InUnneededDataMask);
 }
 
-int XVerse::XStaticMesh::DataMask() const
+int flora::XStaticMesh::DataMask() const
 {
 	return CurrentDataMask;
 }
 
-//void XVerse::XStaticMesh::SetData(float* aPos, float* aNor, float* aUV, int* Index, int numV, int numI)
+//void flora::XStaticMesh::SetData(float* aPos, float* aNor, float* aUV, int* Index, int numV, int numI)
 //{
 //	if (!Index || numV <= 0 || numI <= 0)return;
 //
 //	Enable(vcg::tri::io::Mask::IOM_VERTCOORD | vcg::tri::io::Mask::IOM_VERTNORMAL | vcg::tri::io::Mask::IOM_VERTTEXCOORD);
 //
-//	auto VertexIter = vcg::tri::Allocator<XVerse::XStaticMesh>::AddVertices(*this, numV);
+//	auto VertexIter = vcg::tri::Allocator<flora::XStaticMesh>::AddVertices(*this, numV);
 //	for (size_t Idx = 0; Idx < numV; Idx++)
 //	{
 //		if (aPos && VertexIter->IsCoordEnabled())
@@ -133,82 +133,82 @@ int XVerse::XStaticMesh::DataMask() const
 //
 //	for (size_t Idx = 0; Idx < numI / 3; Idx++)
 //	{
-//		vcg::tri::Allocator<XVerse::XStaticMesh>::AddFace(*this, Index[Idx + 0], Index[Idx + 1], Index[Idx + 2]);
+//		vcg::tri::Allocator<flora::XStaticMesh>::AddFace(*this, Index[Idx + 0], Index[Idx + 1], Index[Idx + 2]);
 //	};
 //
-//	vcg::tri::Clean<XVerse::XStaticMesh>::RemoveDuplicateVertex(*this);
-//	vcg::tri::Allocator<XVerse::XStaticMesh>::CompactEveryVector(*this);
-//	vcg::tri::UpdateNormal<XVerse::XStaticMesh>::PerVertexNormalized(*this);
+//	vcg::tri::Clean<flora::XStaticMesh>::RemoveDuplicateVertex(*this);
+//	vcg::tri::Allocator<flora::XStaticMesh>::CompactEveryVector(*this);
+//	vcg::tri::UpdateNormal<flora::XStaticMesh>::PerVertexNormalized(*this);
 //	UpdateDataMask();
 //}
 
-int XVerse::XStaticMesh::RemoveUnreferencedVertex()
+int flora::XStaticMesh::RemoveUnreferencedVertex()
 {
-	return vcg::tri::Clean<XVerse::XStaticMesh>::RemoveUnreferencedVertex(*this);
+	return vcg::tri::Clean<flora::XStaticMesh>::RemoveUnreferencedVertex(*this);
 }
 
-void XVerse::XStaticMesh::RemoveDuplicate()
+void flora::XStaticMesh::RemoveDuplicate()
 {
-	vcg::tri::Clean<XVerse::XStaticMesh>::RemoveDuplicateVertex(*this);
-	vcg::tri::Clean<XVerse::XStaticMesh>::RemoveDuplicateFace(*this);
-	vcg::tri::Clean<XVerse::XStaticMesh>::RemoveDuplicateEdge(*this);
+	vcg::tri::Clean<flora::XStaticMesh>::RemoveDuplicateVertex(*this);
+	vcg::tri::Clean<flora::XStaticMesh>::RemoveDuplicateFace(*this);
+	vcg::tri::Clean<flora::XStaticMesh>::RemoveDuplicateEdge(*this);
 }
 
-void XVerse::XStaticMesh::RemoveDegenerate()
+void flora::XStaticMesh::RemoveDegenerate()
 {
-	vcg::tri::Clean<XVerse::XStaticMesh>::RemoveDegenerateVertex(*this);
-	vcg::tri::Clean<XVerse::XStaticMesh>::RemoveDegenerateFace(*this);
-	vcg::tri::Clean<XVerse::XStaticMesh>::RemoveDegenerateEdge(*this);
+	vcg::tri::Clean<flora::XStaticMesh>::RemoveDegenerateVertex(*this);
+	vcg::tri::Clean<flora::XStaticMesh>::RemoveDegenerateFace(*this);
+	vcg::tri::Clean<flora::XStaticMesh>::RemoveDegenerateEdge(*this);
 }
 
-void XVerse::XStaticMesh::CompactEveryVector()
+void flora::XStaticMesh::CompactEveryVector()
 {
-	vcg::tri::Allocator<XVerse::XStaticMesh>::CompactEveryVector(*this);
+	vcg::tri::Allocator<flora::XStaticMesh>::CompactEveryVector(*this);
 }
 
-void XVerse::XStaticMesh::UpdateBouding()
+void flora::XStaticMesh::UpdateBouding()
 {
-	vcg::tri::UpdateBounding<XVerse::XStaticMesh>::Box(*this);
+	vcg::tri::UpdateBounding<flora::XStaticMesh>::Box(*this);
 }
 
-void XVerse::XStaticMesh::RegenerateFaceNormal()
+void flora::XStaticMesh::RegenerateFaceNormal()
 {
-	vcg::tri::UpdateNormal<XVerse::XStaticMesh>::PerFaceNormalized(*this);
+	vcg::tri::UpdateNormal<flora::XStaticMesh>::PerFaceNormalized(*this);
 }
 
-void XVerse::XStaticMesh::RegenerateVertexNormal()
+void flora::XStaticMesh::RegenerateVertexNormal()
 {
-	vcg::tri::UpdateNormal<XVerse::XStaticMesh>::PerVertexNormalized(*this);
+	vcg::tri::UpdateNormal<flora::XStaticMesh>::PerVertexNormalized(*this);
 }
 
-void XVerse::XStaticMesh::RegenerateVertexNormalFromFace()
+void flora::XStaticMesh::RegenerateVertexNormalFromFace()
 {
-	vcg::tri::UpdateNormal<XVerse::XStaticMesh>::PerVertexFromCurrentFaceNormal(*this);
-	vcg::tri::UpdateNormal<XVerse::XStaticMesh>::PerVertexNormalized(*this);
+	vcg::tri::UpdateNormal<flora::XStaticMesh>::PerVertexFromCurrentFaceNormal(*this);
+	vcg::tri::UpdateNormal<flora::XStaticMesh>::PerVertexNormalized(*this);
 }
 
-void XVerse::XStaticMesh::RegenerateEdge()
+void flora::XStaticMesh::RegenerateEdge()
 {
 	//generic edge
 	this->face.EnableFFAdjacency();
 
-	vcg::tri::UpdateTopology<XVerse::XStaticMesh>::FaceFace(*this);
-	vcg::tri::UpdateTopology<XVerse::XStaticMesh>::AllocateEdge(*this);
+	vcg::tri::UpdateTopology<flora::XStaticMesh>::FaceFace(*this);
+	vcg::tri::UpdateTopology<flora::XStaticMesh>::AllocateEdge(*this);
 }
 
-void XVerse::XStaticMesh::RegenerateMesh(const std::set<unsigned int>& InDeleteFaces)
+void flora::XStaticMesh::RegenerateMesh(const std::set<unsigned int>& InDeleteFaces)
 {
 	for (auto FaceId : InDeleteFaces)
 	{
-		vcg::tri::Allocator<XVerse::XStaticMesh>::DeleteFace(*this, face[FaceId]);
+		vcg::tri::Allocator<flora::XStaticMesh>::DeleteFace(*this, face[FaceId]);
 	};
 
-	vcg::tri::Clean<XVerse::XStaticMesh>::RemoveDuplicateVertex(*this);
-	vcg::tri::Allocator<XVerse::XStaticMesh>::CompactEveryVector(*this);
+	vcg::tri::Clean<flora::XStaticMesh>::RemoveDuplicateVertex(*this);
+	vcg::tri::Allocator<flora::XStaticMesh>::CompactEveryVector(*this);
 
 }
 
-void XVerse::XStaticMesh::SetData(std::byte* VertexBuffer, size_t VertexBufferSize, BufferLayout VertexLayout, unsigned int* IndexBuffer, int IndexNum)
+void flora::XStaticMesh::SetData(std::byte* VertexBuffer, size_t VertexBufferSize, BufferLayout VertexLayout, unsigned int* IndexBuffer, int IndexNum)
 {
 	if (!VertexBuffer || !IndexBuffer || VertexBufferSize == 0 || IndexNum == 0 || IndexNum % 3 != 0)return;
 
@@ -217,9 +217,9 @@ void XVerse::XStaticMesh::SetData(std::byte* VertexBuffer, size_t VertexBufferSi
 	size_t FaceNum = IndexNum / 3;
 	size_t VertexNum = VertexBufferSize / Stride;
 
-	auto VertexIter = vcg::tri::Allocator<XVerse::XStaticMesh>::AddVertices(*this, VertexNum);
+	auto VertexIter = vcg::tri::Allocator<flora::XStaticMesh>::AddVertices(*this, VertexNum);
 
-	XVerse::BufferElement Element;
+	flora::BufferElement Element;
 	if (VertexLayout.GetElement("aPosition", Element) && VertexIter->IsCoordEnabled())
 	{
 		auto TmpIter = VertexIter;
@@ -278,7 +278,7 @@ void XVerse::XStaticMesh::SetData(std::byte* VertexBuffer, size_t VertexBufferSi
 
 	for (size_t Idx = 0; Idx < FaceNum; Idx++)
 	{
-		vcg::tri::Allocator<XVerse::XStaticMesh>::AddFace(*this,
+		vcg::tri::Allocator<flora::XStaticMesh>::AddFace(*this,
 			IndexBuffer[Idx * 3 + 0],
 			IndexBuffer[Idx * 3 + 1],
 			IndexBuffer[Idx * 3 + 2]
@@ -295,7 +295,7 @@ void XVerse::XStaticMesh::SetData(std::byte* VertexBuffer, size_t VertexBufferSi
 
 }
 
-void XVerse::XStaticMesh::Enable(int InOpeningFileMask)
+void flora::XStaticMesh::Enable(int InOpeningFileMask)
 {
 	if (InOpeningFileMask & vcg::tri::io::Mask::IOM_VERTTEXCOORD)
 		UpdateDataMask(MM_VERTTEXCOORD);

@@ -8,14 +8,14 @@
 
 #include <map>
 #include <string>
-namespace XVerse
+namespace flora
 {
 	//TextureBaseType
-	class XTexture : public XVerse::IResource<>, ISerialization
+	class XTexture : public flora::IResource<>, ISerialization
 	{
 	protected:
 		XTexture() = default;
-		XTexture(const std::string& InFilePath) :XVerse::IResource<>(InFilePath) {  }
+		XTexture(const std::string& InFilePath) :flora::IResource<>(InFilePath) {  }
 
 	public:
 		virtual ~XTexture() = default;

@@ -5,7 +5,7 @@
 #include <Common/Common.h>
 #include <memory>
 
-namespace XVerse
+namespace flora
 {
 	class IPass;
 
@@ -18,7 +18,7 @@ namespace XVerse
 	struct IRendererSettings {};
 	
 	template<typename TCustomRenderScene>
-	using XSceneRenderProxy = XVerse::XProxy<XVerse::XScene, TCustomRenderScene>;
+	using XSceneRenderProxy = flora::XProxy<flora::XScene, TCustomRenderScene>;
 
 	class IPass :public INoneCopyable, public std::enable_shared_from_this<IPass>
 	{
@@ -185,7 +185,7 @@ namespace XVerse
 			std::string InfoLog;
 			if (!RenderGraphType::AddPass(InDependencies, InPassName, InPass, InfoLog))
 			{
-				//XVERSE_CORE_ERROR("Fail to add pass : {0},{1}", InPassName, InfoLog);
+				//FLORA_CORE_ERROR("Fail to add pass : {0},{1}", InPassName, InfoLog);
 				return false;
 			}
 			SetOwner(InPass.get());

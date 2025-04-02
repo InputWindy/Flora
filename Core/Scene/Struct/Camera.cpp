@@ -3,19 +3,19 @@
 #include <Common/Log.h>
 
 using namespace glm;
-using namespace XVerse;
+using namespace flora;
 
-void XVerse::XOrthographicCamera::Update()
+void flora::XOrthographicCamera::Update()
 {
 	Projection = glm::ortho(Left, Right, Bottom, Top, NearClip, FarClip);
 }
 
-XFrustum XVerse::XOrthographicCamera::GetFrustum() const
+XFrustum flora::XOrthographicCamera::GetFrustum() const
 {
 	return XFrustum(Left, Right, Bottom, Top, NearClip, FarClip);
 }
 
-bool XVerse::XOrthographicCamera::Parse(const json11::Json& In)
+bool flora::XOrthographicCamera::Parse(const json11::Json& In)
 {
 	Left = In["Left"].number_value();
 	Right = In["Right"].number_value();
@@ -27,7 +27,7 @@ bool XVerse::XOrthographicCamera::Parse(const json11::Json& In)
 	return true;
 }
 
-bool XVerse::XOrthographicCamera::Serialize(json11::Json& Out)
+bool flora::XOrthographicCamera::Serialize(json11::Json& Out)
 {
 	Out = json11::Json::object
 	{
@@ -41,7 +41,7 @@ bool XVerse::XOrthographicCamera::Serialize(json11::Json& Out)
 	return true;
 }
 
-void XVerse::XPerspectiveCamera::Update()
+void flora::XPerspectiveCamera::Update()
 {
 	if (FarClip < 0)
 		Projection = glm::infinitePerspective(glm::radians(Fov), AspectRatio, NearClip);
@@ -51,12 +51,12 @@ void XVerse::XPerspectiveCamera::Update()
 	}
 }
 
-XFrustum XVerse::XPerspectiveCamera::GetFrustum() const
+XFrustum flora::XPerspectiveCamera::GetFrustum() const
 {
 	return XFrustum(Fov, AspectRatio, NearClip, FarClip);
 }
 
-bool XVerse::XPerspectiveCamera::Parse(const json11::Json& In)
+bool flora::XPerspectiveCamera::Parse(const json11::Json& In)
 {
 	Fov = In["Fov"].number_value();
 	AspectRatio = In["AspectRatio"].number_value();
@@ -66,7 +66,7 @@ bool XVerse::XPerspectiveCamera::Parse(const json11::Json& In)
 	return true;
 }
 
-bool XVerse::XPerspectiveCamera::Serialize(json11::Json& Out)
+bool flora::XPerspectiveCamera::Serialize(json11::Json& Out)
 {
 	Out = json11::Json::object
 	{
@@ -150,13 +150,13 @@ void CalculateFrustumPlanes(const glm::vec3* vertices, vec4* out)
 	out[5] = planes[5].ToVec4();
 }
 
-XVerse::XFrustum::XFrustum(float l, float r, float b, float t, float n, float f)
+flora::XFrustum::XFrustum(float l, float r, float b, float t, float n, float f)
 {
-	XVERSE_CORE_ERROR("Undefined Ortho Frustum");
+	FLORA_CORE_ERROR("Undefined Ortho Frustum");
 	throw std::runtime_error("Undefined Ortho Frustum");
 }
 
-XVerse::XFrustum::XFrustum(float fov, float aspect, float near, float far)
+flora::XFrustum::XFrustum(float fov, float aspect, float near, float far)
 {
 	CalculateFrustumVertices(fov,aspect,near,far,Corners);
 	CalculateFrustumPlanes(Corners, Planes);

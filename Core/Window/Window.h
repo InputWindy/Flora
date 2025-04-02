@@ -7,7 +7,7 @@
 /*
 	key codes (glfw key codes)
 */
-namespace XVerse
+namespace flora
 {
 #define X_TRUE                   1
 	/*! @brief Zero.
@@ -320,7 +320,7 @@ namespace XVerse
 #define X_GAMEPAD_AXIS_LAST          X_GAMEPAD_AXIS_RIGHT_TRIGGER
 }
 
-namespace XVerse
+namespace flora
 {
 	enum class EWindowType
 	{

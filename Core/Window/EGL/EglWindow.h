@@ -1,6 +1,6 @@
 #pragma once
 #include <Window/Window.h>
-namespace XVerse
+namespace flora
 {
 	class XEglWindow final : public XWindow
 	{

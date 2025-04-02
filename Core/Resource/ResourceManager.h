@@ -26,7 +26,7 @@ void MakeKey()override\
 const std::string GetTypeString() const override { return #ResourceType; };
 
 //Wrapper
-namespace XVerse
+namespace flora
 {
     enum class EFileType;
 
@@ -58,7 +58,7 @@ namespace XVerse
 }
 
 //template resource base type and resource manager
-namespace XVerse
+namespace flora
 {
     typedef size_t Guid;
 

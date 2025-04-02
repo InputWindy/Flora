@@ -13,7 +13,7 @@
 #include <iostream>
 
 template<>
-void XVerse::XStaticMeshProxy::CreateContainer()
+void flora::XStaticMeshProxy::CreateContainer()
 {
 	if (Container == nullptr || Object == nullptr)return;
 
@@ -23,29 +23,29 @@ void XVerse::XStaticMeshProxy::CreateContainer()
 
 	XStaticMesh& InoutStaticMesh = *Object;
 
-	bool bHasPosition = InoutStaticMesh.HasDataMask(XVerse::XStaticMesh::MM_VERTCOORD);
-	bool bHasVertexNormal = InoutStaticMesh.HasDataMask(XVerse::XStaticMesh::MM_VERTNORMAL);
-	bool bHasVertexCoord = InoutStaticMesh.HasDataMask(XVerse::XStaticMesh::MM_VERTTEXCOORD);
-	bool bHasVertexColor = InoutStaticMesh.HasDataMask(XVerse::XStaticMesh::MM_VERTCOLOR);
+	bool bHasPosition = InoutStaticMesh.HasDataMask(flora::XStaticMesh::MM_VERTCOORD);
+	bool bHasVertexNormal = InoutStaticMesh.HasDataMask(flora::XStaticMesh::MM_VERTNORMAL);
+	bool bHasVertexCoord = InoutStaticMesh.HasDataMask(flora::XStaticMesh::MM_VERTTEXCOORD);
+	bool bHasVertexColor = InoutStaticMesh.HasDataMask(flora::XStaticMesh::MM_VERTCOLOR);
 
 	if (bHasPosition)
 	{
-		Container->VertexBufferLayout.AddElement({ XVerse::BufferElementDataType::Float3,"aPosition" });
+		Container->VertexBufferLayout.AddElement({ flora::BufferElementDataType::Float3,"aPosition" });
 	}
 
 	if (bHasVertexNormal)
 	{
-		Container->VertexBufferLayout.AddElement({ XVerse::BufferElementDataType::Float3,"aNormal",true });
+		Container->VertexBufferLayout.AddElement({ flora::BufferElementDataType::Float3,"aNormal",true });
 	}
 
 	if (bHasVertexCoord)
 	{
-		Container->VertexBufferLayout.AddElement({ XVerse::BufferElementDataType::Float2,"aUV",true });
+		Container->VertexBufferLayout.AddElement({ flora::BufferElementDataType::Float2,"aUV",true });
 	}
 
 	if (bHasVertexColor)
 	{
-		Container->VertexBufferLayout.AddElement({ XVerse::BufferElementDataType::Float4,"aColor" });
+		Container->VertexBufferLayout.AddElement({ flora::BufferElementDataType::Float4,"aColor" });
 	}
 
 	Container->VertexBufferLayout.CalculateOffsetAndStride();
@@ -56,10 +56,10 @@ void XVerse::XStaticMeshProxy::CreateContainer()
 
 	for (size_t Idx = 0; Idx < InoutStaticMesh.VN(); Idx++)
 	{
-		const XVerse::XVertex& Vertex = InoutStaticMesh.vert[Idx];
+		const flora::XVertex& Vertex = InoutStaticMesh.vert[Idx];
 		std::byte* pBuffer = Container->VertexBulkData.data();
 
-		XVerse::BufferElement Element;
+		flora::BufferElement Element;
 		if (bHasPosition && Container->VertexBufferLayout.GetElement("aPosition", Element))
 		{
 			memcpy(pBuffer + Idx * Stride + Element.Offset + 0 * sizeof(Vertex.cP().X()), &(Vertex.cP().X()), sizeof(Vertex.cP().X()));
@@ -93,7 +93,7 @@ void XVerse::XStaticMeshProxy::CreateContainer()
 
 	for (size_t Idx = 0; Idx < InoutStaticMesh.FN(); Idx++)
 	{
-		const XVerse::XFace& Face = InoutStaticMesh.face[Idx];
+		const flora::XFace& Face = InoutStaticMesh.face[Idx];
 		Container->IndexBulkData.push_back(Face.cV(0)->Index());
 		Container->IndexBulkData.push_back(Face.cV(1)->Index());
 		Container->IndexBulkData.push_back(Face.cV(2)->Index());
@@ -123,7 +123,7 @@ void XVerse::XStaticMeshProxy::CreateContainer()
 	Container->MeshRhiResource = GetRHI()->CreateVertexArray(VertexArrayInfo);
 }
 template<>
-void XVerse::XStaticMeshProxy::UpdateObject()
+void flora::XStaticMeshProxy::UpdateObject()
 {
 	if (Object == nullptr || Container == nullptr)return;
 
@@ -138,16 +138,16 @@ void XVerse::XStaticMeshProxy::UpdateObject()
 	size_t VertexNum = Container->GetVertexNum();
 	unsigned int Stride = VertexBufferLayout.GetStride();
 
-	auto VertexIter = vcg::tri::Allocator<XVerse::XStaticMesh>::AddVertices(*Object, VertexNum);
+	auto VertexIter = vcg::tri::Allocator<flora::XStaticMesh>::AddVertices(*Object, VertexNum);
 
-	XVerse::BufferElement Element;
+	flora::BufferElement Element;
 	if (VertexBufferLayout.GetElement("aPosition",Element) && VertexIter->IsCoordEnabled())
 	{
 		auto TmpIter = VertexIter;
 		const std::byte* pBuffer = VertexBulkData.data();
 		for (size_t VertexIdx = 0; VertexIdx < VertexNum; VertexIdx++)
 		{
-			XVerse::XPoint3 P;
+			flora::XPoint3 P;
 			memcpy(&P, pBuffer + Stride * VertexIdx + Element.Offset, Element.Size);
 			TmpIter->P() = P;
 
@@ -161,7 +161,7 @@ void XVerse::XStaticMeshProxy::UpdateObject()
 		const std::byte* pBuffer = VertexBulkData.data();
 		for (size_t VertexIdx = 0; VertexIdx < VertexNum; VertexIdx++)
 		{
-			XVerse::XPoint3 N;
+			flora::XPoint3 N;
 			memcpy(&N, pBuffer + Stride * VertexIdx + Element.Offset, Element.Size);
 			TmpIter->N() = N;
 
@@ -171,31 +171,31 @@ void XVerse::XStaticMeshProxy::UpdateObject()
 
 	for (size_t Idx = 0; Idx < FaceNum; Idx++)
 	{
-		vcg::tri::Allocator<XVerse::XStaticMesh>::AddFace(*Object,
+		vcg::tri::Allocator<flora::XStaticMesh>::AddFace(*Object,
 			IndexBulkData[Idx * 3 + 0], 
 			IndexBulkData[Idx * 3 + 1],
 			IndexBulkData[Idx * 3 + 2]
 		);
 	};
 
-	vcg::tri::Clean<XVerse::XStaticMesh>::RemoveDuplicateVertex(*Object);
-	vcg::tri::Allocator<XVerse::XStaticMesh>::CompactEveryVector(*Object);
+	vcg::tri::Clean<flora::XStaticMesh>::RemoveDuplicateVertex(*Object);
+	vcg::tri::Allocator<flora::XStaticMesh>::CompactEveryVector(*Object);
 
 }
 template<>
-void XVerse::XMaterialProxy::CreateContainer()
+void flora::XMaterialProxy::CreateContainer()
 {
 	if (Container == nullptr || Object == nullptr)return;
 
 	Container->ShaderProgramResource = nullptr;
 
-	XVerse::XRHIShaderProgramCreateInfo ShaderProgramInfo;
+	flora::XRHIShaderProgramCreateInfo ShaderProgramInfo;
 	for (auto Iter : Object->GetShaderMap())
 	{
-		XVerse::XRHIShaderCreateInfo ShaderInfo;
+		flora::XRHIShaderCreateInfo ShaderInfo;
 		ShaderInfo.ShaderType = Iter.first;
 		ShaderInfo.ShaderCode = Iter.second;
-		std::shared_ptr<XVerse::XRHIShader> Shader = GetRHI()->CreateShader(ShaderInfo);
+		std::shared_ptr<flora::XRHIShader> Shader = GetRHI()->CreateShader(ShaderInfo);
 		if (Shader->IsCompiled() == false)
 		{
 			std::string log;
@@ -205,13 +205,13 @@ void XVerse::XMaterialProxy::CreateContainer()
 		
 		switch (Iter.first)
 		{
-		case XVerse::EShaderType::ST_VERTEX_SHADER:ShaderProgramInfo.VertexShader = Shader; break;
-		case XVerse::EShaderType::ST_TESS_CONTROL_SHADER:ShaderProgramInfo.TessControlShader = Shader; break;
-		case XVerse::EShaderType::ST_TESS_EVALUATION_SHADER:ShaderProgramInfo.TessEvaluationShader = Shader; break;
-		case XVerse::EShaderType::ST_GEOMETRY_SHADER:ShaderProgramInfo.GeometryShader = Shader; break;
-		case XVerse::EShaderType::ST_FRAGMENT_SHADER:ShaderProgramInfo.FragmentShader = Shader; break;
-		case XVerse::EShaderType::ST_COMPUTE_SHADER:ShaderProgramInfo.ComputeShader = Shader; break;
-		case XVerse::EShaderType::ST_MAX_COUNT:break;
+		case flora::EShaderType::ST_VERTEX_SHADER:ShaderProgramInfo.VertexShader = Shader; break;
+		case flora::EShaderType::ST_TESS_CONTROL_SHADER:ShaderProgramInfo.TessControlShader = Shader; break;
+		case flora::EShaderType::ST_TESS_EVALUATION_SHADER:ShaderProgramInfo.TessEvaluationShader = Shader; break;
+		case flora::EShaderType::ST_GEOMETRY_SHADER:ShaderProgramInfo.GeometryShader = Shader; break;
+		case flora::EShaderType::ST_FRAGMENT_SHADER:ShaderProgramInfo.FragmentShader = Shader; break;
+		case flora::EShaderType::ST_COMPUTE_SHADER:ShaderProgramInfo.ComputeShader = Shader; break;
+		case flora::EShaderType::ST_MAX_COUNT:break;
 		default:
 			break;
 		}
@@ -224,19 +224,19 @@ void XVerse::XMaterialProxy::CreateContainer()
 		std::string log;
 		Container->ShaderProgramResource->GetShaderProgramInfoLog(log);
 
-		XVERSE_CORE_ERROR(log);
+		FLORA_CORE_ERROR(log);
 	}
 
 	Container->MaterialState = Object->GetMaterialState();
 }
 template<>
-void XVerse::XMaterialProxy::UpdateObject()
+void flora::XMaterialProxy::UpdateObject()
 {
 	if (Object == nullptr || Container == nullptr)return;
 }
 
 template<>
-void XVerse::XTextureProxy::CreateContainer()
+void flora::XTextureProxy::CreateContainer()
 {
 	if (Container == nullptr || Object == nullptr)return;
 
@@ -271,7 +271,7 @@ void XVerse::XTextureProxy::CreateContainer()
 }
 
 template<>
-void XVerse::XTextureProxy::UpdateObject()
+void flora::XTextureProxy::UpdateObject()
 {
 	
 }

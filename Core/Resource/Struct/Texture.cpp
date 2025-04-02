@@ -20,9 +20,9 @@ bool IsImage(const std::string& Extension)
 }
 
 template<>
-std::shared_ptr<XVerse::XTexture2D::BaseType> XVerse::XImporter<XVerse::Texture2DImportSettings, XVerse::XTexture2D::BaseType>::Exec(const std::string& InFilepath, const XVerse::Texture2DImportSettings& InSettings)
+std::shared_ptr<flora::XTexture2D::BaseType> flora::XImporter<flora::Texture2DImportSettings, flora::XTexture2D::BaseType>::Exec(const std::string& InFilepath, const flora::Texture2DImportSettings& InSettings)
 {
-	std::shared_ptr<XVerse::XTexture2D> Ret = nullptr;
+	std::shared_ptr<flora::XTexture2D> Ret = nullptr;
 	
 	std::filesystem::path Path(InFilepath);
 
@@ -53,12 +53,12 @@ std::shared_ptr<XVerse::XTexture2D::BaseType> XVerse::XImporter<XVerse::Texture2
 }
 
 template<>
-bool XVerse::XExporter<XVerse::Texture2DExportSettings, XVerse::XTexture2D>::Exec(XVerse::XTexture2D& Texture2D, const std::string& Filepath, const XVerse::Texture2DExportSettings& Settings)
+bool flora::XExporter<flora::Texture2DExportSettings, flora::XTexture2D>::Exec(flora::XTexture2D& Texture2D, const std::string& Filepath, const flora::Texture2DExportSettings& Settings)
 {
 	bool Ret = false;
 	std::filesystem::path Path(Filepath);
 
-	if (std::filesystem::exists(Path.parent_path()) == false)XVerse::GlobalUtils::CreateDirectoryRecursive(Path.parent_path().generic_string());
+	if (std::filesystem::exists(Path.parent_path()) == false)flora::GlobalUtils::CreateDirectoryRecursive(Path.parent_path().generic_string());
 
 	if (std::filesystem::exists(Path.parent_path()))
 	{
@@ -97,12 +97,12 @@ bool XVerse::XExporter<XVerse::Texture2DExportSettings, XVerse::XTexture2D>::Exe
 }
 
 template<>
-bool XVerse::XExporter<XVerse::TextureCubeExportSettings, XVerse::XTextureCube>::Exec(XVerse::XTextureCube& TextureCube, const std::string& Filepath, const XVerse::TextureCubeExportSettings& Settings)
+bool flora::XExporter<flora::TextureCubeExportSettings, flora::XTextureCube>::Exec(flora::XTextureCube& TextureCube, const std::string& Filepath, const flora::TextureCubeExportSettings& Settings)
 {
 	bool Ret = false;
 	std::filesystem::path Path(Filepath);
 
-	if (std::filesystem::exists(Path.parent_path()) == false)XVerse::GlobalUtils::CreateDirectoryRecursive(Path.parent_path().generic_string());
+	if (std::filesystem::exists(Path.parent_path()) == false)flora::GlobalUtils::CreateDirectoryRecursive(Path.parent_path().generic_string());
 
 	if (std::filesystem::exists(Path.parent_path()))
 	{

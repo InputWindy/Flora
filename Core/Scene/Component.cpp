@@ -1,6 +1,6 @@
 #include "Component.h"
 
-bool XVerse::XTagComponent::Parse(const json11::Json& In)
+bool flora::XTagComponent::Parse(const json11::Json& In)
 {
     for (const auto& Tag : In.array_items())
     {
@@ -9,7 +9,7 @@ bool XVerse::XTagComponent::Parse(const json11::Json& In)
     return true;
 }
 
-bool XVerse::XTagComponent::Serialize(json11::Json& Out)
+bool flora::XTagComponent::Serialize(json11::Json& Out)
 {
     auto array = json11::Json::array();
     for (const auto& Tag : Tags)
@@ -20,19 +20,19 @@ bool XVerse::XTagComponent::Serialize(json11::Json& Out)
     return true;
 }
 
-bool XVerse::XTransformComponent::Parse(const json11::Json& In)
+bool flora::XTransformComponent::Parse(const json11::Json& In)
 {
     Transform.Parse(In);
     return true;
 }
 
-bool XVerse::XTransformComponent::Serialize(json11::Json& Out)
+bool flora::XTransformComponent::Serialize(json11::Json& Out)
 {
 	Transform.Serialize(Out);
     return true;
 }
 
-bool XVerse::XCameraComponent::Parse(const json11::Json& In)
+bool flora::XCameraComponent::Parse(const json11::Json& In)
 {
     ECameraType CameraType = In["Type"].string_value() == "Perspective" ? ECameraType::CT_PERSPECTIVE : ECameraType::CT_ORTHOGRAPHIC;
     SwitchCameraType(CameraType);
@@ -40,7 +40,7 @@ bool XVerse::XCameraComponent::Parse(const json11::Json& In)
     return true;
 }
 
-bool XVerse::XCameraComponent::Serialize(json11::Json& Out)
+bool flora::XCameraComponent::Serialize(json11::Json& Out)
 {
     std::string CameraType = Camera->GetType() == ECameraType::CT_PERSPECTIVE ? "Perspective" : "Orthographic";
 
@@ -55,7 +55,7 @@ bool XVerse::XCameraComponent::Serialize(json11::Json& Out)
     return true;
 }
 
-bool XVerse::XModelMeshComponent::Parse(const json11::Json& In)
+bool flora::XModelMeshComponent::Parse(const json11::Json& In)
 {
     ModelMesh = In["ModelMesh"].int_value();
     for (const auto& Material : In["ModelMesh"].array_items())
@@ -65,7 +65,7 @@ bool XVerse::XModelMeshComponent::Parse(const json11::Json& In)
     return true;
 }
 
-bool XVerse::XModelMeshComponent::Serialize(json11::Json& Out)
+bool flora::XModelMeshComponent::Serialize(json11::Json& Out)
 {
     auto data = json11::Json::array();
     for (const auto& Material : MaterialSlots)

@@ -6,7 +6,7 @@
 
 namespace tsl
 {
-	using namespace XVerse;
+	using namespace flora;
 
 	struct SimpleSubdivision
 	{
@@ -146,7 +146,7 @@ namespace tsl
 		{
 			InMesh.CompactEveryVector();
 
-			auto VertexIter = vcg::tri::Allocator<XVerse::XStaticMesh>::AddVertices(InMesh, VertsToAdd.size());
+			auto VertexIter = vcg::tri::Allocator<flora::XStaticMesh>::AddVertices(InMesh, VertsToAdd.size());
 
 			InMesh.CompactEveryVector();
 
@@ -172,7 +172,7 @@ namespace tsl
 					(VertexIter + IdxToAdd[i * 3 + 2])->Index()
 				);
 			}
-			XVERSE_CORE_ERROR("Num Added Triangle : {0}", IdxToAdd.size() / 3)
+			FLORA_CORE_ERROR("Num Added Triangle : {0}", IdxToAdd.size() / 3)
 
 				InMesh.CompactEveryVector();
 		}
@@ -292,7 +292,7 @@ namespace tsl
 			if (TProcesser::AreaBig(Face, MaxTriArea) && TProcesser::Inside(Face, BoundingSphere))
 			{
 				TProcesser::Do(Mesh, Face, MaxTriArea);
-				//XVERSE_CORE_ERROR("ok")
+				//FLORA_CORE_ERROR("ok")
 			}
 		}
 

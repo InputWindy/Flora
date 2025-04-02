@@ -1,7 +1,7 @@
 #pragma once
 #include <Window/Window.h>
 
-namespace XVerse
+namespace flora
 {
 	class XGlfwWindow final : public XWindow
 	{

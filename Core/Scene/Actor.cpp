@@ -1,6 +1,6 @@
 #include "Actor.h"
 
-bool XVerse::XCameraActor::Parse(const json11::Json& In)
+bool flora::XCameraActor::Parse(const json11::Json& In)
 {
 	Name = In["Name"].string_value();
 	ID = In["ID"].int_value();
@@ -17,7 +17,7 @@ bool XVerse::XCameraActor::Parse(const json11::Json& In)
     return true;
 }
 
-bool XVerse::XCameraActor::Serialize(json11::Json& Out)
+bool flora::XCameraActor::Serialize(json11::Json& Out)
 {
 	auto array = json11::Json::array();
 	for (const auto& Child : Children)
@@ -49,7 +49,7 @@ bool XVerse::XCameraActor::Serialize(json11::Json& Out)
     return true;
 }
 
-bool XVerse::XModelActor::Parse(const json11::Json& In)
+bool flora::XModelActor::Parse(const json11::Json& In)
 {
 	Name = In["Name"].string_value();
 	ID = In["ID"].int_value();
@@ -66,7 +66,7 @@ bool XVerse::XModelActor::Parse(const json11::Json& In)
 	return true;
 }
 
-bool XVerse::XModelActor::Serialize(json11::Json& Out)
+bool flora::XModelActor::Serialize(json11::Json& Out)
 {
 	auto array = json11::Json::array();
 	for (const auto& Child : Children)

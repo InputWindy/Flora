@@ -3,11 +3,11 @@
 
 #define STR_CAT(Str1,Str2) Str1##Str2
 
-std::string XVerse::ExcutePath;
+std::string flora::ExcutePath;
 
-using namespace XVerse;
+using namespace flora;
 template<>
-std::shared_ptr<XVerse::IEditor> XVerse::IEditor::InitEditor<EEditorType::ET_ImGui>(void* InWindowHandle)
+std::shared_ptr<flora::IEditor> flora::IEditor::InitEditor<EEditorType::ET_ImGui>(void* InWindowHandle)
 {
 	return nullptr;
 };
@@ -36,12 +36,12 @@ struct InputInfo :public ISerialization
 
 	void DebugLog()
 	{
-			XVERSE_CORE_INFO("LengthPerPixel:{0}", LengthPerPixel)
-			XVERSE_CORE_INFO("FbxFilepath:{0}", FbxFilepath)
-			XVERSE_CORE_INFO("SavePath:{0}", SavePath)
-			XVERSE_CORE_INFO("MaskUnreachableArea:{0}", MaskUnreachableArea)
-			XVERSE_CORE_INFO("MaskWallArea:{0}", MaskWallArea)
-			XVERSE_CORE_INFO("MaskReachableArea:{0}", MaskReachableArea)
+			FLORA_CORE_INFO("LengthPerPixel:{0}", LengthPerPixel)
+			FLORA_CORE_INFO("FbxFilepath:{0}", FbxFilepath)
+			FLORA_CORE_INFO("SavePath:{0}", SavePath)
+			FLORA_CORE_INFO("MaskUnreachableArea:{0}", MaskUnreachableArea)
+			FLORA_CORE_INFO("MaskWallArea:{0}", MaskWallArea)
+			FLORA_CORE_INFO("MaskReachableArea:{0}", MaskReachableArea)
 	}
 
 	float LengthPerPixel = 0.0f;
@@ -78,7 +78,7 @@ public:
 
 };
 
-struct OrthoCamApp : public XVerse::IApp
+struct OrthoCamApp : public flora::IApp
 {
 	OrthoCamApp()
 	{
@@ -213,7 +213,7 @@ struct OrthoCamApp : public XVerse::IApp
 
 			
 
-			//XVERSE_CORE_INFO("per pixel length: ({0},{1})", bbox.DimX() / ResX, bbox.DimY() / ResY)
+			//FLORA_CORE_INFO("per pixel length: ({0},{1})", bbox.DimX() / ResX, bbox.DimY() / ResY)
 
 			ResultInfo Result;
 			Result.bottom_left_x_offset = bbox.min.X();
@@ -276,7 +276,7 @@ struct OrthoCamApp : public XVerse::IApp
 				std::vector<uint8_t> Pixels; int X, Y, CompN;
 				if (Color0->DynamicPointerCast<XRHITexture2D>()->ReadPixels(Pixels, X, Y, CompN))
 				{
-					XVERSE_CORE_TRACE("ReadPixels");
+					FLORA_CORE_TRACE("ReadPixels");
 
 					auto GetPixelData = [&Pixels, X, Y, CompN](int x, int y)->uint8_t&
 						{
@@ -483,7 +483,7 @@ struct OrthoCamApp : public XVerse::IApp
 
 					if (Color0->DynamicPointerCast<XRHITexture2D>()->SetPixels(Pixels))
 					{
-						XVERSE_CORE_TRACE("SetPixels");
+						FLORA_CORE_TRACE("SetPixels");
 					};
 
 				}
@@ -519,10 +519,10 @@ struct OrthoCamApp : public XVerse::IApp
 		}
 		else
 		{
-			XVERSE_CORE_ERROR("Invalid Surface Shader . ")
+			FLORA_CORE_ERROR("Invalid Surface Shader . ")
 		}
 
-		XVERSE_CORE_INFO("Done .")
+		FLORA_CORE_INFO("Done .")
 
 		//TODO:Do Something After Run
 	}

@@ -4,12 +4,12 @@
 #include <Render/RHI/RHI.h>
 
 #define IMPL_APP(AppType) \
-XVerse::IApp* XVerse::CreatApp(int argc, char* argv[]) \
+flora::IApp* flora::CreatApp(int argc, char* argv[]) \
 { \
 	return new AppType(argc, argv); \
 };
 
-namespace XVerse
+namespace flora
 {
 	class IApp
 	{

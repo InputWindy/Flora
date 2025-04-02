@@ -1,10 +1,10 @@
 ﻿#include <CoreMinimal.h>
 #include "Voxelization.h"
 #include "Tessellation.h"
-using namespace XVerse;
+using namespace flora;
 
 template<>
-std::shared_ptr<XVerse::IEditor> XVerse::IEditor::InitEditor<EEditorType::ET_ImGui>(void* InWindowHandle)
+std::shared_ptr<flora::IEditor> flora::IEditor::InitEditor<EEditorType::ET_ImGui>(void* InWindowHandle)
 {
 	return nullptr;
 };
@@ -16,7 +16,7 @@ using namespace glm;
 
 #define STR_CAT(Str1,Str2) Str1##Str2
 
-std::string XVerse::ExcutePath;
+std::string flora::ExcutePath;
 
 
 struct FBakeParam:public ISerialization
@@ -160,7 +160,7 @@ struct FProfilingResult :public ISerialization
 	int LO0Num = 0;
 };
 
-struct MeshPartitionApp : public XVerse::IApp
+struct MeshPartitionApp : public flora::IApp
 {
 	typedef FStructuredBuffer<VERTEX_BUFFER_SLOT, FVertex, EBufferUsage::BU_STATIC_COPY> FVertexBuffer;
 	typedef FStructuredBuffer<TRIANGLE_BUFFER_SLOT, ivec3, EBufferUsage::BU_STATIC_COPY> FTriangleBuffer;
@@ -287,7 +287,7 @@ struct MeshPartitionApp : public XVerse::IApp
 
 		IApp::Shutdown();
 
-		XVERSE_CORE_INFO("Done .")
+		FLORA_CORE_INFO("Done .")
 	}
 
 	private:
@@ -297,7 +297,7 @@ struct MeshPartitionApp : public XVerse::IApp
 			// ��ȡ��������
 			if (auto RH = IResource<>::Open<XImporter>(Filepath, AssimpImportSettings()))
 			{
-				std::shared_ptr<XVerse::XModelMesh> HighModel = RH->DynamicPointerCast<XModelMesh>();
+				std::shared_ptr<flora::XModelMesh> HighModel = RH->DynamicPointerCast<XModelMesh>();
 				HighModel->Register();
 
 				for (int i = 0; i < HighModel->GetMeshes().size(); ++i)
@@ -711,12 +711,12 @@ IMPL_APP(MeshPartitionApp)
 #endif
 
 template<>
-XVerse::BufferLayout MeshPartitionApp::GetLayoutFromVertexType<FVertex>()
+flora::BufferLayout MeshPartitionApp::GetLayoutFromVertexType<FVertex>()
 {
 	return 
 	{
-		{ XVerse::BufferElementDataType::Float4,"aPosition" },
-		{ XVerse::BufferElementDataType::Float4,"aNormal" },
-		{ XVerse::BufferElementDataType::Float4,"aUV" },
+		{ flora::BufferElementDataType::Float4,"aPosition" },
+		{ flora::BufferElementDataType::Float4,"aNormal" },
+		{ flora::BufferElementDataType::Float4,"aUV" },
 	};
 }

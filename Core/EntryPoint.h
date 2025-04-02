@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
 {
 	try
 	{
-		XVerse::IApp* GApp = XVerse::CreatApp(argc, argv);
+		flora::IApp* GApp = flora::CreatApp(argc, argv);
 
 		GApp->StartUp();
 		GApp->Run();
@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 	}
 	catch (const std::exception& e)
 	{
-		//XVERSE_CORE_ERROR("Fatal Error:{0}", e.what());
+		//FLORA_CORE_ERROR("Fatal Error:{0}", e.what());
 		std::cerr << e.what() << std::endl;
 		std::exit(EXIT_FAILURE);
 	}

@@ -1,47 +1,47 @@
 #include "OpenGLRenderBuffer.h"
 #include <Render/RHI/OpenGL/OpenGLRHI.h>
 
-XVerse::XOpenGLRenderBuffer::~XOpenGLRenderBuffer()
+flora::XOpenGLRenderBuffer::~XOpenGLRenderBuffer()
 {
     ReleaseRHI();
 }
 
-bool XVerse::XOpenGLRenderBuffer::IsValid()
+bool flora::XOpenGLRenderBuffer::IsValid()
 {
     Bind();
     return glIsRenderbuffer(Handle) == GL_TRUE;
 }
 
-bool XVerse::XOpenGLRenderBuffer::InitRHI()
+bool flora::XOpenGLRenderBuffer::InitRHI()
 {
     glGenRenderbuffers(1, &Handle);
     return IsValid();
 }
 
-bool XVerse::XOpenGLRenderBuffer::ReleaseRHI()
+bool flora::XOpenGLRenderBuffer::ReleaseRHI()
 {
     glDeleteRenderbuffers(1, &Handle);
     return true;
 }
 
-bool XVerse::XOpenGLRenderBuffer::CopyFrom(std::shared_ptr<XRHIResource>)
+bool flora::XOpenGLRenderBuffer::CopyFrom(std::shared_ptr<XRHIResource>)
 {
     return false;
 }
 
-bool XVerse::XOpenGLRenderBuffer::UpdateRHI()
+bool flora::XOpenGLRenderBuffer::UpdateRHI()
 {
     Bind();
-    glRenderbufferStorage(GL_RENDERBUFFER, XVerse::ToGLInternalFormat(InternalFormat), SizeX, SizeY);
+    glRenderbufferStorage(GL_RENDERBUFFER, flora::ToGLInternalFormat(InternalFormat), SizeX, SizeY);
     return true;
 }
 
-void XVerse::XOpenGLRenderBuffer::Bind()
+void flora::XOpenGLRenderBuffer::Bind()
 {
     glBindRenderbuffer(GL_RENDERBUFFER, Handle);
 }
 
-void XVerse::XOpenGLRenderBuffer::UnBind()
+void flora::XOpenGLRenderBuffer::UnBind()
 {
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
 }

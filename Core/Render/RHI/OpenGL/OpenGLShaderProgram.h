@@ -1,6 +1,6 @@
 #pragma once
 #include <Render/RHI/OpenGL/OpenGLRHI.h>
-namespace XVerse
+namespace flora
 {
 	class XOpenGLShaderProgram :public XRHIShaderProgram
 	{
@@ -65,7 +65,7 @@ namespace XVerse
 		/// <summary>
 		/// </summary>
 		/// <param name="buffer"></param>
-		virtual void SetBuffer(std::shared_ptr<XVerse::XRHIBuffer>) const override;
+		virtual void SetBuffer(std::shared_ptr<flora::XRHIBuffer>) const override;
 
 		/// <summary>
 		/// glsl uniform samplerXX

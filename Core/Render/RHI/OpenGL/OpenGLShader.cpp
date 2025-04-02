@@ -1,55 +1,55 @@
 #include "OpenGLShader.h"
 
-XVerse::XOpenGLShader::~XOpenGLShader()
+flora::XOpenGLShader::~XOpenGLShader()
 {
     ReleaseRHI();
 }
 
-bool XVerse::XOpenGLShader::IsValid()
+bool flora::XOpenGLShader::IsValid()
 {
     return glIsShader(Handle) == GL_TRUE;
 }
 
-bool XVerse::XOpenGLShader::InitRHI()
+bool flora::XOpenGLShader::InitRHI()
 {
     switch (ShaderType)
     {
-    case XVerse::EShaderType::ST_VERTEX_SHADER:Handle = glCreateShader(GL_VERTEX_SHADER); break;
-    case XVerse::EShaderType::ST_TESS_CONTROL_SHADER:Handle = glCreateShader(GL_TESS_CONTROL_SHADER); break;
-    case XVerse::EShaderType::ST_TESS_EVALUATION_SHADER:Handle = glCreateShader(GL_TESS_EVALUATION_SHADER); break;
-    case XVerse::EShaderType::ST_GEOMETRY_SHADER:Handle = glCreateShader(GL_GEOMETRY_SHADER); break;
-    case XVerse::EShaderType::ST_FRAGMENT_SHADER:Handle = glCreateShader(GL_FRAGMENT_SHADER); break;
-    case XVerse::EShaderType::ST_COMPUTE_SHADER:Handle = glCreateShader(GL_COMPUTE_SHADER); break;
-    case XVerse::EShaderType::ST_MAX_COUNT:
+    case flora::EShaderType::ST_VERTEX_SHADER:Handle = glCreateShader(GL_VERTEX_SHADER); break;
+    case flora::EShaderType::ST_TESS_CONTROL_SHADER:Handle = glCreateShader(GL_TESS_CONTROL_SHADER); break;
+    case flora::EShaderType::ST_TESS_EVALUATION_SHADER:Handle = glCreateShader(GL_TESS_EVALUATION_SHADER); break;
+    case flora::EShaderType::ST_GEOMETRY_SHADER:Handle = glCreateShader(GL_GEOMETRY_SHADER); break;
+    case flora::EShaderType::ST_FRAGMENT_SHADER:Handle = glCreateShader(GL_FRAGMENT_SHADER); break;
+    case flora::EShaderType::ST_COMPUTE_SHADER:Handle = glCreateShader(GL_COMPUTE_SHADER); break;
+    case flora::EShaderType::ST_MAX_COUNT:
     default:
         break;
     }
     return IsValid();
 }
 
-bool XVerse::XOpenGLShader::ReleaseRHI()
+bool flora::XOpenGLShader::ReleaseRHI()
 {
     glDeleteShader(Handle);
     return true;
 }
 
-bool XVerse::XOpenGLShader::CopyFrom(std::shared_ptr<XRHIResource>)
+bool flora::XOpenGLShader::CopyFrom(std::shared_ptr<XRHIResource>)
 {
     return false;
 }
 
-bool XVerse::XOpenGLShader::UpdateRHI()
+bool flora::XOpenGLShader::UpdateRHI()
 {
     return Compile();
 }
 
-void XVerse::XOpenGLShader::SetSourceCode(const std::string& InSourceCode)
+void flora::XOpenGLShader::SetSourceCode(const std::string& InSourceCode)
 {
     const char* ShaderSource = InSourceCode.c_str();
     glShaderSource(Handle, 1, &ShaderSource, nullptr);
 }
 
-void XVerse::XOpenGLShader::GetShaderInfoLog(std::string& outInfo)
+void flora::XOpenGLShader::GetShaderInfoLog(std::string& outInfo)
 {
     GLint logLength;
     glGetShaderiv(Handle, GL_INFO_LOG_LENGTH, &logLength);
@@ -62,13 +62,13 @@ void XVerse::XOpenGLShader::GetShaderInfoLog(std::string& outInfo)
     delete[] log;
 }
 
-bool XVerse::XOpenGLShader::Compile()
+bool flora::XOpenGLShader::Compile()
 {
     glCompileShader(Handle);
     return IsCompiled();
 }
 
-bool XVerse::XOpenGLShader::IsCompiled()
+bool flora::XOpenGLShader::IsCompiled()
 {
     GLint compileStatus;
     glGetShaderiv(Handle, GL_COMPILE_STATUS, &compileStatus);

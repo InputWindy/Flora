@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-bool XVerse::XScene::Parse(const json11::Json& In)
+bool flora::XScene::Parse(const json11::Json& In)
 {
 	Name = In["Name"].string_value();
 	for (const auto& Actor : In["Actors"].array_items())
@@ -22,7 +22,7 @@ bool XVerse::XScene::Parse(const json11::Json& In)
 	return true;
 }
 
-bool XVerse::XScene::Serialize(json11::Json& Out)
+bool flora::XScene::Serialize(json11::Json& Out)
 {
 	auto array = json11::Json::array();
 	for (int i = 1;i < Actors.size();++i)
@@ -39,7 +39,7 @@ bool XVerse::XScene::Serialize(json11::Json& Out)
 	return true;
 }
 
-XVerse::Guid XVerse::XScene::GetNextActorID()
+flora::Guid flora::XScene::GetNextActorID()
 {
 	for (size_t i = 1; i < Actors.size(); i++)
 		if (Actors[i] == nullptr)return i;

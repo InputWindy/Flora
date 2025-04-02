@@ -1,7 +1,7 @@
 #pragma once 
 #include <Render/Renderer.h>
 
-namespace XVerse
+namespace flora
 {
 	struct XExampleRendererSettings:public IRendererSettings
 	{

@@ -1,6 +1,6 @@
 #pragma once
 #include <Render/RHI/OpenGL/OpenGLRHI.h>
-namespace XVerse
+namespace flora
 {
 	class XOpenGLSampler :public XRHISampler
 	{
