@@ -4,8 +4,8 @@
 #WORK_DIR请填写.exe的安装目录
 
 #project settings
-set(PROJECT_NAME "Example")
-set(PROJECT_FILE Example)
+set(PROJECT_NAME "GI")
+set(PROJECT_FILE GI)
 set(CMAKE_MIN_VERSION 3.17)
 set(CPP_VERSION 20)
 set(WITH_IMGUI 1)
