@@ -35,3 +35,6 @@ glxinfo | grep "OpenGL version"
 在`CMakeLists.txt`中配置`PROJECT_NAME`和`PROJECT_FILE`即可切换生成的项目。`PROJECT_NAME`对应VS中的项目名称以及编译出的exe的名称，`PROJECT_FILE`是项目根目录名称，`INCLUDE_MODULES`添加子模块，`MACRO_NAME`添加预编译宏
 
 Core是引擎目录，MeshPartitioner和OrthoCam是两个示例项目
+
+## 测试场景资产下载
+    https://casual-effects.com/data/
