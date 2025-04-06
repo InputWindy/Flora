@@ -2,11 +2,11 @@
 #include <CoreMinimal.h>
 #include <pybind11/pybind11.h>
 
-using namespace XVerse;
+using namespace flora;
 namespace py = pybind11;
 
 typedef bool(*pybind_register_func)(pybind11::module& m);
-struct PyRegister :public XVerse::XSingleton<PyRegister>
+struct PyRegister :public flora::XSingleton<PyRegister>
 {
     static inline bool Register(pybind_register_func func) { if (func)register_funcs.push_back(func); return true; }
 
