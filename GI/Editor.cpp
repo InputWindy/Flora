@@ -2,7 +2,7 @@
 #ifdef WITH_GUI
 
 template<>
-std::shared_ptr<XVerse::IEditor> XVerse::IEditor::InitEditor<EEditorType::ET_ImGui>(void* InWindowHandle)
+std::shared_ptr<flora::IEditor> flora::IEditor::InitEditor<EEditorType::ET_ImGui>(void* InWindowHandle)
 {
 	return std::make_shared<XEditor>(InWindowHandle);
 };

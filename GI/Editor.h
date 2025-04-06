@@ -3,9 +3,9 @@
 
 #include <iostream>
 
-using namespace XVerse;
+using namespace flora;
 
-class XEditor:public XVerse::IEditor
+class XEditor:public flora::IEditor
 {
 public:
 	XEditor() = default;
