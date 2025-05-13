@@ -1,0 +1,10 @@
+#ifndef SHADER_DEFINES_H
+#define SHADER_DEFINES_H
+
+#define BLOCK_SIZE_X 8
+#define BLOCK_SIZE_Y 8
+#define BLOCK_SIZE BLOCK_SIZE_X * BLOCK_SIZE_Y
+
+#define NCC_RESULT_SLOT 0
+
+#endif

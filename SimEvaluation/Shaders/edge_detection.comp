@@ -1,0 +1,55 @@
+/*
+	function:make target image a zero-average image
+*/
+#version 460 core
+
+#include "Core/ShaderCore.glsl"
+#include "ShaderDefines.h"
+#include "ShaderStructs.h"
+
+layout (binding = 0,rgba32f) uniform image2D TargetTex;
+
+// sobel x
+const float Sx[3][3] = {
+	{-1, 0, 1},
+	{-2, 0, 2},
+	{-1, 0, 1},
+};
+
+// sobel y
+const float Sy[3][3] = {
+	{ 1,  2,  1},
+	{ 0,  0,  0},
+	{-1, -2, -1},
+};
+
+// Each thread group process one image block
+NUM_THREADS(BLOCK_SIZE_X,BLOCK_SIZE_Y,1)
+void main()
+{    
+	uvec2 BlockID = gl_WorkGroupID.xy;
+	uvec2 PixelOffset = gl_LocalInvocationID.xy;
+
+	ivec2 TargetTexUV = ivec2(BlockID.x * BLOCK_SIZE_X + PixelOffset.x,BlockID.y * BLOCK_SIZE_Y + PixelOffset.y);
+
+	 vec4 Color = vec4(0.0);
+
+    // 遍历 3x3 邻域
+    for (int x = -1; x <= 1; x++) 
+	{
+        for (int y = -1; y <= 1; y++) 
+		{
+			vec4 SampleColor = imageLoad(TargetTex,TargetTexUV + ivec2(x,y));
+            // 计算 Gx 和 Gy
+            Color += SampleColor * Sx[x + 1][y + 1]; // 使用水平 Sobel 核
+            Color += SampleColor * Sy[x + 1][y + 1]; // 使用垂直 Sobel 核
+        }
+    }
+	
+	float EdgeIntensity = length(Color);
+
+	if(EdgeIntensity > 0.2)
+	{
+		imageStore(TargetTex,TargetTexUV,vec4(0));
+	}
+}
