@@ -187,5 +187,28 @@ make
     }
     ```
 
+    网格体绘制
+    ```cpp
+    /*
+        通过XStaticMesh创建XStaticMeshProxy
+        XStaticMeshProxy隐藏了vbo，ibo，vao和顶点layout的设置细节
+    */
+    std::vector<XStaticMeshProxy> DrawLists;
+    if (auto RH = IResource<>::Open<XImporter>(FbxFilepath, Settings))
+    {
+        auto Model = RH->DynamicPointerCast<XModelMesh>();
+        Model->Register();
+
+        for (std::shared_ptr<XStaticMesh> M : Model->GetMeshes())
+            DrawLists.emplace_back(M);
+    }
+
+    // 绘制
+    for (int i = 0; i < DrawLists.size(); ++i)
+    {
+        DrawLists[i].GetContainer()->DrawElementInstanced(EDrawMode::DM_TRIANGLES, 1);
+    }
+    ```
+
 
 
