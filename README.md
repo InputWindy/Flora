@@ -160,6 +160,9 @@ make
     // 读回数据
     StructuredBuffer.ReadBack();
     Value = StructuredBuffer[Idx];
+
+    //绑定buffer
+    Shader.GetProgram()->SetBuffer(StructuredBuffer.GetRef());
     
     ```
 
