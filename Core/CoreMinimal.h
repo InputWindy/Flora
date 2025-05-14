@@ -21,16 +21,11 @@
 
 //Render module (depend on Common & Resource type)
 #include <Render/Proxy/ProxyBase.h>
-#include <Render/Renderer.h>
-#include <Render/ExampleRenderer.h>
 #include <Render/RHI/RHI.h>
 #include <Render/Proxy/Continer/MaterialFieldContainer.h>
 #include <Render/Proxy/Continer/StaticMeshFieldContainer.h>
 
 //Scene module (depend on xxx)
-#include <Scene/Scene.h>
-#include <Scene/Actor.h>
-#include <Scene/Component.h>
 #include <Scene/Struct/Camera.h>
 #include <Scene/Struct/Transform.h>
 
