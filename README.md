@@ -80,6 +80,16 @@ make
 ![alt text](doc/img/法线debug.png)
 
 
+- 反射
+![alt text](doc/img/图片1.png)
+![alt text](doc/img/图片2.png)
+![alt text](doc/img/图片3.png)
+
+- 调试材质用的小编辑器
+![alt text](doc/img/纳西达.jpg)
+![alt text](doc/img/小镇.jpg)
+
+
 ## 模块介绍
 - Geometry —— 核心类是XStaticMesh。vcglib套壳，详情见vcglib官方接口文档。
 - Resource —— 提供了Texture、Model的导入导出功能。（CPU资源）
