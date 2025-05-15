@@ -1,11 +1,31 @@
 #include <CoreMinimal.h>
 #include "Editor.h"
 
+#include "Scene/Allocator.h"
+
+#include <iostream>
+
 #define STR_CAT(Str1,Str2) Str1##Str2
 
 std::string flora::ExcutePath;
 
 using namespace flora;
+
+
+struct FTestAlloc:public IAllocable
+{
+	FTestAlloc(int a,float& b,double&& c)
+	{
+		std::cout << a << " " << b << " " << c << std::endl;
+	}
+
+	~FTestAlloc()
+	{
+		std::cout << "free" << std::endl;
+	}
+
+	DECLARE_TYPE(FTestAlloc)
+};
 
 struct FloraEditorApp : public flora::IApp
 {
@@ -14,7 +34,7 @@ struct FloraEditorApp : public flora::IApp
 		WindowDesc.Name = "FloraEditor";
 		WindowDesc.Width = 1024;
 		WindowDesc.Height = 1024;
-		WindowDesc.bHideWindow = false;
+		WindowDesc.bHideWindow = true;
 
 		ExcutePath = std::filesystem::canonical(std::filesystem::current_path()).generic_string();
 		LogPath = "log.txt";
@@ -26,7 +46,7 @@ struct FloraEditorApp : public flora::IApp
 		WindowDesc.Name = "FloraEditor";
 		WindowDesc.Width = 1024;
 		WindowDesc.Height = 1024;
-		WindowDesc.bHideWindow = false;
+		WindowDesc.bHideWindow = true;
 
 		ExcutePath = std::filesystem::canonical(std::filesystem::current_path() / std::filesystem::path(argv[0])).parent_path().generic_string();
 		LogPath = "log.txt";
@@ -50,37 +70,57 @@ struct FloraEditorApp : public flora::IApp
 
 		//TODO: Init Your Application (Import Demo Scene or Other Resources)
 		{
+			int a = 0;
+			float b = 1.0f;
+			double c = 2.0f;
+			//FTestAlloc Test(a, b, std::move(c));
 
+			FTestAlloc* Allocated = nullptr;
+			
+			for (size_t i = 0; i < 12; i++)
+			{
+				++a;
+				++b;
+				++c;
+				TAllocator<>::Alloc<FTestAlloc>();
+			}
+			
+			std::cout << "Allocated Num:" << TAllocator<>::GetNum() << std::endl;
+
+			TAllocator<>::Dealloc(Allocated);
 		}
+
+		system("pause");
+
 	}
 
-	virtual void Shutdown()override
-	{
-		//TODO: Clear Your Resources
-		{
+	//virtual void Shutdown()override
+	//{
+	//	//TODO: Clear Your Resources
+	//	{
 
-		}
-		IApp::Shutdown();
-	}
+	//	}
+	//	IApp::Shutdown();
+	//}
 
 	//Main Loop
 	virtual void Run()override
 	{
 		//TODO:Do Something Before Run
 
-		while (BeginFrame())
-		{
-			//UpdateCamera();
-			//UpdateGameScene();
-			//RenderScene();
+		//while (BeginFrame())
+		//{
+		//	//UpdateCamera();
+		//	//UpdateGameScene();
+		//	//RenderScene();
 
-		#ifdef WITH_GUI
-			Editor->BeginRender();
-			Editor->Render();
-			Editor->EndRender();
-		#endif
-			EndFrame();
-		}
+		//#ifdef WITH_GUI
+		//	Editor->BeginRender();
+		//	Editor->Render();
+		//	Editor->EndRender();
+		//#endif
+		//	EndFrame();
+		//}
 
 		//TODO:Do Something After Run
 	}

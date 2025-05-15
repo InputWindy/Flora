@@ -2,6 +2,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <list>
 
 namespace flora
 {
@@ -23,5 +24,6 @@ namespace flora
 		std::map<std::string, std::vector<IComponent*>> Comps;
 		std::map<std::string, std::vector<IEntity*>> Entts;
 		std::map<std::string, std::vector<ISystem*>> Syss;
+		
 	};
 }
