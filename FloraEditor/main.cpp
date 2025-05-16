@@ -14,9 +14,15 @@ using namespace flora;
 
 struct FTestAlloc:public IAllocable
 {
+	DECLARE_TYPE(FTestAlloc)
+
+	FTestAlloc() {
+
+	}
+
 	FTestAlloc(int a,float& b,double&& c)
 	{
-		std::cout << a << " " << b << " " << c << std::endl;
+		//std::cout << a << " " << b << " " << c << std::endl;
 	}
 
 	~FTestAlloc()
@@ -24,23 +30,15 @@ struct FTestAlloc:public IAllocable
 		std::cout << "free" << std::endl;
 	}
 
-	DECLARE_TYPE(FTestAlloc)
+
+	bool bb1 = true;
+	bool bb2 = true;
+	bool bb3 = true;
+
 };
 
 struct FloraEditorApp : public flora::IApp
 {
-	FloraEditorApp()
-	{
-		WindowDesc.Name = "FloraEditor";
-		WindowDesc.Width = 1024;
-		WindowDesc.Height = 1024;
-		WindowDesc.bHideWindow = true;
-
-		ExcutePath = std::filesystem::canonical(std::filesystem::current_path()).generic_string();
-		LogPath = "log.txt";
-
-	}
-
 	FloraEditorApp(int argc, char* argv[])
 	{
 		WindowDesc.Name = "FloraEditor";
@@ -52,11 +50,6 @@ struct FloraEditorApp : public flora::IApp
 		LogPath = "log.txt";
 
 		ParseCmdline(argc, argv);
-	}
-
-	virtual ~FloraEditorApp()override
-	{
-		
 	}
 
 	virtual void StartUp()override
@@ -75,33 +68,86 @@ struct FloraEditorApp : public flora::IApp
 			double c = 2.0f;
 			//FTestAlloc Test(a, b, std::move(c));
 
-			FTestAlloc* Allocated = nullptr;
+			std::vector<FTestAlloc*> Tests;
 			
 			for (size_t i = 0; i < 12; i++)
 			{
 				++a;
 				++b;
 				++c;
-				TAllocator<>::Alloc<FTestAlloc>();
+				Tests.push_back(TAllocator<FTestAlloc>::Alloc(a,b,std::move(c)));
 			}
-			
-			std::cout << "Allocated Num:" << TAllocator<>::GetNum() << std::endl;
 
-			TAllocator<>::Dealloc(Allocated);
+			for (auto T : TAllocator<FTestAlloc>::GetUsed())
+			{
+				std::cout << "Used:" << (unsigned int)T << " ";
+			}
+
+			std::cout << std::endl;
+
+			for (FTestAlloc* T : Tests)
+			{
+				std::cout << "Addr:" << (unsigned int)T << " ";
+			}
+
+			std::cout << "=======1========" << std::endl;
+
+			TAllocator<FTestAlloc>::Dealloc(Tests[3]);
+			TAllocator<FTestAlloc>::Dealloc(Tests[4]);
+			TAllocator<FTestAlloc>::Dealloc(Tests[7]);
+			TAllocator<FTestAlloc>::Dealloc(Tests[9]);
+
+			for (auto T : TAllocator<FTestAlloc>::GetUsed())
+			{
+				std::cout << "Used:" << (unsigned int)T << " ";
+			}
+
+			std::cout << std::endl;
+
+			for (FTestAlloc* T : Tests)
+			{
+				std::cout << "Addr:" << (unsigned int)T << " ";
+			}
+
+			std::cout << "=======2========" << std::endl;
+
+			for (size_t i = 0; i < 8; i++)
+			{
+				++a;
+				++b;
+				++c;
+				Tests.push_back(TAllocator<FTestAlloc>::Alloc(a, b, std::move(c)));
+			}
+
+			for (auto T : TAllocator<FTestAlloc>::GetUsed())
+			{
+				std::cout << "Used:" << (unsigned int)T << " ";
+			}
+
+			std::cout << std::endl;
+
+			for (FTestAlloc* T : Tests)
+			{
+				std::cout << "Addr:" << (unsigned int)T << " ";
+			}
+
+			std::cout << "=======3========" << std::endl;
+
+			std::cout << TAllocator<FTestAlloc>::MaxSize << std::endl;
+			std::cout << SMALL_MEMORY_POOL << std::endl;
+
+
+
+			/*auto [NumUsed, NumUnused] = TAllocator<FTestAlloc>::GetNum();
+
+			std::cout << "Mem Num:" << NumUsed << " " << NumUnused << std::endl;*/
+
+			
 		}
 
 		system("pause");
 
 	}
-
-	//virtual void Shutdown()override
-	//{
-	//	//TODO: Clear Your Resources
-	//	{
-
-	//	}
-	//	IApp::Shutdown();
-	//}
 
 	//Main Loop
 	virtual void Run()override
