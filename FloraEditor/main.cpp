@@ -1,42 +1,106 @@
 #include <CoreMinimal.h>
 #include "Editor.h"
 
+#include "Scene/Allocator.h"
+#include "Scene/Scene.h"
+#include "Scene/Component.h"
+#include "Scene/Entity.h"
+#include "Scene/System.h"
+
+#include <iostream>
+
 #define STR_CAT(Str1,Str2) Str1##Str2
 
 std::string flora::ExcutePath;
 
 using namespace flora;
 
-struct FloraEditorApp : public flora::IApp
+
+struct Component:public IScene
 {
-	FloraEditorApp()
+	DECLARE_TYPE(Component)
+
+	virtual ~Component(){}
+
+	XTransform Trans;
+};
+
+struct Entity :public IEntity
+{
+	DECLARE_TYPE(Entity)
+
+		Entity()
 	{
-		WindowDesc.Name = "FloraEditor";
-		WindowDesc.Width = 1024;
-		WindowDesc.Height = 1024;
-		WindowDesc.bHideWindow = false;
+		Component* C = Scene->AllocC<Component>();
+		C->Trans;
 
-		ExcutePath = std::filesystem::canonical(std::filesystem::current_path()).generic_string();
-		LogPath = "log.txt";
-
+		Scene->Attach(this, C);
 	}
 
+	virtual ~Entity() {}
+
+};
+
+struct System:public ISystem
+{
+	DECLARE_TYPE(System)
+	virtual void OnUpdate(IScene*, float /*delta time*/)
+	{
+		std::cout << "System OnUpdate" << std::endl;
+	};
+	virtual void OnStart(IScene*) 
+	{
+		std::cout << "System OnStart" << std::endl;
+	};;
+	virtual void OnEnd(IScene*)
+	{
+		std::cout << "System OnEnd" << std::endl;
+	};;
+};
+
+struct System2 :public ISystem
+{
+	DECLARE_TYPE(System2)
+		virtual void OnUpdate(IScene*, float /*delta time*/)
+	{
+		std::cout << "System2 OnUpdate" << std::endl;
+	};
+	virtual void OnStart(IScene*)
+	{
+		std::cout << "System2 OnStart" << std::endl;
+	};;
+	virtual void OnEnd(IScene*)
+	{
+		std::cout << "System2 OnEnd" << std::endl;
+	};;
+};
+
+struct Scene :public IScene
+{
+	DECLARE_TYPE(Scene)
+
+		Scene()
+	{
+		AddSystem<System>();
+		AddSystem<System2>();
+	}
+
+	virtual ~Scene() {}
+};
+
+struct FloraEditorApp : public flora::IApp
+{
 	FloraEditorApp(int argc, char* argv[])
 	{
 		WindowDesc.Name = "FloraEditor";
 		WindowDesc.Width = 1024;
 		WindowDesc.Height = 1024;
-		WindowDesc.bHideWindow = false;
+		WindowDesc.bHideWindow = true;
 
 		ExcutePath = std::filesystem::canonical(std::filesystem::current_path() / std::filesystem::path(argv[0])).parent_path().generic_string();
 		LogPath = "log.txt";
 
 		ParseCmdline(argc, argv);
-	}
-
-	virtual ~FloraEditorApp()override
-	{
-		
 	}
 
 	virtual void StartUp()override
@@ -48,19 +112,12 @@ struct FloraEditorApp : public flora::IApp
 		XMaterial::ImportShaderHeaderFiles(ExcutePath + "/Shaders/");
 		XMaterial::ImportShaderHeaderFiles(ExcutePath + "/Shaders/Core/");
 
-		//TODO: Init Your Application (Import Demo Scene or Other Resources)
-		{
+		Scene* scene = TAllocator<Scene>::Alloc();
+		scene->Start();
+		scene->Update();
+		scene->End();
 
-		}
-	}
 
-	virtual void Shutdown()override
-	{
-		//TODO: Clear Your Resources
-		{
-
-		}
-		IApp::Shutdown();
 	}
 
 	//Main Loop
@@ -68,19 +125,19 @@ struct FloraEditorApp : public flora::IApp
 	{
 		//TODO:Do Something Before Run
 
-		while (BeginFrame())
-		{
-			//UpdateCamera();
-			//UpdateGameScene();
-			//RenderScene();
+		//while (BeginFrame())
+		//{
+		//	//UpdateCamera();
+		//	//UpdateGameScene();
+		//	//RenderScene();
 
-		#ifdef WITH_GUI
-			Editor->BeginRender();
-			Editor->Render();
-			Editor->EndRender();
-		#endif
-			EndFrame();
-		}
+		//#ifdef WITH_GUI
+		//	Editor->BeginRender();
+		//	Editor->Render();
+		//	Editor->EndRender();
+		//#endif
+		//	EndFrame();
+		//}
 
 		//TODO:Do Something After Run
 	}
