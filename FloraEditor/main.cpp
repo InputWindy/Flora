@@ -2,6 +2,10 @@
 #include "Editor.h"
 
 #include "Scene/Allocator.h"
+#include "Scene/Scene.h"
+#include "Scene/Component.h"
+#include "Scene/Entity.h"
+#include "Scene/System.h"
 
 #include <iostream>
 
@@ -12,29 +16,76 @@ std::string flora::ExcutePath;
 using namespace flora;
 
 
-struct FTestAlloc:public IAllocable
+struct Component:public IScene
 {
-	DECLARE_TYPE(FTestAlloc)
+	DECLARE_TYPE(Component)
 
-	FTestAlloc() {
+	virtual ~Component(){}
 
-	}
+	XTransform Trans;
+};
 
-	FTestAlloc(int a,float& b,double&& c)
+struct Entity :public IEntity
+{
+	DECLARE_TYPE(Entity)
+
+		Entity()
 	{
-		//std::cout << a << " " << b << " " << c << std::endl;
+		Component* C = Scene->AllocC<Component>();
+		C->Trans;
+
+		Scene->Attach(this, C);
 	}
 
-	~FTestAlloc()
+	virtual ~Entity() {}
+
+};
+
+struct System:public ISystem
+{
+	DECLARE_TYPE(System)
+	virtual void OnUpdate(IScene*, float /*delta time*/)
 	{
-		std::cout << "free" << std::endl;
+		std::cout << "System OnUpdate" << std::endl;
+	};
+	virtual void OnStart(IScene*) 
+	{
+		std::cout << "System OnStart" << std::endl;
+	};;
+	virtual void OnEnd(IScene*)
+	{
+		std::cout << "System OnEnd" << std::endl;
+	};;
+};
+
+struct System2 :public ISystem
+{
+	DECLARE_TYPE(System2)
+		virtual void OnUpdate(IScene*, float /*delta time*/)
+	{
+		std::cout << "System2 OnUpdate" << std::endl;
+	};
+	virtual void OnStart(IScene*)
+	{
+		std::cout << "System2 OnStart" << std::endl;
+	};;
+	virtual void OnEnd(IScene*)
+	{
+		std::cout << "System2 OnEnd" << std::endl;
+	};;
+};
+
+struct Scene :public IScene
+{
+	DECLARE_TYPE(Scene)
+
+		Scene()
+	{
+		AddSystem<System>();
+		AddSystem<System2>();
 	}
 
-
-	bool bb1 = true;
-	bool bb2 = true;
-	bool bb3 = true;
-
+	virtual ~Scene() {}
 };
 
 struct FloraEditorApp : public flora::IApp
@@ -61,91 +112,11 @@ struct FloraEditorApp : public flora::IApp
 		XMaterial::ImportShaderHeaderFiles(ExcutePath + "/Shaders/");
 		XMaterial::ImportShaderHeaderFiles(ExcutePath + "/Shaders/Core/");
 
-		//TODO: Init Your Application (Import Demo Scene or Other Resources)
-		{
-			int a = 0;
-			float b = 1.0f;
-			double c = 2.0f;
-			//FTestAlloc Test(a, b, std::move(c));
+		Scene* scene = TAllocator<Scene>::Alloc();
+		scene->Start();
+		scene->Update();
+		scene->End();
 
-			std::vector<FTestAlloc*> Tests;
-			
-			for (size_t i = 0; i < 12; i++)
-			{
-				++a;
-				++b;
-				++c;
-				Tests.push_back(TAllocator<FTestAlloc>::Alloc(a,b,std::move(c)));
-			}
-
-			for (auto T : TAllocator<FTestAlloc>::GetUsed())
-			{
-				std::cout << "Used:" << (unsigned int)T << " ";
-			}
-
-			std::cout << std::endl;
-
-			for (FTestAlloc* T : Tests)
-			{
-				std::cout << "Addr:" << (unsigned int)T << " ";
-			}
-
-			std::cout << "=======1========" << std::endl;
-
-			TAllocator<FTestAlloc>::Dealloc(Tests[3]);
-			TAllocator<FTestAlloc>::Dealloc(Tests[4]);
-			TAllocator<FTestAlloc>::Dealloc(Tests[7]);
-			TAllocator<FTestAlloc>::Dealloc(Tests[9]);
-
-			for (auto T : TAllocator<FTestAlloc>::GetUsed())
-			{
-				std::cout << "Used:" << (unsigned int)T << " ";
-			}
-
-			std::cout << std::endl;
-
-			for (FTestAlloc* T : Tests)
-			{
-				std::cout << "Addr:" << (unsigned int)T << " ";
-			}
-
-			std::cout << "=======2========" << std::endl;
-
-			for (size_t i = 0; i < 8; i++)
-			{
-				++a;
-				++b;
-				++c;
-				Tests.push_back(TAllocator<FTestAlloc>::Alloc(a, b, std::move(c)));
-			}
-
-			for (auto T : TAllocator<FTestAlloc>::GetUsed())
-			{
-				std::cout << "Used:" << (unsigned int)T << " ";
-			}
-
-			std::cout << std::endl;
-
-			for (FTestAlloc* T : Tests)
-			{
-				std::cout << "Addr:" << (unsigned int)T << " ";
-			}
-
-			std::cout << "=======3========" << std::endl;
-
-			std::cout << TAllocator<FTestAlloc>::MaxSize << std::endl;
-			std::cout << SMALL_MEMORY_POOL << std::endl;
-
-
-
-			/*auto [NumUsed, NumUnused] = TAllocator<FTestAlloc>::GetNum();
-
-			std::cout << "Mem Num:" << NumUsed << " " << NumUnused << std::endl;*/
-
-			
-		}
-
-		system("pause");
 
 	}
 

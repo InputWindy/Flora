@@ -30,7 +30,7 @@ namespace flora
 	// 改进后的内存分配器模板类
 	template<
 		typename TAllocable,
-		unsigned int MAX_ALLOC_SIZE = SMALL_MEMORY_POOL / (
+		unsigned int MAX_ALLOC_SIZE = LARGE_MEMORY_POOL / (
 			(sizeof(TAllocable) % alignof(TAllocable) == 0) ?
 			sizeof(TAllocable) :
 			((sizeof(TAllocable) / alignof(TAllocable)) + 1) * alignof(TAllocable)
@@ -86,7 +86,7 @@ namespace flora
 				&& "Memory alignment error!");
 
 			// Placement new构造对象
-			return new (Mem + idx) TAllocable(std::forward<Args>(args)...);
+			return new (Mem + idx) TAllocable(std::forward<Args&&>(args)...);
 		}
 
 		// 释放对象

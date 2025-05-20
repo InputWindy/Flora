@@ -1,9 +1,13 @@
 #pragma once
 #include <string>
+#include "Allocator.h"
 
 namespace flora
 {
-	class IComponent
+	class IScene;
+	class ISystem;
+
+	class IComponent:public IAllocable
 	{
 		friend class IScene;
 	protected:
@@ -11,16 +15,23 @@ namespace flora
 	public:
 		virtual~IComponent() = default;
 
-		virtual std::string GetType()const = 0;
+	private:
+		friend class ISystem;
 
-	public:
-		inline void Enable(bool NewEnable) { bEnable = NewEnable; }
 		inline bool IsEnable()const { return bEnable ; }
+		inline void Enable(bool e) { bEnable = e; }
+
+		inline void Mark(uint32_t M) { Flags |= M; }
+		inline void UnMark(uint32_t M) { Flags &= ~M; }
+		inline bool HasMark(uint32_t M) { return Flags & M; }
 
 	private:
 		bool bEnable = true;
 
 		uint32_t Entt = -1;
+
+		uint32_t ID = -1;
+		uint32_t Flags = 0;
 	};
 
 }

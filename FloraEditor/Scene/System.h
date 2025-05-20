@@ -1,15 +1,23 @@
 #pragma once
 #include <string>
+#include "Allocator.h"
 
 namespace flora
 {
-	class ISystem
+	class IComponent;
+	class IEntity;
+	class IScene;
+
+	class ISystem : public IAllocable
 	{
+		friend class IScene;
 	protected:
 		ISystem() = default;
 	public:
 		virtual~ISystem() = default;
-
-		virtual std::string GetType()const = 0;
+	protected:
+		virtual void OnUpdate(IScene*, float /*delta time*/) = 0;
+		virtual void OnStart(IScene*) = 0;
+		virtual void OnEnd(IScene*) = 0;
 	};
 }
