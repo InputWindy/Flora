@@ -8,7 +8,7 @@ namespace flora
 	class IEntity;
 	class IScene;
 
-	class ISystem : public IAllocable
+	class ISystem : public IAllocable, public ISerialization
 	{
 		friend class IScene;
 	protected:

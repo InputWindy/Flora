@@ -28,6 +28,11 @@
 //Scene module (depend on xxx)
 #include <Scene/Struct/Camera.h>
 #include <Scene/Struct/Transform.h>
+#include <Scene/Allocator.h>
+#include <Scene/Scene.h>
+#include <Scene/Component.h>
+#include <Scene/Entity.h>
+#include <Scene/System.h>
 
 //Window module ( standalone module)
 #include <Window/Window.h>

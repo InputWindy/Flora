@@ -40,9 +40,68 @@ void flora::XOpenGLShaderProgram::AttachShader(std::shared_ptr<XRHIShader> Shade
     glAttachShader(Handle, std::dynamic_pointer_cast<XOpenGLShader>(Shader)->GetHandle());
 }
 
-bool flora::XOpenGLShaderProgram::Link() const
+flora::EMaterialParamType GetUniformType(GLenum type) {
+	switch (type) {
+	case GL_FLOAT:      return flora::EMaterialParamType::vec1;
+	case GL_FLOAT_VEC2: return flora::EMaterialParamType::vec3;
+	case GL_FLOAT_VEC3: return flora::EMaterialParamType::vec3;
+	case GL_FLOAT_VEC4: return flora::EMaterialParamType::vec4;
+	case GL_INT:        return flora::EMaterialParamType::ivec1;
+	case GL_INT_VEC2:   return flora::EMaterialParamType::ivec2;
+	case GL_INT_VEC3:   return flora::EMaterialParamType::ivec3;
+	case GL_INT_VEC4:   return flora::EMaterialParamType::ivec4;
+	case GL_SAMPLER_1D: return flora::EMaterialParamType::sampler1D;
+	case GL_SAMPLER_2D: return flora::EMaterialParamType::sampler2D;
+	case GL_SAMPLER_3D: return flora::EMaterialParamType::sampler3D;
+	case GL_SAMPLER_CUBE: return flora::EMaterialParamType::samplerCube;
+		// 其他类型可根据需要扩展
+	default:            return flora::EMaterialParamType::UnKnown;
+	}
+}
+
+// 查询并打印所有 Uniform 参数
+void QueryUniforms(GLuint program, std::vector<flora::FMaterialParam>& Params) {
+
+	Params.clear();
+
+	GLint uniformCount = 0;
+	glGetProgramiv(program, GL_ACTIVE_UNIFORMS, &uniformCount);
+
+	GLint maxNameLength = 0;
+	glGetProgramiv(program, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxNameLength);
+	std::vector<GLchar> nameBuffer(maxNameLength);
+
+	for (GLint i = 0; i < uniformCount; ++i) {
+		GLsizei nameLength = 0;
+		GLint size = 0;
+		GLenum type = GL_NONE;
+
+		glGetActiveUniform(program, i, maxNameLength, &nameLength, &size, &type, nameBuffer.data());
+		std::string name(nameBuffer.data(), nameLength);
+
+		// 处理数组类型（如 myArray[0]）
+		if (size > 1) {
+			name = name.substr(0, name.find('[')); // 去除数组下标
+		}
+
+		flora::EMaterialParamType ParamType = GetUniformType(type);
+
+		if (ParamType != flora::EMaterialParamType::UnKnown)
+		{
+			flora::FMaterialParam Param(ParamType,name,size, glGetUniformLocation(program, name.c_str()));
+		
+			Params.emplace_back(std::move(Param));
+		}
+	}
+
+}
+
+bool flora::XOpenGLShaderProgram::Link() 
 {
     glLinkProgram(Handle);
+
+	QueryUniforms(Handle, UnifomParams);
+
     return IsLinked();
 }
 

@@ -12,6 +12,7 @@
 #include <unordered_map>
 #include <map>
 #include <utility>
+#include <glm/glm.hpp>
 // #include <format>
 
 #include <Common/Layout.h>
@@ -871,6 +872,65 @@ namespace flora
 
 	};
 
+	enum class EMaterialParamType
+	{
+		ivec1, ivec2, ivec3, ivec4,
+		vec1, vec2, vec3, vec4,
+
+		sampler1D, sampler2D, sampler3D, samplerCube,
+
+		UnKnown
+	};
+
+	class FMaterialParamInst;
+	struct FMaterialParam
+	{
+		friend class FMaterialParamInst;
+
+		FMaterialParam(
+			EMaterialParamType t,
+			std::string n,
+			uint32_t s,
+			uint32_t l
+			) :ParamType(t), Name(n), Size(s),Location(l) {}
+	private:
+		EMaterialParamType ParamType;
+		std::string Name;
+		uint32_t Size;
+		uint32_t Location;
+	};
+
+	struct FMaterialParamInst
+	{
+		FMaterialParamInst(const FMaterialParam& PP) :Info(PP)
+		{
+			switch (PP.ParamType)
+			{
+			case flora::EMaterialParamType::ivec1:DataUniform.resize(sizeof(int) * Info.Size); break;
+			case flora::EMaterialParamType::ivec2:DataUniform.resize(sizeof(glm::ivec2) * Info.Size); break;
+			case flora::EMaterialParamType::ivec3:DataUniform.resize(sizeof(glm::ivec3) * Info.Size); break;
+			case flora::EMaterialParamType::ivec4:DataUniform.resize(sizeof(glm::ivec4) * Info.Size); break;
+			case flora::EMaterialParamType::vec1:DataUniform.resize(sizeof(float) * Info.Size); break;
+			case flora::EMaterialParamType::vec2:DataUniform.resize(sizeof(glm::vec2) * Info.Size); break;
+			case flora::EMaterialParamType::vec3:DataUniform.resize(sizeof(glm::vec3) * Info.Size); break;
+			case flora::EMaterialParamType::vec4:DataUniform.resize(sizeof(glm::vec4) * Info.Size); break;
+			case flora::EMaterialParamType::sampler1D:
+			case flora::EMaterialParamType::sampler2D:
+			case flora::EMaterialParamType::sampler3D:
+			case flora::EMaterialParamType::samplerCube:
+			case flora::EMaterialParamType::UnKnown:
+			default:
+				break;
+			}
+		}
+
+		FMaterialParam Info;
+
+		std::vector<std::byte> DataUniform;
+		std::shared_ptr<XRHIResource> ResourceUniform;
+	};
+
+
 	/// <summary>
 	/// material binary program
 	/// </summary>
@@ -897,7 +957,7 @@ namespace flora
 		/// link
 		/// </summary>
 		/// <returns></returns>
-		virtual bool Link() const = 0;
+		virtual bool Link() = 0;
 
 		/// <summary>
 		/// check link status
@@ -989,6 +1049,12 @@ namespace flora
 		virtual void SetMatrixFloat4x2Array(const char*, size_t, bool, float*) const = 0;
 		virtual void SetMatrixFloat3x4Array(const char*, size_t, bool, float*) const = 0;
 		virtual void SetMatrixFloat4x3Array(const char*, size_t, bool, float*) const = 0;
+
+	public:
+
+
+	protected:
+		std::vector<FMaterialParam> UnifomParams;
 	};
 
 	/// <summary>

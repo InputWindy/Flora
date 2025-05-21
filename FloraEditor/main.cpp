@@ -1,11 +1,7 @@
 #include <CoreMinimal.h>
 #include "Editor.h"
 
-#include "Scene/Allocator.h"
-#include "Scene/Scene.h"
-#include "Scene/Component.h"
-#include "Scene/Entity.h"
-#include "Scene/System.h"
+
 
 #include <iostream>
 
@@ -15,78 +11,7 @@ std::string flora::ExcutePath;
 
 using namespace flora;
 
-
-struct Component:public IScene
-{
-	DECLARE_TYPE(Component)
-
-	virtual ~Component(){}
-
-	XTransform Trans;
-};
-
-struct Entity :public IEntity
-{
-	DECLARE_TYPE(Entity)
-
-		Entity()
-	{
-		Component* C = Scene->AllocC<Component>();
-		C->Trans;
-
-		Scene->Attach(this, C);
-	}
-
-	virtual ~Entity() {}
-
-};
-
-struct System:public ISystem
-{
-	DECLARE_TYPE(System)
-	virtual void OnUpdate(IScene*, float /*delta time*/)
-	{
-		std::cout << "System OnUpdate" << std::endl;
-	};
-	virtual void OnStart(IScene*) 
-	{
-		std::cout << "System OnStart" << std::endl;
-	};;
-	virtual void OnEnd(IScene*)
-	{
-		std::cout << "System OnEnd" << std::endl;
-	};;
-};
-
-struct System2 :public ISystem
-{
-	DECLARE_TYPE(System2)
-		virtual void OnUpdate(IScene*, float /*delta time*/)
-	{
-		std::cout << "System2 OnUpdate" << std::endl;
-	};
-	virtual void OnStart(IScene*)
-	{
-		std::cout << "System2 OnStart" << std::endl;
-	};;
-	virtual void OnEnd(IScene*)
-	{
-		std::cout << "System2 OnEnd" << std::endl;
-	};;
-};
-
-struct Scene :public IScene
-{
-	DECLARE_TYPE(Scene)
-
-		Scene()
-	{
-		AddSystem<System>();
-		AddSystem<System2>();
-	}
-
-	virtual ~Scene() {}
-};
+DECLARE_SURFACE_SHADER(FSurfaceShader,"Surface.vert","Surface.frag")
 
 struct FloraEditorApp : public flora::IApp
 {
@@ -112,12 +37,11 @@ struct FloraEditorApp : public flora::IApp
 		XMaterial::ImportShaderHeaderFiles(ExcutePath + "/Shaders/");
 		XMaterial::ImportShaderHeaderFiles(ExcutePath + "/Shaders/Core/");
 
-		Scene* scene = TAllocator<Scene>::Alloc();
-		scene->Start();
-		scene->Update();
-		scene->End();
-
-
+		FScopeShader<FSurfaceShader> SurfaceShader;
+		if (SurfaceShader.IsValid())
+		{
+			FLORA_CORE_INFO("test")
+		}
 	}
 
 	//Main Loop

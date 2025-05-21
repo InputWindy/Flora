@@ -44,7 +44,7 @@ namespace flora
 		/// link
 		/// </summary>
 		/// <returns></returns>
-		virtual bool Link() const override;
+		virtual bool Link() override;
 
 		/// <summary>
 		/// check link status

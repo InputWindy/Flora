@@ -14,7 +14,7 @@ namespace flora
 	class IEntity;
 	class ISystem;
 
-	class IScene:public IAllocable
+	class IScene:public IAllocable,public ISerialization
 	{
 	protected:
 		IScene() = default;

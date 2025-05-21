@@ -1,5 +1,7 @@
 #pragma once
 #include <Common/Common.h>
+#include <Common/Serialize.h>
+
 #include <string>
 #include <map>
 #include <stack>
