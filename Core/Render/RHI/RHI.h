@@ -882,7 +882,6 @@ namespace flora
 		UnKnown
 	};
 
-	class FMaterialParamInst;
 	struct FMaterialParam
 	{
 		friend class FMaterialParamInst;
@@ -899,37 +898,6 @@ namespace flora
 		uint32_t Size;
 		uint32_t Location;
 	};
-
-	struct FMaterialParamInst
-	{
-		FMaterialParamInst(const FMaterialParam& PP) :Info(PP)
-		{
-			switch (PP.ParamType)
-			{
-			case flora::EMaterialParamType::ivec1:DataUniform.resize(sizeof(int) * Info.Size); break;
-			case flora::EMaterialParamType::ivec2:DataUniform.resize(sizeof(glm::ivec2) * Info.Size); break;
-			case flora::EMaterialParamType::ivec3:DataUniform.resize(sizeof(glm::ivec3) * Info.Size); break;
-			case flora::EMaterialParamType::ivec4:DataUniform.resize(sizeof(glm::ivec4) * Info.Size); break;
-			case flora::EMaterialParamType::vec1:DataUniform.resize(sizeof(float) * Info.Size); break;
-			case flora::EMaterialParamType::vec2:DataUniform.resize(sizeof(glm::vec2) * Info.Size); break;
-			case flora::EMaterialParamType::vec3:DataUniform.resize(sizeof(glm::vec3) * Info.Size); break;
-			case flora::EMaterialParamType::vec4:DataUniform.resize(sizeof(glm::vec4) * Info.Size); break;
-			case flora::EMaterialParamType::sampler1D:
-			case flora::EMaterialParamType::sampler2D:
-			case flora::EMaterialParamType::sampler3D:
-			case flora::EMaterialParamType::samplerCube:
-			case flora::EMaterialParamType::UnKnown:
-			default:
-				break;
-			}
-		}
-
-		FMaterialParam Info;
-
-		std::vector<std::byte> DataUniform;
-		std::shared_ptr<XRHIResource> ResourceUniform;
-	};
-
 
 	/// <summary>
 	/// material binary program

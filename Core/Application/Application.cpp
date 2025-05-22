@@ -1,4 +1,5 @@
 #include <Application/Application.h>
+#include <Resource//Struct/Material.h>
 
 namespace flora
 {
@@ -18,6 +19,8 @@ namespace flora
 #ifdef WITH_GUI
 			Editor = IEditor::InitEditor<EEditorType::ET_ImGui>(MainWindow->GetHandle());
 #endif // WITH_GUI
+
+			XMaterial::ImportEngineDefaultResource();
 		}
 	}
 

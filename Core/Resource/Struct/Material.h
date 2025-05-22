@@ -50,8 +50,25 @@ namespace flora
 	public:
 		static void ImportShaderHeaderFiles(const std::string& ShaderRootPath);
 		static void ParseAndReplaceIncludes(const char* Sufix, std::string& Inout);
+
+		static void ImportEngineDefaultResource();
+
 	protected:
 		static inline std::unordered_map<std::string, std::string> GIncludeMap;
+		static inline std::shared_ptr<XRHITexture2D> White;
+		static inline std::shared_ptr<XRHITexture2D> MR;
+		static inline std::shared_ptr<XRHITexture2D> Normal;
+		static inline std::shared_ptr<XRHITexture2D> Grid;
+
+		static inline std::shared_ptr<XRHITexture2D> BRDF_Schilk;
+
+		static inline std::shared_ptr<XRHITexture2D> ColorGradingLUT;
+		static inline std::shared_ptr<XRHITexture2D> ColorGradingLUT01;
+		static inline std::shared_ptr<XRHITexture2D> ColorGradingLUT02;
+		static inline std::shared_ptr<XRHITexture2D> ColorGradingLUT03;
+		static inline std::shared_ptr<XRHITexture2D> ColorGradingLUT04;
+		static inline std::shared_ptr<XRHITexture2D> ColorGradingLUT05;
+		static inline std::shared_ptr<XRHITexture2D> ColorGradingLUT06;
 	};
 
 }

@@ -1,8 +1,6 @@
 #include <CoreMinimal.h>
 #include "Editor.h"
 
-
-
 #include <iostream>
 
 #define STR_CAT(Str1,Str2) Str1##Str2
@@ -42,6 +40,7 @@ struct FloraEditorApp : public flora::IApp
 		{
 			FLORA_CORE_INFO("test")
 		}
+
 	}
 
 	//Main Loop
