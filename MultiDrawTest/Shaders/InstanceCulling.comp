@@ -1,0 +1,112 @@
+#version 460 core
+#include "GpuScene.glsl"
+
+#define LOCAL_THREAD_X 1
+#define LOCAL_THREAD_Y 1
+
+float DistanceFromPoint(vec4 plane, vec3 in_point)
+{
+	return dot(in_point, normalize(plane.xyz)) + plane.w;
+}
+
+// view space interaction test
+bool IsBoxInsideFrustum(vec4 frustum[6],vec3 center, float radius)
+{
+	bool in_frustum = true;
+	for (int i = 0; i < 6; i++)
+	{
+		float Dist = DistanceFromPoint(frustum[i], center) + radius;
+			
+		in_frustum = in_frustum && (Dist > 0.0f);
+	}
+
+	return in_frustum;
+}
+
+float GetMaxScale(mat4 view_model)
+{
+	float s1 = abs(view_model[0][2]);
+	float s2 = abs(view_model[1][0]);
+	float s3 = abs(view_model[2][1]);
+
+	return max(s1,max(s2,s3));
+}
+
+bool FrustumCulling(int id)
+{
+	CSceneInstance Instance = GetCSceneInstanceLists(id);
+	CStaticMesh StaticMesh = GetCStaticMeshLists(GetMeshId(id));
+
+	mat4 model = Instance.model_matrix;
+	mat4 view = GetViewMatrix();
+//	mat4 proj = GetProjMatrix();
+
+	vec4 center = vec4(StaticMesh.sphere_box.xyz,1);
+	center = view * model * center;
+
+	float radius = StaticMesh.sphere_box.w;
+	
+	vec4 frustum[6];
+	GetFrustum(frustum);
+
+//	mat4 f[6];
+//	f[0][0] = frustum[0];
+//	f[1][0] = frustum[1];
+//	f[2][0] = frustum[2];
+//	f[3][0] = frustum[3];
+//	f[4][0] = frustum[4];
+//	f[5][0] = frustum[5];
+//
+//	SetDebug1(0,f[0]);
+//	SetDebug1(1,f[1]);
+//	SetDebug1(2,f[2]);
+//	SetDebug1(3,f[3]);
+//	SetDebug1(4,f[4]);
+//	SetDebug1(5,f[5]);
+//
+//	SetDebug1(6,view * model);
+//
+//	mat4 c;
+//	c[0] = center;
+//	c[0][3] = radius;
+//	SetDebug1(7,c);
+
+	return IsBoxInsideFrustum(frustum,center.xyz,radius * GetMaxScale(view * model));
+}
+
+int GetLoopCnt(int index_num,int thread_num)
+{
+	return (index_num / thread_num) + 1;
+}
+
+NUM_THREADS(LOCAL_THREAD_X,LOCAL_THREAD_Y,1)
+void main()
+{
+	int InstanceID = THREAD_GROUP_ID_1D;
+
+	if(InstanceID < GetSceneInstanceNum())
+	{
+		CVisibleInfo Info;
+		Info.first = 0;
+		Info.count = 0;
+
+		if(FrustumCulling(InstanceID))
+		{
+			CStaticMesh StaticMesh = GetCStaticMeshLists(GetMeshId(InstanceID));
+			
+			int IndexNum = StaticMesh.tri_num * 3;
+			int IndexOffset = StaticMesh.tri_offset * 3;
+			int first = AtomicAddIndirectDrawNum(IndexNum);
+
+			// write visible info
+			Info.first = first;
+			Info.count = IndexNum;
+			
+			AtomicAddVisibleInstanceNum();
+		}
+
+		MarkVisibleInstance(InstanceID,Info);
+		
+	}
+
+}

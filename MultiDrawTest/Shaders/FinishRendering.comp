@@ -1,0 +1,25 @@
+/*
+	clear intermediate ssbo
+*/
+#version 460 core
+#include "GpuScene.glsl"
+
+NUM_THREADS(32,32,1)
+void main()
+{
+	int InstanceID = GLOBAL_THREAD_ID_1D;
+
+	// clear instance culling results
+	if(InstanceID < GetSceneInstanceNum())
+	{
+		MarkInvisibleInstance(InstanceID);
+	}
+	
+	// clear indirec draw command buffer
+	if(InstanceID < GetSceneInstanceNum())
+	{
+		ResetIndirectDrawCmd(InstanceID);
+	}
+
+	ResetStat();
+}

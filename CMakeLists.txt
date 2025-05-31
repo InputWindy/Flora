@@ -4,8 +4,8 @@
 #WORK_DIR请填写.exe的安装目录
 
 #project settings
-set(PROJECT_NAME "FloraEditor")
-set(PROJECT_FILE FloraEditor)
+set(PROJECT_NAME "MultiDrawTest")
+set(PROJECT_FILE MultiDrawTest)
 set(CMAKE_MIN_VERSION 3.17)
 set(CPP_VERSION 20)
 set(WITH_IMGUI 1)

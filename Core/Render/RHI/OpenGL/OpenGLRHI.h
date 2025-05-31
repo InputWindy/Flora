@@ -81,8 +81,6 @@ namespace flora
 		/// <param name="memory type"></param>
 		virtual void MemoryBarrier(EMemoryBarrierBit) override;
 
-		virtual void MemoryBarrier(EBufferTarget) override;
-
 		virtual void FlushRenderCommand() override;
 
 		virtual void FinishRenderCommand() override;

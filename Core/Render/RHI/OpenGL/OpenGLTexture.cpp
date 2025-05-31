@@ -21,13 +21,7 @@ bool flora::XOpenGLTexture2D::InitRHI()
 
     for (size_t i = 0; i < MipLevels; i++)
     {
-        glTexImage2D(GL_TEXTURE_2D, i, ToGLInternalFormat(InternalFormat), SizeX[0] / powf(2, i), SizeY[0] / powf(2, i), 0, ToGLFormat(WriteFormat.first), ToGLDataType(WriteFormat.second), NULL);
-
-        if (i > 0)
-		{
-			SizeX[i] = SizeX[0] / powf(2, i);
-			SizeY[i] = SizeY[0] / powf(2, i);
-        }
+        glTexImage2D(GL_TEXTURE_2D, i, ToGLInternalFormat(InternalFormat), SizeX / powf(2, i), SizeY / powf(2, i), 0, ToGLFormat(WriteFormat.first), ToGLDataType(WriteFormat.second), NULL);
     }
     //SetSamplerState(XRHISamplerCreateInfo());
 
@@ -50,20 +44,6 @@ bool flora::XOpenGLTexture2D::UpdateRHI()
     return true;
 }
 
-void flora::XOpenGLTexture2D::AddNewMip(uint32_t InSizeX, uint32_t InSizeY)
-{
-	Bind();
-
-	auto WriteFormat = MatchInternalFormat(InternalFormat);
-
-	glTexImage2D(GL_TEXTURE_2D, MipLevels, ToGLInternalFormat(InternalFormat), InSizeX, InSizeY, 0, ToGLFormat(WriteFormat.first), ToGLDataType(WriteFormat.second), NULL);
-
-	SizeX[MipLevels] = InSizeX;
-	SizeY[MipLevels] = InSizeY;
-
-    ++MipLevels;
-}
-
 void flora::XOpenGLTexture2D::Bind()
 {
     glBindTexture(GL_TEXTURE_2D, Handle);
@@ -84,7 +64,7 @@ void flora::XOpenGLTexture2D::ReadPixels(int level, EFormat format, EDataType ty
 void flora::XOpenGLTexture2D::SetPixels(uint32_t level, EFormat format, EDataType type, const void* data)
 {
     Bind();
-    glTexImage2D(GL_TEXTURE_2D, level, ToGLInternalFormat(InternalFormat), SizeX[level], SizeY[level], 0, ToGLFormat(format), ToGLDataType(type), data);
+    glTexImage2D(GL_TEXTURE_2D, level, ToGLInternalFormat(InternalFormat), SizeX / powf(2, level), SizeY / powf(2, level), 0, ToGLFormat(format), ToGLDataType(type), data);
 }
 
 //void flora::XOpenGLTexture2D::SetMinFilter(EFilterMode Mode) const

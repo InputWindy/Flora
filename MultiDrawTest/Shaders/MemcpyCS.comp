@@ -1,0 +1,15 @@
+/*
+	clear intermediate ssbo
+*/
+#version 460 core
+#include "Core/ShaderCore.glsl"
+
+FByteAddressBuffer(Src, 0) 
+FByteAddressBuffer(Dst, 1) 
+
+NUM_THREADS(32,32,1)
+void main()
+{
+	
+}
+

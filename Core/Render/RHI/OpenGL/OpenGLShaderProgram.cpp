@@ -105,11 +105,6 @@ void flora::XOpenGLShaderProgram::SetTextureImage(std::shared_ptr<class XRHIText
 	}
 }
 
-void flora::XOpenGLShaderProgram::SetTextureImage(std::shared_ptr<class XRHITexture>texture, uint32_t image_unit, uint32_t mip, EAccessPolicy access_policy) const
-{
-	SetTextureImage(texture, image_unit, mip, ToGLAccessPolicy(access_policy));
-}
-
 void flora::XOpenGLShaderProgram::SetBool1(const char* name, bool data) const
 {
 	glUniform1i(glGetUniformLocation(Handle, name), data ? 1 : 0);

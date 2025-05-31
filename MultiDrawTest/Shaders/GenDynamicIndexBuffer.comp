@@ -1,0 +1,49 @@
+#version 460 core
+#include "GpuScene.glsl"
+
+#define LOCAL_THREAD_X 32
+#define LOCAL_THREAD_Y 32
+
+int GetLoopCnt(int index_num,int thread_num)
+{
+	return (index_num / thread_num) + 1;
+}
+
+NUM_THREADS(LOCAL_THREAD_X,LOCAL_THREAD_Y,1)
+void main()
+{
+	int InstanceID = THREAD_GROUP_ID_1D;
+
+	if(InstanceID < GetSceneInstanceNum())
+	{
+		CVisibleInfo Info = GetVisibleInstance(InstanceID);
+		int first = Info.first;
+		int count = Info.count;
+
+		// construct dynamic ibo
+		int LocalThreadNum = LOCAL_THREAD_X*LOCAL_THREAD_Y;
+		int LocalThreadID = LOCAL_THREAD_ID_1D;
+		int LoopCnt = GetLoopCnt(count,LocalThreadNum);
+
+		CStaticMesh StaticMesh = GetCStaticMeshLists(GetMeshId(InstanceID));
+		int IndexOffset = StaticMesh.tri_offset * 3;
+		int VertOffset = StaticMesh.pos_offset;
+
+		for(int i = 0;i < LoopCnt;++i)
+		{
+			if(i * LocalThreadNum + LocalThreadID < count)
+			{
+				int SrcIndexLocalID = IndexOffset + i * LocalThreadNum + LocalThreadID;
+				int DstIndexLocalID = first + i * LocalThreadNum + LocalThreadID;
+
+				WriteDynamicIndex(DstIndexLocalID,LoadIndexInt(SrcIndexLocalID)+VertOffset);
+			}
+		}
+
+		SetDebug0(InstanceID * 4 + 0,LoopCnt);
+		SetDebug0(InstanceID * 4 + 1,VertOffset);
+		SetDebug0(InstanceID * 4 + 2,first);
+		SetDebug0(InstanceID * 4 + 3,count);
+	}
+
+}

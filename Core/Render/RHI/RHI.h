@@ -21,11 +21,6 @@
 
 namespace flora
 {
-	#define MAX_MIP_LEVEL 8
-}
-
-namespace flora
-{
 	enum class ERHIFeatureLevel
 	{
 		FL_OpenGL,
@@ -93,19 +88,19 @@ namespace flora
 	typedef uint32_t EMemoryBarrierBit;
 	enum EMemoryBarrierBit_
 	{
-		MBB_VERTEX_ATTRIB_ARRAY_BARRIER_BIT				= 1 << 0 ,
-		MBB_ELEMENT_ARRAY_BARRIER_BIT					= 1 << 1 ,
-		MBB_UNIFORM_BARRIER_BIT							= 1 << 2 ,
-		MBB_TEXTURE_FETCH_BARRIER_BIT					= 1 << 3 ,
-		MBB_SHADER_IMAGE_ACCESS_BARRIER_BIT				= 1 << 4 ,
-		MBB_COMMAND_BARRIER_BIT							= 1 << 5 ,
-		MBB_PIXEL_BUFFER_BARRIER_BIT					= 1 << 6 ,
-		MBB_TEXTURE_UPDATE_BARRIER_BIT					= 1 << 7 ,
-		MBB_BUFFER_UPDATE_BARRIER_BIT					= 1 << 8 ,
-		MBB_FRAMEBUFFER_BARRIER_BIT						= 1 << 9 ,
-		MBB_TRANSFORM_FEEDBACK_BARRIER_BIT				= 1 << 10,
-		MBB_ATOMIC_COUNTER_BARRIER_BIT					= 1 << 11,
-		MBB_SHADER_STORAGE_BARRIER_BIT					= 1 << 12,
+		MBB_VERTEX_ATTRIB_ARRAY_BARRIER_BIT = 1 << 0,
+		MBB_ELEMENT_ARRAY_BARRIER_BIT = 1 << 1,
+		MBB_UNIFORM_BARRIER_BIT = 1 << 2,
+		MBB_TEXTURE_FETCH_BARRIER_BIT = 1 << 3,
+		MBB_SHADER_IMAGE_ACCESS_BARRIER_BIT = 1 << 4,
+		MBB_COMMAND_BARRIER_BIT = 1 << 5,
+		MBB_PIXEL_BUFFER_BARRIER_BIT = 1 << 6,
+		MBB_TEXTURE_UPDATE_BARRIER_BIT = 1 << 7,
+		MBB_BUFFER_UPDATE_BARRIER_BIT = 1 << 8,
+		MBB_FRAMEBUFFER_BARRIER_BIT = 1 << 9,
+		MBB_TRANSFORM_FEEDBACK_BARRIER_BIT = 1 << 10,
+		MBB_ATOMIC_COUNTER_BARRIER_BIT = 1 << 11,
+		MBB_SHADER_STORAGE_BARRIER_BIT = 1 << 12,
 
 		MBB_MAX_COUNT
 	};
@@ -688,7 +683,6 @@ namespace flora
 		static std::shared_ptr<XRHITextureCube> PanoramaToCubemap(uint32_t CubeSize, std::shared_ptr<XRHITexture2D>);
 		static std::shared_ptr<XRHITexture2D> CubemapFaceToTexture2D(ECubeFace Face, std::shared_ptr<XRHITextureCube>);
 		static std::shared_ptr<XTexture> CreateStaticTexture(std::shared_ptr<XRHITexture>);
-		static std::vector< std::shared_ptr<XTexture>> CreateStaticTextureMipChain(std::shared_ptr<XRHITexture>);
 		static std::shared_ptr<XRHITextureCube> FacesToCubemap(std::vector< std::shared_ptr<XRHITexture2D>>);
 
 	public:
@@ -725,7 +719,7 @@ namespace flora
 		///  indirect draw array
 		/// </summary>
 		/// <param name=""></param>
-		virtual void DrawArrayIndirect(EDrawMode,std::shared_ptr<class XRHIDrawIndirectBuffer>) = 0;
+		virtual void DrawArrayIndirect(EDrawMode, std::shared_ptr<class XRHIDrawIndirectBuffer>) = 0;
 
 		/// <summary>
 		/// indirect draw element
@@ -745,8 +739,6 @@ namespace flora
 		/// <param name="memory type"></param>
 		virtual void MemoryBarrier(EMemoryBarrierBit) = 0;
 
-		virtual void MemoryBarrier(EBufferTarget) = 0;
-
 		virtual void FlushRenderCommand() = 0;
 
 		virtual void FinishRenderCommand() = 0;
@@ -756,6 +748,8 @@ namespace flora
 	};
 
 	XRHI* GetRHI();
+
+
 }
 
 namespace flora
@@ -937,14 +931,6 @@ namespace flora
 		/// <param name="access_policy"></param>
 		virtual void SetTextureImage(std::shared_ptr<class XRHITexture>, uint32_t, uint32_t = 0, uint32_t = 0/* = GL_READ_WRITE*/) const = 0;
 
-		/// <summary>
-		/// </summary>
-		/// <param name="texture"></param>
-		/// <param name="image_unit"></param>
-		/// <param name="mip"></param>
-		/// <param name="access_policy"></param>
-		virtual void SetTextureImage(std::shared_ptr<class XRHITexture>, uint32_t, uint32_t = 0, EAccessPolicy = EAccessPolicy::AP_READ_WRITE) const = 0;
-
 		virtual void SetBool1(const char*, bool) const = 0;
 		virtual void SetBool2(const char*, bool, bool) const = 0;
 		virtual void SetBool3(const char*, bool, bool, bool) const = 0;
@@ -1051,7 +1037,6 @@ namespace flora
 		virtual void Bind() = 0;
 
 		virtual void UnBind() = 0;
-
 	public:
 		inline auto GetMipLevels()		const { return MipLevels; }
 		inline auto GetInternalFormat()	const { return InternalFormat; }
@@ -1095,11 +1080,7 @@ namespace flora
 	{
 	protected:
 		XRHITexture2D() = default;
-		XRHITexture2D(uint32_t InMipLevels, EInternalFormat InInternalFormat, uint32_t InX, uint32_t InY) :XRHITexture(InMipLevels, InInternalFormat)
-		{
-			SizeX[0] = InX;
-			SizeY[0] = InY;
-		}
+		XRHITexture2D(uint32_t InMipLevels, EInternalFormat InInternalFormat, uint32_t InX, uint32_t InY) :XRHITexture(InMipLevels, InInternalFormat), SizeX(InX), SizeY(InY) {}
 	public:
 		~XRHITexture2D() override = default;
 	public:
@@ -1121,12 +1102,12 @@ namespace flora
 
 
 		template<typename T>
-		bool ReadPixels(std::vector<T>& OutPixels,int level = 0)
+		bool ReadPixels(std::vector<T>& OutPixels)
 		{
 			auto ReadFormat = MatchInternalFormat(GetInternalFormat());
 
-			int SizeX = GetSizeX(level);
-			int SizeY = GetSizeY(level);
+			int SizeX = GetSizeX();
+			int SizeY = GetSizeY();
 			int DataTypeSize = GetRHI()->GetDataTypeSize(ReadFormat.second);
 			int FormatCompNum = GetRHI()->GetFormatCompNum(ReadFormat.first);
 			int BufferSize = SizeX * SizeY * DataTypeSize * FormatCompNum;
@@ -1135,7 +1116,7 @@ namespace flora
 
 			std::byte* Buffer = (std::byte*)malloc(BufferSize);
 			{
-				ReadPixels(level, ReadFormat.first, ReadFormat.second, Buffer);
+				ReadPixels(0, ReadFormat.first, ReadFormat.second, Buffer);
 			}
 
 			OutPixels.clear();
@@ -1158,16 +1139,13 @@ namespace flora
 		/// <param name="out type"></param>
 		/// <param name="out data"></param>
 		virtual void SetPixels(uint32_t, EFormat, EDataType, const void*) = 0;
-
 	public:
-		virtual void AddNewMip(uint32_t InSizeX, uint32_t InSizeY) = 0;
-	public:
-		inline uint32_t GetSizeX(int MipLevel = 0) const { return SizeX[MipLevel]; }
-		inline uint32_t GetSizeY(int MipLevel = 0) const { return SizeY[MipLevel]; }
+		inline uint32_t GetSizeX() const { return SizeX; }
+		inline uint32_t GetSizeY() const { return SizeY; }
 
 	protected:
-		uint32_t SizeX[MAX_MIP_LEVEL] = {};
-		uint32_t SizeY[MAX_MIP_LEVEL] = {};
+		uint32_t SizeX = 0;
+		uint32_t SizeY = 0;
 	};
 
 	/// <summary>
@@ -1318,7 +1296,7 @@ namespace flora
 		/// <param name="size"></param>
 		/// <param name="data"></param>
 		/// <returns></returns>
-		virtual bool UpdateSubData(size_t,size_t, const void*) = 0;
+		virtual bool UpdateSubData(size_t, size_t, const void*) = 0;
 
 		/// <summary>
 		/// begin read buffer data:
@@ -1467,14 +1445,14 @@ namespace flora
 		unsigned int  instanceCount;
 		unsigned int  first;
 		unsigned int  baseInstance;
-	} ;
+	};
 
 	struct XDispatchIndirectCommand
 	{
 		unsigned int  num_groups_x;
 		unsigned int  num_groups_y;
 		unsigned int  num_groups_z;
-	} ;
+	};
 
 	/// <summary>
 	/// uniform block
@@ -1631,18 +1609,6 @@ namespace flora
 		virtual void UnBind() = 0;
 
 		virtual bool IsComplete() = 0;
-
-		virtual void ClearBuffer(EClearBufferBit InBufferBit) = 0;
-
-		/// <summary>
-		/// clear color output
-		/// </summary>
-		/// <param name="slot"></param>
-		/// <param name="r"></param>
-		/// <param name="g"></param>
-		/// <param name="b"></param>
-		/// <param name="a"></param>
-		virtual void ClearColor(int, float, float, float, float) = 0;
 	public:
 		inline const auto& GetColorAttachments()const { return ColorAttachments; }
 		inline const auto& GetDepthStencilAttachment()const { return DepthStencilAttachment; }
@@ -1650,7 +1616,6 @@ namespace flora
 
 		inline void SetColorAttachment(const std::vector<XFrameBufferAttachment>& InColorAttachments) { ColorAttachments = InColorAttachments; }
 		inline void EnableOutputAttachments(const std::vector<uint32_t>& InDrawBuffers) { DrawBuffers = InDrawBuffers; }
-
 	protected:
 		/// <summary>
 		/// key:texture
@@ -1709,14 +1674,11 @@ namespace flora
 {
 	struct FBaseBuffer
 	{
-	public:
-		std::shared_ptr<XRHIBuffer> GetRef() { return Gpu; };
-	protected:
-		std::shared_ptr<XRHIBuffer> Gpu = nullptr;
+		virtual std::shared_ptr<XRHIBuffer> GetRef() = 0;
 	};
 
 	template<int Slot, EBufferUsage Usage>
-	struct FByteAddressBuffer:public FBaseBuffer
+	struct FByteAddressBuffer :public FBaseBuffer
 	{
 		void InitRHI(void* Buffer, size_t BufferSize)
 		{
@@ -1740,7 +1702,7 @@ namespace flora
 				Size = BufferSize;
 
 				if (Buffer)memcpy(Data, Buffer, BufferSize);
-				
+
 			}
 		}
 
@@ -1765,7 +1727,7 @@ namespace flora
 		{
 			InoutData.clear();
 
-			ReadBack(Data,Size, Policy);
+			ReadBack(Data, Size, Policy);
 			if (Size % sizeof(T) == 0)
 			{
 				InoutData.resize(Size / sizeof(T));
@@ -1776,36 +1738,19 @@ namespace flora
 
 			return false;
 		}
+
+		virtual std::shared_ptr<XRHIBuffer> GetRef()override { return Gpu; }
 	private:
+		std::shared_ptr<XRHIBuffer> Gpu = nullptr;
 		void* Data = nullptr;
 		size_t Size = 0;
 	};
 
-	template<int Slot, typename T, EBufferUsage Usage, EBufferTarget Target = EBufferTarget::BT_SHADER_STORAGE_BUFFER>
+	template<int Slot, typename T, int N, EBufferUsage Usage, EBufferTarget Target = EBufferTarget::BT_SHADER_STORAGE_BUFFER>
 	struct FStructuredBuffer :public FBaseBuffer
 	{
-		void Clear()
-		{
-			PackedData.clear();
-			Gpu = nullptr;
-		}
-
-		void Resize(int N)
-		{
-			Clear();
-			PackedData.resize(N);
-		}
-
-		void Resize(int N,T Data)
-		{
-			Clear();
-			PackedData.resize(N,Data);
-		}
-
 		void InitRHI()
 		{
-			Gpu = nullptr;
-
 			if (!Gpu)
 			{
 				XRHIBufferCreateInfo Info;
@@ -1819,31 +1764,16 @@ namespace flora
 
 		void UpdateSubData(int idx)
 		{
-			if (idx < PackedData.size())
-			{
-				Gpu->UpdateSubData(sizeof(T) * idx, sizeof(T), &(PackedData[idx]));
-			}
-		}
-
-		void UpdateAllData()
-		{
-			if (PackedData.size() > 0)
-			{
-				Gpu->UpdateSubData(0, sizeof(T) * PackedData.size(), &(PackedData[0]));
-			}
+			Gpu->UpdateSubData(sizeof(T) * idx, sizeof(T), &(PackedData[idx]));
 		}
 
 		bool ReadBack()
 		{
-			GetRHI()->MemoryBarrier(Target);
+			GetRHI()->MemoryBarrier(MBB_SHADER_STORAGE_BARRIER_BIT);
 
 			if (void* Ptr = Gpu->Map(EAccessPolicy::AP_READ_ONLY))
 			{
-				if (Ptr)
-				{
-					memcpy(PackedData.data(), Ptr, PackedData.size() * sizeof(T));
-				}
-
+				memcpy(PackedData.data(), Ptr, PackedData.size() * sizeof(T));
 				Gpu->Unmap();
 
 				return Ptr != nullptr;
@@ -1852,19 +1782,15 @@ namespace flora
 			return false;
 		}
 
+		virtual std::shared_ptr<XRHIBuffer> GetRef()override { return Gpu; }
+
 		T& operator[](int id)
 		{
 			return PackedData[id];
 		}
-
-		T* GetData()
-		{
-			return PackedData.data();
-		}
-
-		inline int GetNum()const { return PackedData.size(); };
 	private:
-		std::vector<T> PackedData;
+		std::array<T, N> PackedData;
+		std::shared_ptr<XRHIBuffer> Gpu = nullptr;
 	};
 
 	template<int Slot>
@@ -1876,17 +1802,20 @@ namespace flora
 			Info.BindingSlot = Slot;
 			Info.BufferTarget = EBufferTarget::BT_DRAW_INDIRECT_BUFFER;
 
-			Gpu = GetRHI()->CreateBuffer(Info);
-			Gpu->DynamicPointerCast<XRHIDrawIndirectBuffer>()->SetZero<XDrawElementsIndirectCommand>(EBufferUsage::BU_DYNAMIC_COPY, N);
+			CommandBuffer = GetRHI()->CreateBuffer(Info)->DynamicPointerCast<XRHIDrawIndirectBuffer>();
+			CommandBuffer->SetZero<XDrawElementsIndirectCommand>(EBufferUsage::BU_DYNAMIC_COPY, N);
 		}
 
 		template<typename T>
 		void ReadBack(std::vector<T>& CmdBuffer)
 		{
-			Gpu->DynamicPointerCast<XRHIDrawIndirectBuffer>()->ReadBack(CmdBuffer);
+			CommandBuffer->ReadBack(CmdBuffer);
 		}
 
-		inline int GetCmdNum()const { return Gpu->DynamicPointerCast<XRHIDrawIndirectBuffer>()->GetCmdNum(); }
+		inline int GetCmdNum()const { return CommandBuffer->GetCmdNum(); }
+		virtual std::shared_ptr<XRHIBuffer> GetRef()override { return CommandBuffer; }
+	private:
+		std::shared_ptr<XRHIDrawIndirectBuffer> CommandBuffer;
 	};
 }
 
@@ -1896,12 +1825,12 @@ namespace flora
 	typedef unsigned int EQueryCategory;
 	enum EQueryCategory_
 	{
-		EQC_TIME ,
-		EQC_PRIMITIVE ,
-		EQC_MAX_COUNT ,
+		EQC_TIME,
+		EQC_PRIMITIVE,
+		EQC_MAX_COUNT,
 	};
 
-	struct FQueryResult 
+	struct FQueryResult
 	{
 		FQueryResult() = default;
 		FQueryResult(const char* InName) :Name(InName) {};
@@ -1913,7 +1842,7 @@ namespace flora
 	{
 	public:
 		template<typename T>
-		void Register(EQueryCategory Cate,T* Result)
+		void Register(EQueryCategory Cate, T* Result)
 		{
 			bool bFind = false;
 
@@ -1931,7 +1860,7 @@ namespace flora
 			{
 				Categories[Cate].push_back(std::make_shared<T>(Result));
 			}
-			
+
 		}
 	public:
 		const std::vector<std::shared_ptr<FQueryResult>>& operator[](EQueryCategory Category)const { return Categories[Category]; };
@@ -1939,7 +1868,6 @@ namespace flora
 		std::vector<std::shared_ptr<FQueryResult>> Categories[EQC_MAX_COUNT];
 	};
 
-#define SCOPE_TIMER(Name) flora::FScopeTimer Timer(#Name);
 	struct FScopeTimer
 	{
 		struct TimeResult :public FQueryResult
@@ -1947,7 +1875,7 @@ namespace flora
 			TimeResult() = default;
 
 			TimeResult(const char* InName) :FQueryResult(InName) {};
-			TimeResult(TimeResult* Rhs) :FQueryResult(Rhs), ElapsedTime(Rhs->ElapsedTime){};
+			TimeResult(TimeResult* Rhs) :FQueryResult(Rhs), ElapsedTime(Rhs->ElapsedTime) {};
 
 			double ElapsedTime = 0.0;
 		};

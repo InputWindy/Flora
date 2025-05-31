@@ -83,8 +83,6 @@ namespace flora
 		/// <param name="mip"></param>
 		/// <param name="access_policy"></param>
 		virtual void SetTextureImage(std::shared_ptr<class XRHITexture>, uint32_t, uint32_t , uint32_t /* = GL_READ_WRITE*/) const override;
-		virtual void SetTextureImage(std::shared_ptr<class XRHITexture>, uint32_t, uint32_t, EAccessPolicy) const override;
-
 
 		virtual void SetBool1(const char*, bool) const override;
 		virtual void SetBool2(const char*, bool, bool) const override;

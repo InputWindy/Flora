@@ -40,8 +40,6 @@ bool flora::XOpenGLFrameBuffer::UpdateRHI()
 {
     Bind();
 
-    glViewport(0, 0, DepthStencilAttachment->GetSizeX(), DepthStencilAttachment->GetSizeY());
-
     int idx = 0;
 
     for (size_t idx = 0; idx < ColorAttachments.size(); ++idx)
@@ -112,23 +110,4 @@ bool flora::XOpenGLFrameBuffer::IsComplete()
 {
     Bind();
     return glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
-}
-
-//void flora::XOpenGLFrameBuffer::ClearDepthStencil(float d, int i)
-//{
-//    Bind();
-//    glClearBufferfi(GL_DEPTH_STENCIL, 0, d, i);
-//}
-
-void flora::XOpenGLFrameBuffer::ClearBuffer(EClearBufferBit InBufferBit)
-{
-    glClear(ToGLClearBufferBit(InBufferBit));
-}
-
-void flora::XOpenGLFrameBuffer::ClearColor(int i, float r, float g, float b, float a)
-{
-	Bind();
-    const GLfloat Color[4] = { r, g, b, a };
-
-    glClearBufferfv(GL_COLOR, i, Color);
 }

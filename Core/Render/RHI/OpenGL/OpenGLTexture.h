@@ -35,11 +35,6 @@ namespace flora
 		/// synchronize CPU resources to the GPU without checking the correctness of the resources.
 		/// </summary>
 		virtual bool UpdateRHI()override;
-
-		/// <summary>
-		/// Append Next Mip Level
-		/// </summary>
-		virtual void AddNewMip(uint32_t InSizeX, uint32_t InSizeY) override;
 	public:
 		virtual void Bind() override;
 

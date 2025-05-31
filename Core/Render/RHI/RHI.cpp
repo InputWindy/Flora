@@ -57,7 +57,7 @@ flora::EInternalFormat flora::MatchFormat(flora::EFormat InFormat, flora::EDataT
         assert(0);
     }
     //hdr exr...
-    else if(InDataType == flora::EDataType::DT_FLOAT)
+    else if (InDataType == flora::EDataType::DT_FLOAT)
     {
         switch (InFormat)
         {
@@ -147,21 +147,21 @@ std::pair<flora::EFormat, flora::EDataType> flora::MatchInternalFormat(flora::EI
     case flora::EInternalFormat::IF_RGB16:     Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGB, flora::EDataType::DT_UNSIGNED_SHORT); break;
     case flora::EInternalFormat::IF_RGB16I:    Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGB_INTEGER, flora::EDataType::DT_SHORT); break;
     case flora::EInternalFormat::IF_RGB16UI:   Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGB_INTEGER, flora::EDataType::DT_UNSIGNED_SHORT); break;
-    
+
     case flora::EInternalFormat::IF_RGB32I:    Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGB_INTEGER, flora::EDataType::DT_INT); break;
     case flora::EInternalFormat::IF_RGB32UI:   Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGB_INTEGER, flora::EDataType::DT_UNSIGNED_INT); break;
-    
+
     case flora::EInternalFormat::IF_RGBA8:     Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGBA, flora::EDataType::DT_UNSIGNED_BYTE);              break;
     case flora::EInternalFormat::IF_RGBA8I:    Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGBA_INTEGER, flora::EDataType::DT_BYTE); break;
     case flora::EInternalFormat::IF_RGBA8UI:   Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGBA_INTEGER, flora::EDataType::DT_UNSIGNED_BYTE); break;
-    
+
     case flora::EInternalFormat::IF_RGBA16:    Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGBA, flora::EDataType::DT_UNSIGNED_SHORT); break;
     case flora::EInternalFormat::IF_RGBA16I:   Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGBA_INTEGER, flora::EDataType::DT_SHORT); break;
     case flora::EInternalFormat::IF_RGBA16UI:  Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGBA_INTEGER, flora::EDataType::DT_UNSIGNED_SHORT); break;
-    
+
     case flora::EInternalFormat::IF_RGBA32I:   Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGBA_INTEGER, flora::EDataType::DT_INT); break;
     case flora::EInternalFormat::IF_RGBA32UI:  Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RGBA_INTEGER, flora::EDataType::DT_UNSIGNED_INT); break;
-    
+
     case flora::EInternalFormat::IF_R16F:      Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RED, flora::EDataType::DT_FLOAT); break;
     case flora::EInternalFormat::IF_R32F:      Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RED, flora::EDataType::DT_FLOAT);              break;
     case flora::EInternalFormat::IF_RG16F:     Ret = std::pair<flora::EFormat, flora::EDataType>(flora::EFormat::F_RG, flora::EDataType::DT_FLOAT); break;
@@ -385,7 +385,7 @@ std::shared_ptr<flora::XRHITexture2D> flora::XRHI::CubemapFaceToTexture2D(ECubeF
             Buffer.resize(Stride * SizeX * SizeX);
         }
 
-        Cubemap->ReadPixels(Face,0, ReadFormat.first, ReadFormat.second, Buffer.data());
+        Cubemap->ReadPixels(Face, 0, ReadFormat.first, ReadFormat.second, Buffer.data());
 
         /*uint8_t* p = (uint8_t*)(Buffer.data());
         while (p)
@@ -401,8 +401,8 @@ std::shared_ptr<flora::XRHITexture2D> flora::XRHI::CubemapFaceToTexture2D(ECubeF
         Texture2DInfo.InternalFormat = InternalFormat;
 
         std::shared_ptr<flora::XRHITexture2D> Texture2D = GetRHI()->CreateTexture(Texture2DInfo)->DynamicPointerCast<flora::XRHITexture2D>();
-        Texture2D->SetPixels(0,ReadFormat.first, ReadFormat.second, Buffer.data());
-        
+        Texture2D->SetPixels(0, ReadFormat.first, ReadFormat.second, Buffer.data());
+
         return Texture2D;
     }
 
@@ -427,18 +427,18 @@ std::shared_ptr<flora::XTexture> flora::XRHI::CreateStaticTexture(std::shared_pt
         auto InternalFormat = Texture2DResource->GetInternalFormat();
         auto ReadFormat = MatchInternalFormat(InternalFormat);
         int CompNum = GetRHI()->GetFormatCompNum(ReadFormat.first);
-        std::byte* Buffer = (std::byte*)malloc(SizeX* SizeY * GetRHI()->GetDataTypeSize(ReadFormat.second) * GetRHI()->GetFormatCompNum(ReadFormat.first));
+        std::byte* Buffer = (std::byte*)malloc(SizeX * SizeY * GetRHI()->GetDataTypeSize(ReadFormat.second) * GetRHI()->GetFormatCompNum(ReadFormat.first));
         {
             Texture2DResource->ReadPixels(0, ReadFormat.first, ReadFormat.second, Buffer);
         }
-        
+
         Texture2D->Width = SizeX;
         Texture2D->Height = SizeY;
 
         Texture2D->ChannelNum = CompNum;
         Texture2D->Format = ReadFormat.first;
         Texture2D->DataType; ReadFormat.second;
-        
+
         Texture2D->ImageData = Buffer;
         Texture2D->MipLevels = MipLevels;
 
@@ -464,63 +464,6 @@ std::shared_ptr<flora::XTexture> flora::XRHI::CreateStaticTexture(std::shared_pt
         break;
     }
     return Ret;
-}
-
-std::vector<std::shared_ptr<flora::XTexture>> flora::XRHI::CreateStaticTextureMipChain(std::shared_ptr<XRHITexture>InTexture)
-{
-	std::vector<std::shared_ptr<flora::XTexture>> Ret;
-
-	if (!InTexture)return Ret;
-
-	switch (InTexture->GetType())
-	{
-	case flora::ERHIResourceType::RT_Texture2D:
-	{		
-		auto Texture2DResource = InTexture->DynamicPointerCast<XRHITexture2D>();
-		auto MipLevels = Texture2DResource->GetMipLevels();
-
-        for (int i = 0; i < MipLevels; ++i)
-        {
-			auto Texture2D = std::make_shared<XTexture2D>();
-
-			auto SizeX = Texture2DResource->GetSizeX(i);
-			auto SizeY = Texture2DResource->GetSizeY(i);
-			auto InternalFormat = Texture2DResource->GetInternalFormat();
-			auto ReadFormat = MatchInternalFormat(InternalFormat);
-			int CompNum = GetRHI()->GetFormatCompNum(ReadFormat.first);
-			std::byte* Buffer = (std::byte*)malloc(SizeX * SizeY * GetRHI()->GetDataTypeSize(ReadFormat.second) * GetRHI()->GetFormatCompNum(ReadFormat.first));
-			{
-				Texture2DResource->ReadPixels(i, ReadFormat.first, ReadFormat.second, Buffer);
-			}
-
-			Texture2D->Width = SizeX;
-			Texture2D->Height = SizeY;
-
-			Texture2D->ChannelNum = CompNum;
-			Texture2D->Format = ReadFormat.first;
-			Texture2D->DataType; ReadFormat.second;
-
-			Texture2D->ImageData = Buffer;
-			Texture2D->MipLevels = 1;
-
-			Ret.emplace_back(Texture2D);
-        }
-		break;
-	}
-	case flora::ERHIResourceType::RT_Texture3D:
-	{
-
-		break;
-	}
-	case flora::ERHIResourceType::RT_TextureCube:
-	{
-
-		break;
-	}
-	default:
-		break;
-	}
-	return Ret;
 }
 
 
@@ -559,7 +502,7 @@ std::shared_ptr<flora::XRHITextureCube> flora::XRHI::FacesToCubemap(std::vector<
         for (ECubeFace FaceId = 0; FaceId < ECubeFace_::MAX_COUNT; FaceId++)
         {
             InFaces[FaceId]->ReadPixels(0, ReadFormat.first, ReadFormat.second, Buffer.data());
-            Cubemap->SetPixels(FaceId,0, ReadFormat.first, ReadFormat.second, Buffer.data());
+            Cubemap->SetPixels(FaceId, 0, ReadFormat.first, ReadFormat.second, Buffer.data());
         }
 
         return Cubemap;

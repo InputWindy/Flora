@@ -1,0 +1,47 @@
+/*
+	clear intermediate ssbo
+*/
+#version 460 core
+#include "GpuScene.glsl"
+
+NUM_THREADS(32,32,1)
+void main()
+{
+	int InstanceID = GLOBAL_THREAD_ID_1D;
+
+	if(InstanceID < GetSceneInstanceNum())
+	{
+		FDrawElementsIndirectCommand Cmd;
+		Cmd.instance_count = 1;
+		Cmd.base_instance_id = InstanceID;
+
+		CStaticMesh StaticMesh = GetCStaticMeshLists(GetMeshId(InstanceID));
+
+		if(IsVisibleInstance(InstanceID))
+		{
+			Cmd.index_count = StaticMesh.tri_num * 3;
+			Cmd.index_offset = StaticMesh.tri_offset * 3/*offset of dynamic ibo*/;
+			Cmd.vertex_offset = StaticMesh.pos_offset;
+		}
+		else
+		{
+			Cmd.index_count = 0;
+			Cmd.index_offset = 0;
+			Cmd.vertex_offset = 0;
+		}
+
+		SetIndirectDrawCommandBuffer(InstanceID,Cmd);
+	}
+
+	{
+		FDrawElementsIndirectCommand Cmd;
+		Cmd.instance_count = 1;
+		Cmd.base_instance_id = 0;
+		Cmd.index_count = GetIndirectDrawNum();
+		Cmd.index_offset = 0;
+		Cmd.vertex_offset = 0;
+
+		SetIndirectDrawCommandBuffer1(0,Cmd);
+	}
+
+}

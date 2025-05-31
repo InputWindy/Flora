@@ -352,24 +352,21 @@ void flora::XOpenGLRHI::DrawElementIndirect(EDrawMode DrawMode, std::shared_ptr<
 {
 	if (IndirectBuffer)
 	{
-		static GLuint VAO;
-		auto ScopeInit = [&]()->bool
-			{
-				glGenVertexArrays(1, &VAO);
-				return true;
-			};
+        GLuint VAO;
+        auto ScopeInit = [&]()->bool
+            {
+                glGenVertexArrays(1, &VAO);
+                return true;
+            };
 
-		static bool bScopeInit = ScopeInit();
-		assert(glGetError() == GL_NO_ERROR);
-		glBindVertexArray(VAO);
-		assert(glGetError() == GL_NO_ERROR);
-		//vbo->Bind();
-		Transition(Ibo, EBufferTarget::BT_ELEMENT_ARRAY_BUFFER);
-		assert(glGetError() == GL_NO_ERROR);
+        static bool bScopeInit = ScopeInit();
+
+        glBindVertexArray(VAO);
+
+        Transition(Ibo, EBufferTarget::BT_ELEMENT_ARRAY_BUFFER);
+
 		IndirectBuffer->Bind();
-		assert(glGetError() == GL_NO_ERROR);
-		glMultiDrawElementsIndirect(ToGLDrawMode(DrawMode), GL_UNSIGNED_INT, nullptr, IndirectBuffer->GetCmdNum(), 0);
-		assert(glGetError() == GL_NO_ERROR);
+        glMultiDrawElementsIndirect(ToGLDrawMode(DrawMode), GL_UNSIGNED_INT, nullptr, IndirectBuffer->GetCmdNum(), 0);
 	}
 }
 
@@ -402,30 +399,6 @@ void flora::XOpenGLRHI::Transition(std::shared_ptr<XRHIBuffer> Buffer, EBufferTa
 void flora::XOpenGLRHI::MemoryBarrier(EMemoryBarrierBit InBufferBit)
 {
     glMemoryBarrier(ToGLMemoryBufferBit(InBufferBit));
-}
-
-void flora::XOpenGLRHI::MemoryBarrier(EBufferTarget InTarget)
-{
-    switch (InTarget)
-    {
-    case flora::EBufferTarget::BT_ARRAY_BUFFER:assert(0);break;
-    case flora::EBufferTarget::BT_ATOMIC_COUNTER_BUFFER:MemoryBarrier(MBB_ATOMIC_COUNTER_BARRIER_BIT); break;
-    case flora::EBufferTarget::BT_COPY_READ_BUFFER:assert(0); break;
-    case flora::EBufferTarget::BT_COPY_WRITE_BUFFER:assert(0); break;
-    case flora::EBufferTarget::BT_DISPATCH_INDIRECT_BUFFER:MemoryBarrier(MBB_COMMAND_BARRIER_BIT); break;
-    case flora::EBufferTarget::BT_DRAW_INDIRECT_BUFFER:MemoryBarrier(MBB_COMMAND_BARRIER_BIT); break;
-    case flora::EBufferTarget::BT_ELEMENT_ARRAY_BUFFER:assert(0); break;
-    case flora::EBufferTarget::BT_PIXEL_PACK_BUFFER:assert(0); break;
-    case flora::EBufferTarget::BT_PIXEL_UNPACK_BUFFER:assert(0); break;
-    case flora::EBufferTarget::BT_QUERY_BUFFER:assert(0); break;
-    case flora::EBufferTarget::BT_SHADER_STORAGE_BUFFER: MemoryBarrier(MBB_SHADER_STORAGE_BARRIER_BIT); break;
-    case flora::EBufferTarget::BT_TEXTURE_BUFFER:assert(0); break;
-    case flora::EBufferTarget::BT_TRANSFORM_FEEDBACK_BUFFER:assert(0); break;
-    case flora::EBufferTarget::BT_UNIFORM_BUFFER: MemoryBarrier(MBB_UNIFORM_BARRIER_BIT); break;
-    case flora::EBufferTarget::BT_MAX_COUNT:
-    default:
-        break;
-    }
 }
 
 void flora::XOpenGLRHI::FlushRenderCommand()

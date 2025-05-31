@@ -40,9 +40,6 @@ namespace flora
 		virtual void UnBind() override;
 
 		virtual bool IsComplete() override;
-
-		virtual void ClearBuffer(EClearBufferBit InBufferBit) override;
-		virtual void ClearColor(int, float, float, float, float) override;
 	public:
 		inline uint32_t GetHandle()const { return Handle; }
 	private:
